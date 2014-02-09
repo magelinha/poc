@@ -27,10 +27,6 @@ function readXml(){
 
 				componentes_basicos.push(obj);
 			});
-
-			addDraggableToComponents();
-			addSortableToComponents(".conteudo-ordenado");
-			addSortableToComponents(".coluna");
 		}
 
 	});
@@ -60,7 +56,7 @@ function addDraggableToComponents(){
 	$(".componente-arrastavel").each(function(index, value){
 		var data = componentes_basicos[index].html;
 
-		index < 4 ? classe = ".conteudo-ordenado" : classe = ".coluna";
+		index < 4 ? classe = "#poc-header,#poc-content, #poc-footer" : classe = ".coluna";
 		$(this).draggable({
 			revert:"invalid",
 			cursor: "move",
@@ -96,7 +92,7 @@ function addSortableToComponents(classe){
 			removeStyle();
 
 			addDraggableToComponents();
-			addSortableToComponents(".coluna");
+			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
 		}
 
 	}).disableSelection();
@@ -109,6 +105,9 @@ function removeStyle(){
 $('#selecionarLayout').on('hidden.bs.modal', function (e) {
 	template = $('input[name=layout]:checked', '#formLayout').val();
 	$(".conteudo-gerado").html(layouts[template-1].html); //insere o layout escolhido na tela
+
+	addDraggableToComponents();
+	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
 });
 
 
