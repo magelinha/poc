@@ -1,0 +1,105 @@
+.conteudo-gerado:after {
+	content: "Página";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+#poc-header:before {
+	content: "Cabeçalho";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+#poc-content:before {
+	content: "Conteúdo";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+#poc-footer:before {
+	content: "Rodapé";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+.row:before {
+	content: "Bloco";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+
+.coluna:before {
+	content: "Coluna";
+	top: -1px;
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+.conteudo-gerado {
+	min-height: 600px;
+	border: 1px dotted;
+	padding: 25px 10px 10px 10px;
+}
+
+.row, .coluna, #poc-content, #poc-header, #poc-footer {
+	position: relative;
+	padding: 25px 14px 0;
+	margin: 15px 0;
+}
+
+.previa {
+	border: 1px solid;
+	min-height: 200px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-bottom: 25px;
+	padding-top: 40px;
+}
+
+.previa .coluna {
+	min-height: 200px;
+	border: 1px dotted;
+
+}
+
+header, footer {
+	min-height: 200px;
+}
+
+#poc-content{
+	min-height: 600px;	
+}
+
+#poc-content, #poc-header, #poc-footer {
+	border: 1px solid;
+}

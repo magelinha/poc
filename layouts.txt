@@ -1,0 +1,276 @@
+1- http://www.americanas.com.br/
+	Cabeçalho com o menu interno, sendo o menu dropdown
+	Aréa de Destaque
+	Conteudo (centralizado)
+	Rodapé
+
+2 - http://www.globo.com/
+	Cabeçalho, com um item de busca
+	Menu
+	Conteúdo (centralizado)
+	Rodaé com mapa do site
+
+3 - http://letras.mus.br/
+	Cabeçalho
+	Menu
+	Destaques
+	Conteudo (centralizado)
+	Rodapé
+
+4 - http://www.youtube.com/
+	Cabeçalho
+	conteudo em 3 colunas, sendo que o menu fica no canto esquerdo da página
+	rodapé
+
+5 - http://br.yahoo.com/
+	Menu fixo no topo
+	Cabeçalho
+	conteudo (centralizado), dividido em 3 colunas
+
+6 - http://tera.enmasse.com/
+	Cabeçalho com menu alinhado a direita
+	Conteudo (centralizado)
+	Rodapé
+
+7 - http://ufsj.edu.br/
+	Cabeçalho
+	conteudo(centralizado), como menu vertical
+	rodape
+
+8 - http://legendas.tv/
+	Cabeçalho
+	Área de Destaque
+	Conteúdo(centralizado)
+	Rodapé
+
+9 - https://www.netflix.com/
+	Cabeçalho
+	conteúdo (centralizado)
+	Rodapé
+
+10 - http://bancodeseries.com.br/
+	Menu
+	Conteúdo
+	Rodapé
+
+
+11 - http://www.fazenda.gov.br/
+	Cabeçalho
+	Conteúdo (centralizado), com menu Lateral Esquerdo
+	Rodapé
+
+12 - http://www.r7.com/
+	Cabeçalho com menu interno
+	Conteúdo (centralizado)
+	Rodapé
+
+13 - http://www.g4tv.com/
+	Cabeçalho, com menu interno
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+
+
+14 - http://www.naosalvo.com.br/
+	Cabeçalho, com menu interno
+	Conteudo centralizado
+	Rodapé
+
+
+15 - http://olhardigital.uol.com.br/home
+	Cabeçalho, com menu interno
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+
+16 - http://www.amazon.com/
+	Cabeçalho, com menu interno
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+
+17 - http://www.vagalume.com.br/
+	Cabeçalho, com menu interno
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+
+18 - http://livrariasaraiva.com.br/
+	Cabeçalho com o menu interno, sendo o menu dropdown
+	Aréa de Destaque
+	Conteudo (centralizado)
+	Rodapé
+
+19 - http://www.decolar.com/
+	Cabeçalho
+	Menu
+	Conteudo(centralizado)
+	Rodapé
+
+20 - http://belohorizonte.mg.gov.br/
+	Cabeçalho
+	Menu
+	conteudo(centralizado)
+	Rodapé
+
+21 - http://www.eduardoamorimpsc.com.br/
+	Cabeçalho
+	Menu
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+
+22 - http://facebook.com/
+	Cabeçalho fixo
+	Conteúdo dividido em 3 colunas
+
+23 - http://www.educacional.com.br/
+	Destaque junto com o cabeçalho
+	Conteudo dividido em sessões, onde cada sessão ocupa 100% da tela lateralmente e seu conteúdo fica centralizado
+	Rodapé
+
+24 - http://www.olx.com.br/
+	Cabeçalho
+	Conteudo(centralizado) com menu lateral
+	Rodapé
+
+25 - http://vidadeprogramador.com.br/
+	Cabeaçalho com menu interno
+	conteúdo centralizado
+	Rodapé
+
+26 - http://store.steampowered.com/
+	Cabeçalho
+	Conteudo (centralizado) com menu
+	Rodapé
+
+27 - http://www.caixa.gov.br/
+	Cabeçalho com menu interno
+	Conteúdo(centralizado)
+	Rodapé
+
+28 - http://www.abril.com.br/
+	Cabeçalho com menu interno
+	Conteúdo(centralizado)
+	Rodapé
+
+29 - http://www.lolking.net/
+	Cabeçalho
+	Menu
+	Conteúdo Centralizado
+	Rodapé
+
+30 - http://www.ahnegao.com.br/
+	Cabeçalho
+	Conteudo (centralizado)
+	Rodapé
+
+31 - http://www.legiaodosherois.com.br/
+	Menu
+	Area de Destaque
+	Conteudo centralizado
+	Rodapé
+
+32 - http://grooveshark.com/
+	Menu fixo
+	Conteudo centralizado
+	Rodapé fixo
+
+33 - http://www.submarino.com.br/
+	Cabeaçalho
+	area de destaque
+	Conteudo centralizado
+	rodapé
+
+34 - http://levelupgames.uol.com.br/levelup/
+	Cabeçalho
+	Area de Destaque
+	Conteúdo centralizado
+	Rodapé
+
+35 - http://terceirotempo.bol.uol.com.br/
+	Cabeçalho
+	Menu
+	Conteudo centralizado
+	Rodapé
+
+36 - http://www.netshoes.com.br/
+	Cabeaçalho
+	Menu
+	Area de destaque
+	Conteudo centralizado
+	rodapé
+
+37 - http://projecteuler.net/
+	Cabeçalho com menu
+	Conteudo centralizado
+	rodapé
+
+38 - http://inep.gov.br/web/guest/home
+	Cabeaçalho
+	Conteudo centralizado com o menu lateral na vertical
+	Rodapé
+
+39 - https://www.portaldoservidor.mg.gov.br/
+	Cabaçalho
+	Menu
+	Conteudo centralizado
+	Rodapé
+
+40 - http://anitube.xpg.uol.com.br/
+	Cabeçalho
+	Menu
+	Conteudo centralizado
+	Rodapé
+
+41 - http://blogdojuca.uol.com.br/
+	Cabeçalho
+	Menu
+	Conteudo centralizado
+	Rodapé
+
+
+Projeto da Linked
+
+42 - I Semand
+	Cabeçalho
+	Menu
+	Conteudo (centralizado)
+	Rodapé
+
+43 - VII Congresso Latioamericano de Sistemas Agroflorestais
+	Cabeçalho
+	Conteudo(centralizado), com o menu vertical
+
+44 - XXII Congresso Brasileiro de Engenharia Biomédica
+	Cabeçalho
+	Menu
+	Conteudo centralizado
+
+45 - 26º Inverno Cultural
+	cabeçalho com menu
+	Area de destaque
+	Conteudo centralizado
+	Rodapé
+	
+46 - Site da Linked
+	Cabeçalho
+	Menu
+	Area de Destaque
+	Conteudo centralizado
+	Rodapé
+
+47 - IX Prêmio Fejemg
+	Cabeçalho com menu
+	Conteudo centalizado com area de destaque
+	Rodapé.
+
+
+
+
+
+
+
+
+
+

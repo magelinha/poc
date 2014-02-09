@@ -1,0 +1,161 @@
+<listaComponentes>
+
+	<!-- 1 coluna -->
+	<componente>
+		<nome>1coluna</nome>
+		<html><![CDATA[
+			<div class="row previa" data-id="0">
+				<div class="col-md-12 coluna"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- 2 colunas -->
+	<componente>
+		<nome>2colunas</nome>
+		<html><![CDATA[
+			<div class="row previa" data-id="1">
+				<div class="col-md-6 coluna"></div>
+				<div class="col-md-6 coluna"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- 3 colunas -->
+	<componente>
+		<nome>3colunas</nome>
+		<html><![CDATA[
+			<div class="row previa" data-id="2">
+				<div class="col-md-4 coluna"></div>
+				<div class="col-md-4 coluna"></div>
+				<div class="col-md-4 coluna"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- 4 colunas -->
+	<componente>
+		<nome>4colunas</nome>
+		<html><![CDATA[
+			<div class="row previa" data-id="3">
+				<div class="col-md-3 coluna"></div>
+				<div class="col-md-3 coluna"></div>
+				<div class="col-md-3 coluna"></div>
+				<div class="col-md-3 coluna"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Parágrafo -->
+	<componente>
+		<nome>paragrafo</nome>
+		<html><![CDATA[
+			
+			<p data-id="4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			
+		]]>
+		</html>
+	</componente>
+
+	<!-- Texto -->
+	<componente>
+		<nome>texto</nome>
+		<html><![CDATA[
+				<div data-id="5">
+				<h2>Titulo do texto</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur...</p>
+				<p><a href="#">Leia Mais >></a></p></div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Citação -->
+	<componente>
+		<nome>citacao</nome>
+		<html><![CDATA[
+			
+			<blockquote data-id="6">
+
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur...
+
+				<small>Autor da citação </small></p>
+			</blockquote>
+		
+		]]>
+		</html>
+	</componente>
+
+	<!-- Listas -->
+	<componente>
+		<nome>listas</nome>
+		<html><![CDATA[
+				<ul data-id="7">
+					<li>item 1</li>
+					<li>item 2</li>
+					<li>item 3</li>
+					<li>item 4</li>
+					<li>item 5</li>
+				</ul>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Botão -->
+	<componente>
+		<nome>botao</nome>
+		<html><![CDATA[
+			<button data-id="8" type="button" class="btn btn-default">Botão</button>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Botão Dropdown -->
+	<componente>
+
+		<nome>botao-dropdown</nome>
+		<html><![CDATA[
+			
+			<div class="btn-group" data-id="9">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+				</ul>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Grupo de Botões -->
+	<componente>
+		<nome>grupo-botoes</nome>
+		<html><![CDATA[
+			<div class="btn-group" data-id="10">
+				<button type="button" class="btn btn-default">Botão 1</button>
+				<button type="button" class="btn btn-default">Botão 2</button>
+				<button type="button" class="btn btn-default">Botão 3</button>
+			</div>
+		]]>
+		</html>
+	</componente>
+</listaComponentes>

@@ -1,0 +1,67 @@
+Alan Teles e Rafael Resende:
+	Busca
+	Formulário
+	Comentário
+
+Luis Fernando e Edson:
+	Busca
+	Galeria de Fotos
+	Redes Sociais
+	Formulario
+	Player de Música
+
+Julio Cesar e Lucas Nascimento:
+	Busca
+	Redes Sociais
+	Formulário
+
+Rodrigo Chaves Gabriel Ramos:
+	Redes Sociais
+	SlideShow
+	Busca
+	Formulario
+	Multilinguagem
+
+Maione Jose:
+	Busca
+	Formulario
+
+Matheus Felipe Rodrigo Caputo:
+	Busca
+	SlideShow
+	Mapa do Site
+	Player de Musica
+
+Patricia
+	Busca
+	Formulário
+	Redes Sociais
+
+Renan e Thais:
+	Busca
+	SlideShow
+	Redes Sociais
+	MultiLinguagem
+
+Ronan Diniz e Rodrigo Ferreira:
+	Busca
+	SlideShow
+	Mapa do Site
+	Formulario
+	Player de Musica
+
+Ronan Lopes e Thiago Schonz:
+	SlideShow
+	Redes Sociais
+	Mapa do Site
+	Busca
+	Formulário
+	Multilinguangem
+	Aumentar/diminuir fonte
+	Player de Musica
+
+Vinicius:
+	Redes Sociais
+	Busca
+	Aumentar/Diminuir fonte
+	Aumentar/Diminuir Contraste

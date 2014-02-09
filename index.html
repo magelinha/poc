@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>POC - Ferramenta de prototipação</title>
+
+	<link rel="stylesheet" type="text/css" href="css/jqueryui.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/poc.css">
+
+
+</head>
+<body class="conteudo-total">
+	<!--modal para escolha do layout do site -->
+	<div class="modal fade" id="selecionarLayout">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Selecione o Layout do seu site</h4>
+	      </div>
+	      <div class="modal-body">
+	        <!-- Corpo do modal -->
+	        <form role="form" id="formLayout">
+	        	<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="1" checked> <img src="images/layouts/layout1.png" alt="layout1" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="2"> <img src="images/layouts/layout2.png" alt="layout2" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="3"> <img src="images/layouts/layout3.png" alt="layout3" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="4"> <img src="images/layouts/layout4.png" alt="layout4" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="5"> <img src="images/layouts/layout5.png" alt="layout5" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="6"> <img src="images/layouts/layout6.png" alt="layout6" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="7"> <img src="images/layouts/layout7.png" alt="layout7" />
+	        		</label>
+				</div>
+
+				<div class="radio">
+	        		<label>
+	        			<input type="radio" name="layout" value="8"> <img src="images/layouts/layout8.png" alt="layout8" />
+	        		</label>
+				</div>
+		    </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- área para os componentes -->
+	<div class="col-md-2">
+		<div class="panel-group" id="accordion">
+			<!-- Acorddion sobre as paginas -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapsePaginas">Páginas</a>
+					</h4>
+				</div>
+				<div id="collapsePaginas" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<li><a href="#">Home</a></li>
+							<li><a href="#"><span class="glyphicon glyphicon-plus"></span> Nova Página</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Acorddion sobre os containeres -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseColunas">Colunas</a>
+					</h4>
+				</div>
+				<div id="collapseColunas" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled" id="lista_colunas">
+							<li class="componente-arrastavel bloco 1coluna" data-id="0">1 Coluna <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 2colunas" data-id="1">2 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 3colunas" data-id="2">3 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 4colunas" data-id="3">4 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Componentes Estáticos -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes Estáticos</a>
+					</h4>
+				</div>
+				<div id="collapseEstaticos" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<li class="componente-arrastavel paragrafo" data-id="4">Parágrafo <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel texto" data-id="5">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel citacao" data-id="6">Citação <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel listas" data-id="7">Listas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel botao" data-id="8">Botão <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel botao-dropdown" data-id="9">Botão Dropdown <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel grupo-botao" data-id="10">Grupo de Botões <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="" data-id="11">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="" data-id="12">Menu Horizontal <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Menu Vertical <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Menu Tabulado <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Menu Collapse <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Breadcrumbs <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Paginação <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Título <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Área de Destaque <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Alerta <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Imagem <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Tabela <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Redes Sociais <span class="pull-right glyphicon glyphicon-move"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Acorddion sobre os componentes dinâmicos -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseDinamicos">Componentes Dinamicos</a>
+					</h4>
+				</div>
+				<div id="collapseDinamicos" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<li>Slideshow <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Galeria de Vídeos <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Player de Música <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Enquete <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li>Mapa do Site <span class="pull-right glyphicon glyphicon-move"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Acorddion Referente as propriedades -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapsePropriedades">Propriedades</a>
+					</h4>
+				</div>
+				<div id="collapseDinamicos" class="panel-collapse collapse">
+					<div class="panel-body">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-10 conteudo-gerado conteudo-ordenado">
+		
+	</div>
+
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jqueryui.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/poc.js"></script>
+</body>
+</html>
