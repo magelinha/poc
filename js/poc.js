@@ -1,5 +1,8 @@
 componentes_basicos = [];
 layouts = [];
+paginas = [];
+formularios = [];
+
 var elementoAtual;
 var template = 0;
 /** adiciona o eventos de arrastar à todos os compenentes **/ 
@@ -10,6 +13,16 @@ function getComponent(nome){
 
 	return "";
 }
+
+function getFormulario(nome){
+	for(i=0; i<formularios.length; i++){
+		if(formularios[i].nome === nome) return formularios[i].html;
+	}
+
+	return "";
+}
+
+
 
 
 /** Faz a leitura de todos os componentes contidos no arquivo xml **/
@@ -47,7 +60,23 @@ function readXml(){
 
 	});
 
+	$.ajax({
+		type: "GET",
+		url: "formularios.xml",
+		dataType: "xml",
+		success: function(xml){
+			$(xml).find("formulario").each(function(){
+				var obj = new Object();
+				obj.nome = $(this).find("nome").text();
+				obj.html = $(this).find("html").text();
 
+				formularios.push(obj);
+			});
+
+			console.log(formularios.length);
+		}
+
+	});
 }
 
 
@@ -104,23 +133,85 @@ function removeStyle(){
 
 $('#selecionarLayout').on('hidden.bs.modal', function (e) {
 	template = $('input[name=layout]:checked', '#formLayout').val();
-	$(".conteudo-gerado").html(layouts[template-1].html); //insere o layout escolhido na tela
+	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
 
-	addDraggableToComponents();
-	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
+	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
+	addDraggableToComponents();//capacidade de arrastar
+	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
+	addSidrToComponents(); //exibição das propriedades ao clicar no componente
+	var teste = elementToObject(document.getElementById('poc-page'));
+	console.log(teste);
 });
 
+//função recursiva que pega todos os elementos que estão dentro de um determinado elemento
+function elementToObject(element, o) {
+	var el = $(element);
+	console.log(el);
+	var o = {
+		tagName: el.tagName
+	};
+	var i = 0;
+	for (i ; i < el.attributes.length; i++) {
+		o[el.attributes[i].name] = el.attributes[i].value;
+	}
+
+	var children = el.childElements();
+	if (children.length) {
+		o.children = [];
+		i = 0;
+		for (i ; i < children.length; i++) {
+			child = $(children[i]);
+			o.children[i] = elementToObject(child, o.children) ;
+		}
+	}
+	return o;
+}
+
+function addColorPicker(){
+	$(".cor-de-fundo").minicolors({
+		control: $(this).attr('data-control') || 'hue',
+		defaultValue: $(this).attr('data-defaultValue') || '',
+		inline: $(this).attr('data-inline') === 'true',
+		letterCase: $(this).attr('data-letterCase') || 'lowercase',
+		opacity: $(this).attr('data-opacity'),
+		position: $(this).attr('data-position') || 'bottom right',
+		change: function(hex, opacity) {
+			if( !hex ) return;
+			if( opacity ) hex += ', ' + opacity;
+			try {
+				//console.log(hex);
+			} catch(e) {}
+		},
+		theme: 'bootstrap'
+	});
+}
+
+function addSidrToComponents(){
+	$('#link-prop-pagina').sidr({
+		name: 'prop-pagina',
+		side: 'right',
+		source: function(name){
+			return getFormulario("pagina");
+		}
+	});
+
+	addColorPicker();
+}
+
+function inicializarPaginas(){
+
+
+
+}
 
 $(document).ready(function(){
 	//faz a leitura dos componentes
 	readXml();
-
 	//abre o modal para selecionar o layout
 	$('#selecionarLayout').modal({
 		keyboard: false,
 		show: true,
 		backdrop: 'static'
 	});
-	
 });
 
