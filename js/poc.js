@@ -139,33 +139,9 @@ $('#selecionarLayout').on('hidden.bs.modal', function (e) {
 	addDraggableToComponents();//capacidade de arrastar
 	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
 	addSidrToComponents(); //exibição das propriedades ao clicar no componente
-	var teste = elementToObject(document.getElementById('poc-page'));
-	console.log(teste);
+	
 });
 
-//função recursiva que pega todos os elementos que estão dentro de um determinado elemento
-function elementToObject(element, o) {
-	var el = $(element);
-	console.log(el);
-	var o = {
-		tagName: el.tagName
-	};
-	var i = 0;
-	for (i ; i < el.attributes.length; i++) {
-		o[el.attributes[i].name] = el.attributes[i].value;
-	}
-
-	var children = el.childElements();
-	if (children.length) {
-		o.children = [];
-		i = 0;
-		for (i ; i < children.length; i++) {
-			child = $(children[i]);
-			o.children[i] = elementToObject(child, o.children) ;
-		}
-	}
-	return o;
-}
 
 function addColorPicker(){
 	$(".cor-de-fundo").minicolors({
@@ -198,11 +174,53 @@ function addSidrToComponents(){
 	addColorPicker();
 }
 
-function inicializarPaginas(){
+//funções que serão chamadas quando alguma coisa mudar nos formularios
+$(document).on('change', '#propriedades-pagina', function(){
+	var dados = $("#propriedades-pagina").serializeArray();
+
+	//se o valor de site centrazalido for "não", remove a div com class container
+	if(dados[0].value == 1){
+		$("#poc-page div").removeClass('container');
+	}else{
+		//se não existe o container, então cria-se e insere o conteudo 
+		$("#poc-page div").addClass('container');
+	}
+
+	//adiciona a cor de fundo 
 
 
 
-}
+});
+
+$(document).on('change', '#propriedades-pagina', function(){
+	var dados = $("#propriedades-pagina").serializeArray();
+
+	//se o valor de site centrazalido for "não", remove a div com class container
+	if(dados[0].value == 1){
+		$("#poc-page div").removeClass('container');
+	}else{
+		//se não existe o container, então cria-se e insere o conteudo 
+		$("#poc-page div").addClass('container');
+	}
+
+	//adiciona a cor de fundo 
+	//se foi setada alguma cor, então altera o fundo da div
+	if(dados[1].value){
+		$("#poc-page").css("background-color", dados[1].value);
+	}else{
+		//deixa com o branco
+		$("#poc-page").css("background-color", "#fff");
+	}
+	console.log("mudou");
+	//imagem de fundo
+});
+
+$(document).on('click', '.clear-input', function(){
+	var campo = $($(this).data("input"));
+	campo.prop("value", "");
+	campo.change();
+	//adiciona a cor de fundo 
+});
 
 $(document).ready(function(){
 	//faz a leitura dos componentes
