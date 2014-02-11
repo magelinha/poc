@@ -9,6 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.sidr.dark.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.minicolors.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-thumbs.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-buttons.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="css/poc.css">
 
 
@@ -86,16 +89,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseColunas">Colunas</a>
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseColunas">Blocos</a>
 					</h4>
 				</div>
 				<div id="collapseColunas" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul class="list-unstyled" id="lista_colunas">
-							<li class="componente-arrastavel bloco 1coluna" data-id="0">1 Coluna <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 2colunas" data-id="1">2 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 3colunas" data-id="2">3 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 4colunas" data-id="3">4 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 1coluna">1 Coluna <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 2colunas">2 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 3colunas">3 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel bloco 4colunas">4 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
 						</ul>
 					</div>
 				</div>
@@ -105,42 +108,25 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes Básicos</a>
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes</a>
 					</h4>
 				</div>
 				<div id="collapseEstaticos" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul class="list-unstyled">
-							<li class="componente-arrastavel titulo-texto" data-id="4">Título e Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel texto" data-id="5">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel tabela" data-id="6">Tabela <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel formulario" data-id="7">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel painel" data-id="8">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel conteudo-em-destaque" data-id="9">Conteúdo em Destaque <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel menu-tabulado" data-id="10">Menu Tabulado <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel video" data-id="11">Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- Acorddion sobre os componentes dinâmicos -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseDinamicos">Componentes Customizados</a>
-					</h4>
-				</div>
-				<div id="collapseDinamicos" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul class="list-unstyled">
-							<li class="componente-arrastavel busca" data-id="12">Busca <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel links-redes-sociais" data-id="13">Links para Redes Sociais <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel galeria-imagens" data-id="14">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel slideshow" data-id="15">SlideShow <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel player-musica" data-id="16">Player de Música <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel mapa-do-site" data-id="17">Mapa do Site <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel alertas" data-id="18">Alertas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel titulo-texto">Título e Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel texto">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel texto-paginacao">Contéudo com paginação <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel tabela">Tabela <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel formulario">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel painel">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel conteudo-em-destaque">Conteúdo em Destaque <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel alertas">Alertas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel menu-tabulado">Menu Tabulado <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel video">Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel busca">Busca <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel galeria-imagens">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel slideshow">SlideShow <span class="pull-right glyphicon glyphicon-move"></span></li>
 						</ul>
 					</div>
 				</div>
@@ -149,7 +135,7 @@
 	</div>
 
 	<div class="col-md-10 conteudo-gerado conteudo-ordenado" id="poc-page">
-		<a id="link-prop-pagina" href="#link-prop-pagina" class="btn btn-primary">Propriedade</a>
+		<a id="prop-pagina" href="#" class="btn btn-primary link-propriedades">Propriedade</a>
 	</div>
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
@@ -157,6 +143,11 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mousewheel-3.0.6.pack.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox-buttons.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox-media.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 	<script type="text/javascript" src="js/poc.js"></script>
 </body>
 </html>

@@ -22,9 +22,6 @@ function getFormulario(nome){
 	return "";
 }
 
-
-
-
 /** Faz a leitura de todos os componentes contidos no arquivo xml **/
 function readXml(){
 	
@@ -120,6 +117,7 @@ function addSortableToComponents(classe){
 
 			addDraggableToComponents();
 			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
+			startImageGallery();
 		}
 
 	}).disableSelection();
@@ -155,6 +153,10 @@ function startCarousel(){
 }
 
 
+function startImageGallery(){
+	if($(".poc-componente-galeria-imagem a")) $(".poc-componente-galeria-imagem a").fancybox();
+}
+
 function addColorPicker(){
 	$(".cor-de-fundo").minicolors({
 		control: $(this).attr('data-control') || 'hue',
@@ -175,12 +177,18 @@ function addColorPicker(){
 }
 
 function addSidrToComponents(){
-	$('#link-prop-pagina').sidr({
-		name: 'prop-pagina',
-		side: 'right',
-		source: function(name){
-			return getFormulario("pagina");
+	$(".link-propriedades").each(function(){
+		//se não existe uma div com o id "propriedade-idDoLink" então cria-se a div com o sidr
+		if(!$("#propriedade" + this.id)){
+			$(this).sidr({
+				name: "propriedade" + "-" + $(this).id,
+				side: 'right',
+				source: function(name){
+					return getFormulario($(this).data('prop'));
+				}
+			});		
 		}
+		
 	});
 
 	addColorPicker();
