@@ -2,12 +2,12 @@
 	<layout>
 		<nome>Layout 1</nome>
 		<html><![CDATA[
-			<div class="container">
+			<div class="container content-center">
 				<header class="coluna" id="poc-header">
 					<div class="row previa">
 						<div class="col-md-4 coluna">
 							<!-- logomarca -->
-							<a href="#"><img src="images/layouts/logotemp.png" alt="logomarca" /></a>
+							<h3>Sua Logomarca</h3>
 						</div>
 						<div class="col-md-8 coluna">
 							<!-- menu -->
@@ -31,8 +31,360 @@
 						</div><!-- /.col-md-8 -->
 					</div><!-- /.row -->
 				</header><!-- /.header -->
-				<div id="poc-content" class="coluna"></div>
-				<footer class"coluna" id="poc-footer">
+				<div id="poc-content"></div>
+				<footer id="poc-footer">
+					<div class="row previa">
+						<div class="col-md-12 coluna"><p class="text-center"> <span class="glyphicon glyphicon-copyright-mark"></span> Todos os direito resevervados à Linked Empresa Júnior</p></div>
+					</div>
+				</footer>
+			</div>
+		]]>
+		</html>
+	</layout>
+	<layout>
+		<nome>Layout 2</nome>
+		<html><![CDATA[
+			<div class="container content-center">
+				<header class="coluna" id="poc-header">
+					<div class="row previa">
+						<div class="col-md-4 coluna">
+							<!-- logomarca -->
+							<h3>Sua Logomarca</h3>
+						</div>
+						<div class="col-md-8 coluna">
+							<!-- menu -->
+							<nav class="navbar navbar-default" role="navigation">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse">
+										<ul class="nav navbar-nav">
+											<li class="active"><a href="#">Home</a></li>
+										</ul>
+										<ul class="nav navbar-nav navbar-right">
+											<form class="navbar-form navbar-left" role="search">
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="Search">
+												</div>
+												<button type="submit" class="btn btn-default">Submit</button>
+											</form>
+									  	</ul>
+	    							</div><!-- /.navbar-collapse -->
+	  							</div><!-- /.container-fluid -->
+							</nav><!-- /.nav -->
+						</div><!-- /.col-md-8 -->
+					</div><!-- /.row -->
+				</header><!-- /.header -->
+			</div><!-- /.container -->
+
+				<div id="poc-features">
+					<div id="slide-poc-features" class="carousel slide" class="full-width">
+						<!-- indicadores -->
+						<ol class="carousel-indicators">
+							<li data-target="#slide-poc-features" data-slide-to="0" class="active"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="1"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="2"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="3"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="4"></li>
+					    </ol>
+					    <!-- itens do carousel -->
+					    <div class="carousel-inner">
+					    	<div class="item active">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Primeiro Destaque</h1>
+					    			<p>Texto referente ao primeiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Segundo Destaque</h1>
+					    			<p>Texto referente ao segundo destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Terceiro Destaque</h1>
+					    			<p>Texto referente ao terceiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+				    			<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quarto Destaque</h1>
+					    			<p>Texto referente ao quarto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quinto Destaque</h1>
+					    			<p>Texto referente ao quinto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+					    </div>
+					    <a class="left carousel-control" href="#slide-poc-features" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				    	<a class="right carousel-control" href="#slide-poc-features" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+				</div>
+			<div class="container content-center">
+				<div id="poc-content"></div>
+				<footer id="poc-footer">
+					<div class="row previa">
+						<div class="col-md-12 coluna"><p class="text-center"> <span class="glyphicon glyphicon-copyright-mark"></span> Todos os direito resevervados à Linked Empresa Júnior</p></div>
+					</div>
+				</footer>
+			</div>
+		]]>
+		</html>
+	</layout>
+	<layout>
+		<nome>Layout 3</nome>
+		<html><![CDATA[
+			<div class="container content-center">
+				<header class="coluna" id="poc-header">
+					<div class="row previa">
+						<div class="col-md-4 coluna">
+							<!-- logomarca -->
+							<h3>Sua Logomarca</h3>
+						</div>
+						<div class="col-md-8 coluna">
+							<!-- menu -->
+							<nav class="navbar navbar-default" role="navigation">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse">
+										<ul class="nav navbar-nav">
+											<li class="active"><a href="#">Home</a></li>
+										</ul>
+										<ul class="nav navbar-nav navbar-right">
+											<form class="navbar-form navbar-left" role="search">
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="Search">
+												</div>
+												<button type="submit" class="btn btn-default">Submit</button>
+											</form>
+									  	</ul>
+	    							</div><!-- /.navbar-collapse -->
+	  							</div><!-- /.container-fluid -->
+							</nav><!-- /.nav -->
+						</div><!-- /.col-md-8 -->
+					</div><!-- /.row -->
+				</header><!-- /.header -->
+				<div id="poc-content">
+					<div class="row previa">
+						<div class="col-md-2 coluna">
+							<ul class="nav nav-pills nav-stacked">
+								<li class="active"><a href="#">Sub-item 1</a></li>
+								<li class=""><a href="#">Sub-item 2</a></li>
+								<li class=""><a href="#">Sub-item 3</a></li>
+						    </ul>
+						</div>
+						<div class="col-md-10 coluna">
+
+						</div>
+					</div>
+				</div>
+				<footer id="poc-footer">
+					<div class="row previa">
+						<div class="col-md-12 coluna"><p class="text-center"> <span class="glyphicon glyphicon-copyright-mark"></span> Todos os direito resevervados à Linked Empresa Júnior</p></div>
+					</div>
+				</footer>
+			</div>
+		]]>
+		</html>
+	</layout>
+	<layout>
+		<nome>Layout 4</nome>
+		<html><![CDATA[
+			<div class="container content-center">
+				<header class="coluna" id="poc-header">
+					<div class="row previa">
+						<div class="col-md-4 coluna">
+							<!-- logomarca -->
+							<h3>Sua Logomarca</h3>
+						</div>
+						<div class="col-md-8 coluna">
+							<!-- menu -->
+							<nav class="navbar navbar-default" role="navigation">
+								<div class="container-fluid">
+									<div class="collapse navbar-collapse">
+										<ul class="nav navbar-nav">
+											<li class="active"><a href="#">Home</a></li>
+										</ul>
+										<ul class="nav navbar-nav navbar-right">
+											<form class="navbar-form navbar-left" role="search">
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="Search">
+												</div>
+												<button type="submit" class="btn btn-default">Submit</button>
+											</form>
+									  	</ul>
+	    							</div><!-- /.navbar-collapse -->
+	  							</div><!-- /.container-fluid -->
+							</nav><!-- /.nav -->
+						</div><!-- /.col-md-8 -->
+					</div><!-- /.row -->
+				</header><!-- /.header -->
+			</div><!-- /.container -->
+
+				<div id="poc-features">
+					<div id="slide-poc-features" class="carousel slide">
+						<!-- indicadores -->
+						<ol class="carousel-indicators">
+							<li data-target="#slide-poc-features" data-slide-to="0" class="active"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="1"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="2"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="3"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="4"></li>
+					    </ol>
+					    <!-- itens do carousel -->
+					    <div class="carousel-inner">
+					    	<div class="item active">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Primeiro Destaque</h1>
+					    			<p>Texto referente ao primeiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Segundo Destaque</h1>
+					    			<p>Texto referente ao segundo destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Terceiro Destaque</h1>
+					    			<p>Texto referente ao terceiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+				    			<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quarto Destaque</h1>
+					    			<p>Texto referente ao quarto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quinto Destaque</h1>
+					    			<p>Texto referente ao quinto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+					    </div>
+					    <a class="left carousel-control" href="#slide-poc-features" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				    	<a class="right carousel-control" href="#slide-poc-features" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+				</div>
+
+			<div class="container content-center">
+				<div id="poc-content">
+					<div class="row previa">
+						<div class="col-md-2 coluna">
+							<ul class="nav nav-pills nav-stacked">
+								<li class="active"><a href="#">Sub-item 1</a></li>
+								<li class=""><a href="#">Sub-item 2</a></li>
+								<li class=""><a href="#">Sub-item 3</a></li>
+						    </ul>
+						</div>
+						<div class="col-md-10 coluna">
+
+						</div>
+					</div>
+				</div>
+				<footer id="poc-footer">
+					<div class="row previa">
+						<div class="col-md-12 coluna"><p class="text-center"> <span class="glyphicon glyphicon-copyright-mark"></span> Todos os direito resevervados à Linked Empresa Júnior</p></div>
+					</div>
+				</footer>
+			</div>
+		]]>
+		</html>
+	</layout>
+	<layout>
+		<nome>Layout 5</nome>
+		<html><![CDATA[
+				<div class="navbar-wrapper">
+			      <div class="container">
+			      	<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+			      		<div class="navbar-collapse collapse">
+			      			<ul class="nav navbar-nav">
+			      				<li class="active"><a href="#">Home</a></li>
+			      			</ul>
+			      		</div>
+			      	</div>
+			      </div>
+			  	</div>
+			  	<div id="poc-features" class="full-width">
+					<div id="slide-poc-features" class="carousel slide">
+						<!-- indicadores -->
+						<ol class="carousel-indicators">
+							<li data-target="#slide-poc-features" data-slide-to="0" class="active"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="1"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="2"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="3"></li>
+					        <li data-target="#slide-poc-features" data-slide-to="4"></li>
+					    </ol>
+					    <!-- itens do carousel -->
+					    <div class="carousel-inner">
+					    	<div class="item active">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Primeiro Destaque</h1>
+					    			<p>Texto referente ao primeiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Segundo Destaque</h1>
+					    			<p>Texto referente ao segundo destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Terceiro Destaque</h1>
+					    			<p>Texto referente ao terceiro destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+				    			<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quarto Destaque</h1>
+					    			<p>Texto referente ao quarto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+
+					    	<div class="item">
+					    		<img class="img-features" src="images/layouts/fundo_features.png" alt="fundo" />
+				    			<div class="carousel-caption">
+					    			<h1> Quinto Destaque</h1>
+					    			<p>Texto referente ao quinto destaque. O texto ficará centralizado na página</p>
+					    		</div>
+					    	</div>
+					    </div>
+					    <a class="left carousel-control" href="#slide-poc-features" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				    	<a class="right carousel-control" href="#slide-poc-features" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+				</div>
+			<div class="container content-center">
+				<div id="poc-content"></div>
+				<footer id="poc-footer">
 					<div class="row previa">
 						<div class="col-md-12 coluna"><p class="text-center"> <span class="glyphicon glyphicon-copyright-mark"></span> Todos os direito resevervados à Linked Empresa Júnior</p></div>
 					</div>

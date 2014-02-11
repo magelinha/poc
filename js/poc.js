@@ -72,8 +72,6 @@ function readXml(){
 
 				formularios.push(obj);
 			});
-
-			console.log(formularios.length);
 		}
 
 	});
@@ -133,14 +131,28 @@ function removeStyle(){
 
 $('#selecionarLayout').on('hidden.bs.modal', function (e) {
 	template = $('input[name=layout]:checked', '#formLayout').val();
+	
+	//se o layout escolhido for o 5, então há a necessidade da importação de um arquivo css específico
+	if(template == 5){
+		$('head').append('<link rel="stylesheet" type="text/css" href="css/layout5.css">');
+	}
 	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
 
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
 	addDraggableToComponents();//capacidade de arrastar
 	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
 	addSidrToComponents(); //exibição das propriedades ao clicar no componente
+	startCarousel();
+
 	
 });
+
+function startCarousel(){
+	$(".carousel").carousel({
+		interval: 3000,
+		wrap: true
+	});
+}
 
 
 function addColorPicker(){
@@ -180,27 +192,10 @@ $(document).on('change', '#propriedades-pagina', function(){
 
 	//se o valor de site centrazalido for "não", remove a div com class container
 	if(dados[0].value == 1){
-		$("#poc-page div").removeClass('container');
+		$("#poc-page .content-center").removeClass('container');
 	}else{
 		//se não existe o container, então cria-se e insere o conteudo 
-		$("#poc-page div").addClass('container');
-	}
-
-	//adiciona a cor de fundo 
-
-
-
-});
-
-$(document).on('change', '#propriedades-pagina', function(){
-	var dados = $("#propriedades-pagina").serializeArray();
-
-	//se o valor de site centrazalido for "não", remove a div com class container
-	if(dados[0].value == 1){
-		$("#poc-page div").removeClass('container');
-	}else{
-		//se não existe o container, então cria-se e insere o conteudo 
-		$("#poc-page div").addClass('container');
+		$("#poc-page .content-center").addClass('container');
 	}
 
 	//adiciona a cor de fundo 
@@ -211,7 +206,7 @@ $(document).on('change', '#propriedades-pagina', function(){
 		//deixa com o branco
 		$("#poc-page").css("background-color", "#fff");
 	}
-	console.log("mudou");
+	
 	//imagem de fundo
 });
 
