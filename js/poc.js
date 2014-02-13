@@ -4,6 +4,7 @@ paginas = [];
 formularios = [];
 
 var elementoAtual;
+var objetoAtual;
 var template = 0;
 /** adiciona o eventos de arrastar à todos os compenentes **/ 
 function getComponent(nome){
@@ -118,6 +119,7 @@ function addSortableToComponents(classe){
 			addDraggableToComponents();
 			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
 			startImageGallery();
+			addSidrToComponents();
 		}
 
 	}).disableSelection();
@@ -141,8 +143,6 @@ $('#selecionarLayout').on('hidden.bs.modal', function (e) {
 	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
 	addSidrToComponents(); //exibição das propriedades ao clicar no componente
 	startCarousel();
-
-	
 });
 
 function startCarousel(){
@@ -177,14 +177,17 @@ function addColorPicker(){
 }
 
 function addSidrToComponents(){
-	$(".link-propriedades").each(function(){
+	$(".link-propriedades").each(function(i, el){
 		//se não existe uma div com o id "propriedade-idDoLink" então cria-se a div com o sidr
-		if(!$("#propriedade" + this.id)){
-			$(this).sidr({
-				name: "propriedade" + "-" + $(this).id,
+		var classes = $(this).prop('class').split(/\s/);
+		var lastclass = classes[classes.length-1];
+
+		if(!$("#propriedade-" + lastclass).length){
+			$(el).sidr({
+				name: "propriedade" + "-" + lastclass,
 				side: 'right',
 				source: function(name){
-					return getFormulario($(this).data('prop'));
+					return getFormulario($(el).data('prop'));
 				}
 			});		
 		}
@@ -196,7 +199,9 @@ function addSidrToComponents(){
 
 //funções que serão chamadas quando alguma coisa mudar nos formularios
 $(document).on('change', '#propriedades-pagina', function(){
+	console.log("aqui");
 	var dados = $("#propriedades-pagina").serializeArray();
+	console.log(dados);
 
 	//se o valor de site centrazalido for "não", remove a div com class container
 	if(dados[0].value == 1){
@@ -208,14 +213,20 @@ $(document).on('change', '#propriedades-pagina', function(){
 
 	//adiciona a cor de fundo 
 	//se foi setada alguma cor, então altera o fundo da div
-	if(dados[1].value){
-		$("#poc-page").css("background-color", dados[1].value);
+	if(dados[3].value){
+		$("#poc-page").css("background-color", dados[3].value);
 	}else{
 		//deixa com o branco
 		$("#poc-page").css("background-color", "#fff");
 	}
 	
 	//imagem de fundo
+});
+
+//sempre que clicar em um botão 
+$(document).on('click', 'link-propriedades', function(el){
+	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
+	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
 });
 
 $(document).on('click', '.clear-input', function(){
