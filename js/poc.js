@@ -6,6 +6,9 @@ formularios = [];
 var elementoAtual;
 var objetoAtual;
 var template = 0;
+var tipoPagina = 0;
+
+
 /** adiciona o eventos de arrastar à todos os compenentes **/ 
 function getComponent(nome){
 	for(i=0; i<componentes_basicos.length; i++){
@@ -129,22 +132,6 @@ function removeStyle(){
 	$("*[style]").removeAttr('style');
 }
 
-$('#selecionarLayout').on('hidden.bs.modal', function (e) {
-	template = $('input[name=layout]:checked', '#formLayout').val();
-	
-	//se o layout escolhido for o 5, então há a necessidade da importação de um arquivo css específico
-	if(template == 5){
-		$('head').append('<link rel="stylesheet" type="text/css" href="css/layout5.css">');
-	}
-	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
-
-	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
-	addDraggableToComponents();//capacidade de arrastar
-	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
-	addSidrToComponents(); //exibição das propriedades ao clicar no componente
-	startCarousel();
-});
-
 function startCarousel(){
 	$(".carousel").carousel({
 		interval: 3000,
@@ -182,12 +169,13 @@ function addSidrToComponents(){
 		var classes = $(this).prop('class').split(/\s/);
 		var lastclass = classes[classes.length-1];
 
-		if(!$("#propriedade-" + lastclass).length){
+		if($("#sidr-propriedade-" + lastclass).length == 0){
+			
 			$(el).sidr({
-				name: "propriedade" + "-" + lastclass,
+				name: "sidr-propriedade" + "-" + lastclass,
 				side: 'right',
 				source: function(name){
-					return getFormulario($(el).data('prop'));
+					return "<h1>Propriedades</h1>" + getFormulario($(el).data('prop'));
 				}
 			});		
 		}
@@ -197,12 +185,40 @@ function addSidrToComponents(){
 	addColorPicker();
 }
 
+$(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
+	
+	template = $('input[name=layout]:checked', '#formLayout').val();
+	
+	//se o layout escolhido for o 5, então há a necessidade da importação de um arquivo css específico
+	if(template == 5){
+		$('head').append('<link rel="stylesheet" type="text/css" href="css/layout5.css">');
+	}
+	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
+
+	var home = {
+		nome: 			"Home",
+		isHome: 		true,
+		descricao: 		"",
+		propriedades: 	[],
+		children: 		[],
+		pai: 			"nenhum",
+		conteudo: 		$("#poc-page").html()
+	};
+
+	paginas.push(home);
+
+	
+	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
+	addDraggableToComponents();//capacidade de arrastar
+	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
+	addSidrToComponents(); //exibição das propriedades ao clicar no componente
+	startCarousel();
+});
+
 //funções que serão chamadas quando alguma coisa mudar nos formularios
 $(document).on('change', '#propriedades-pagina', function(){
-	console.log("aqui");
 	var dados = $("#propriedades-pagina").serializeArray();
-	console.log(dados);
-
+	
 	//se o valor de site centrazalido for "não", remove a div com class container
 	if(dados[0].value == 1){
 		$("#poc-page .content-center").removeClass('container');
@@ -224,7 +240,8 @@ $(document).on('change', '#propriedades-pagina', function(){
 });
 
 //sempre que clicar em um botão 
-$(document).on('click', 'link-propriedades', function(el){
+$(document).on('click', '.link-propriedades', function(el){
+	console.log('clicou aqui!');
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
 	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
 });
@@ -236,14 +253,181 @@ $(document).on('click', '.clear-input', function(){
 	//adiciona a cor de fundo 
 });
 
-$(document).ready(function(){
-	//faz a leitura dos componentes
-	readXml();
+$(document).on('hide.bs.modal', '#selecionarTipoSite', function(e){
+	var selecionado = $('#select-tipo-site').val();
+
+	switch(parseInt(selecionado)){
+		case 1: abrirModalSelecionarLayout(); break;
+	}
+
+});
+
+$(document).on('change', '#select-tipo-site', function(){
+	
+	var selecionado = $(this).val();
+	
+	//insere os tooltips
+	var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
+	"começando do zero.</p><p><a href='#'>Exemplo</a></p>";
+
+	var infoOnePage = "<p>Em um site com única página, sub-páginas são exibidas em sessões.</p><p><a href='#'>Exemplo</a></p>";
+	var infoAdministrativo = "<p>Site pre-preparado com login e área de controle.</p><p><a href='#'>Exemplo</a></p>";
+
+	$(".tooltip-tipo-site").popover('destroy').popover({
+		content: function(){ return  definirTooltip(selecionado, infoEstiloLivre, infoOnePage, infoAdministrativo) },
+		trigger: 'click',
+		title: 'Ajuda',
+		html: true,
+		placement: 'left'
+	});
+});
+
+
+
+function createMenuNestable(){
+	$("#lista-paginas").nestable('serialize');
+}
+
+function addPage(){
+
+}
+
+//quando o modal para adiocionar um nova página surgir
+$('#add-page').on('show.bs.modal', function(e){
+	addPaiSelect(paginas, 0);
+	addPosicaoMenu();
+});
+
+
+
+
+//caso seja escolhido estilo livre, deve-se escolher a estrutura do site
+function abrirModalSelecionarLayout(){
 	//abre o modal para selecionar o layout
 	$('#selecionarLayout').modal({
 		keyboard: false,
 		show: true,
 		backdrop: 'static'
 	});
+}
+
+
+//adiciona possíveis pais para serem escolhidos
+function addPaiSelect(itens, nivel){
+	//nível máximo é 3
+	if(nivel > 2) return;
+
+	var lista = $('#pai');
+	for(var i=0; i<itens.length; i++){
+		//adiciona o nome da página na lista
+		lista.append("<option value='" + itens[i].nome + "'>" + addTabulacao(nivel) + " " + itens[i].nome + "</option>");
+
+		//se essa página tem filhos, então faz a busca nesses filhos
+		if(itens[i].children.length > 0) addPaiSelect(itens[i].children, nivel+1);
+	}
+}
+
+//para facilitar a visualização dos níveis de menu, são colocados traços
+function addTabulacao(nivel){
+	if(nivel == 0) return "-";
+
+	var retorno = "";
+	for(var i=0; i<nivel; i++){
+		retorno += "-";
+	}
+
+	return retorno;
+}
+
+//adiciona as opções de posição de acordo com o pai selecionado.
+function addPosicaoMenu(){
+	$("#pai").change(function(){
+		var selecionado = $(this).val();
+
+		if(selecionado == 'nenhum'){
+			//selecionado == 0 indica que foi selecionado a opção Nenhum
+			for(var i=0; i<paginas.length; i++){
+				$("#posicao").append("<option value='" + paginas[i].nome + "'>" + paginas[i].nome + "</option>");
+			}
+		}else{
+			//caso contrario, é necessário procurar 
+			getPai(paginas, selecionado);
+		}
+
+	});
+}
+
+
+//percorre todos as páginas para verificar se algum deles é o item selecionado como pai
+function getPai(itens, nome){
+
+	for(var i=0; i<itens.length; i++){
+		if(itens[i].nome == nome){
+			for(var j=0; j<itens[i].children.length; j++){
+				$("#posicao").append("<option value='" + itens[i].children[j].nome + "'>" + itens[i].children[j].nome + "</option>");
+			}
+
+			return false;
+
+		} else if(itens[i].children.length > 0 && !getPai(itens[i].children, nome)) return;
+	}
+}
+
+
+function carregarModalInicial(){
+	//carrega os modais
+	$("#content-modal").load("modal.html", function(){
+		//insere os tooltips
+		var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
+		"começando do 0</p><p><a href='#'>Exemplo</a></p>";
+
+		$(".tooltip-tipo-site").popover({
+			content: infoEstiloLivre,
+			trigger: 'click',
+			title: 'Ajuda',
+			html: true,
+			placement: 'left'
+			
+		});
+
+
+		//abre o modal para selecionar o layout
+		$('#selecionarTipoSite').modal({
+			keyboard: false,
+			show: true,
+			backdrop: 'static'
+		});
+	});
+}
+
+
+//quando alterar o valor do select para o tipo de site, deve-se alterar o conteúdo do popover
+function definirTooltip(selecionado, livre, onepage, administrativo){
+	var retorno;
+	switch(parseInt(selecionado)){
+		case 1: retorno = livre; break;
+		case 2: retorno = onepage; break;
+		case 3: retorno = administrativo; break;
+		default: retorno = livre;
+	}
+
+	return retorno;
+}
+
+
+//define a ação de acordo com o item selecionado no select para tipo de site
+function definarAcaoTipoSite(selecionado){
+
+}
+
+
+$(document).ready(function(){
+	
+	carregarModalInicial();
+
+	//faz a leitura dos componentes
+	readXml();
+
+	createMenuNestable();
 });
 

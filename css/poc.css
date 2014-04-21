@@ -18,6 +18,16 @@
 	top: -1px;
 }
 
+.poc-menu:after {
+	content: "Menu";
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
 #poc-features:before {
 	content: "Destaques";
 	border:1px solid #dddddd;
@@ -74,9 +84,10 @@
 	min-height: 600px;
 	border: 1px dotted;
 	padding: 33px 10px 10px 10px;
+	margin-top: 40px;
 }
 
-.row, .coluna, #poc-content, #poc-header, #poc-footer {
+.row, .coluna, #poc-content, #poc-header, #poc-footer, .poc-menu {
 	position: relative;
 	padding: 33px 14px 0;
 	margin: 15px 0;
@@ -105,7 +116,7 @@ header, footer {
 	min-height: 600px;	
 }
 
-#poc-content, #poc-header, #poc-footer{
+#poc-content, #poc-header, #poc-footer, .poc-menu{
 	border: 1px solid;
 }
 

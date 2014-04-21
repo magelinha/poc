@@ -1,0 +1,146 @@
+<!--modal para escolha do tipo de site -->
+<div class="modal fade" role="dialog" id="selecionarTipoSite">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Selecione o tipo de site</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Corpo do modal -->
+        <form role="form" id="formSite" class="form-horizontal">
+        	<div class="form-group">
+        		<label for="selectTipo" class="col-sm-2 control-label">Tipo</label>
+        		<div class="col-sm-8">
+        			<select class="form-control" id="select-tipo-site">
+        				<option value="1">Estilo Livre</option>
+        				<option value="2">Página Única</option>
+        				<option value="3">Administrativo</option>
+        			</select>
+    			</div>
+    			<a href="#" class="btn btn-success tooltip-tipo-site"><span class="glyphicon glyphicon-question-sign"></span></a>
+			</div>
+
+	    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-selecionar-tipo" class="btn btn-success" data-dismiss="modal">Confirmar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--modal para escolha do layout do site -->
+<div class="modal fade" id="selecionarLayout">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Selecione o Layout do seu site</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Corpo do modal -->
+        <form role="form" id="formLayout">
+        	<div class="radio">
+        		<label>
+        			<input type="radio" name="layout" value="1" checked> <img src="images/layouts/layout1.png" alt="layout1" />
+        		</label>
+			</div>
+
+			<div class="radio">
+        		<label>
+        			<input type="radio" name="layout" value="2"> <img src="images/layouts/layout2.png" alt="layout2" />
+        		</label>
+			</div>
+
+			<div class="radio">
+        		<label>
+        			<input type="radio" name="layout" value="3"> <img src="images/layouts/layout3.png" alt="layout3" />
+        		</label>
+			</div>
+
+			<div class="radio">
+        		<label>
+        			<input type="radio" name="layout" value="4"> <img src="images/layouts/layout4.png" alt="layout4" />
+        		</label>
+			</div>
+
+			<div class="radio">
+        		<label>
+        			<input type="radio" name="layout" value="5"> <img src="images/layouts/layout5.png" alt="layout5" />
+        		</label>
+			</div>
+	    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- para adicinar nova página -->
+<div class="modal fade" id="add-page" tabindex="-1" role="dialog" aria-labelledby="adicionarPagina" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Adicionar Página</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+		  <div class="form-group">
+		    <label for="nome" class="col-sm-2 control-label">Nome</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome da Página">
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="tipo" class="col-sm-2 control-label">Tipo de Página</label>
+		    <div class="col-sm-10">
+		      <select class="form-control" name="tipo" id="tipo">
+		      	<option value="0">Estilo Livre</option>
+		      	<option value="1">Texto Livre</option>
+		      	<option value="2">Formulário de Contato</option>
+		      	<option value="3">Formulário de Login</option>
+		      	<option value="4">Categoria de Blog</option>
+		      	<option value="5">Galeria de Imagens</option>
+		      	<option value="6">Galeria de Vídeos</option>
+		      	<option value="7">Estilo Livre</option>
+		      </select>
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="descricao" class="col-sm-2 control-label">Descrição</label>
+		    <div class="col-sm-10">
+		      <textarea class="form-control" rows="5" id="descricao" name="descricao"></textarea>
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="pai" class="col-sm-2 control-label">Pai</label>
+		    <div class="col-sm-10">
+		      <select class="form-control" name="pai" id="pai">
+		      	<option value="nenhum">Nenhum</option>
+		      </select>
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="posicao" class="col-sm-2 control-label">Ordenação</label>
+		    <div class="col-sm-10">
+		      <select class="form-control" id="posicao" name="posicao">
+		      	<option value="primeiro">Primeiro</option>
+		      	<option value="ultimo">Último</option>
+		      </select>
+		    </div>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

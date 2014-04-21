@@ -17,56 +17,8 @@
 
 </head>
 <body class="conteudo-total">
-	<!--modal para escolha do layout do site -->
-	<div class="modal fade" id="selecionarLayout">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title">Selecione o Layout do seu site</h4>
-	      </div>
-	      <div class="modal-body">
-	        <!-- Corpo do modal -->
-	        <form role="form" id="formLayout">
-	        	<div class="radio">
-	        		<label>
-	        			<input type="radio" name="layout" value="1" checked> <img src="images/layouts/layout1.png" alt="layout1" />
-	        		</label>
-				</div>
-
-				<div class="radio">
-	        		<label>
-	        			<input type="radio" name="layout" value="2"> <img src="images/layouts/layout2.png" alt="layout2" />
-	        		</label>
-				</div>
-
-				<div class="radio">
-	        		<label>
-	        			<input type="radio" name="layout" value="3"> <img src="images/layouts/layout3.png" alt="layout3" />
-	        		</label>
-				</div>
-
-				<div class="radio">
-	        		<label>
-	        			<input type="radio" name="layout" value="4"> <img src="images/layouts/layout4.png" alt="layout4" />
-	        		</label>
-				</div>
-
-				<div class="radio">
-	        		<label>
-	        			<input type="radio" name="layout" value="5"> <img src="images/layouts/layout5.png" alt="layout5" />
-	        		</label>
-				</div>
-		    </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success" data-dismiss="modal">Confirmar</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
 	<!-- área para os componentes -->
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<div class="panel-group" id="accordion">
 			<!-- Acorddion sobre as paginas -->
 			<div class="panel panel-default">
@@ -77,10 +29,14 @@
 				</div>
 				<div id="collapsePaginas" class="panel-collapse collapse in">
 					<div class="panel-body">
-						<ul class="list-unstyled">
-							<li><a href="#">Home</a></li>
-							<li><a href="#"><span class="glyphicon glyphicon-plus"></span> Nova Página</a></li>
-						</ul>
+						
+						<ul class="list-unstyled" id="lista-paginas">
+							<li class="item-page"><a href="#" class="link-page" data-id="1">Home</a></li>
+						</ul>	
+						
+						<button class="btn btn-primary" data-toggle="modal" data-target="#add-page">
+						  <span class="glyphicon glyphicon-plus"></span> Nova Página
+						</button>
 					</div>
 				</div>
 			</div>
@@ -134,10 +90,11 @@
 		</div>
 	</div>
 
-	<div class="col-md-10 conteudo-gerado conteudo-ordenado" id="poc-page">
-		<a id="prop-pagina" data-prop="pagina" href="#" class="btn btn-primary link-propriedades link-propriedades-pagina">Propriedades</a>
+	<div class="col-md-9 conteudo-gerado conteudo-ordenado" id="poc-page">
+		<a id="prop-pagina" data-prop="pagina" href="#prop-pagina" class="btn btn-primary btn-xs link-propriedades link-propriedades-pagina"><span class="glyphicon glyphicon-cog"></span></a>
 	</div>
-	
+	<div id="content-modal"></div>
+
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jqueryui.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -148,6 +105,7 @@
 	<script type="text/javascript" src="js/jquery.fancybox-buttons.js"></script>
 	<script type="text/javascript" src="js/jquery.fancybox-media.js"></script>
 	<script type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
+	<script type="text/javascript" src="js/jquery.nestable.js"></script>
 	<script type="text/javascript" src="js/poc.js"></script>
 </body>
 </html>
