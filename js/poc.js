@@ -190,6 +190,7 @@ function addColorPicker(){
 		position: 'bottom right',
 		change: function(hex, opacity){
 			$('#poc-page').css('background', hex);
+			background.valor = hex;
 		},
 
 		theme: 'bootstrap'
@@ -242,15 +243,6 @@ $(document).on('click', '.clear-input', function(){
 	//adiciona a cor de fundo 
 });
 
-$(document).on('click', '#prop-pagina', function(){
-	var retorno = definirElementosVisivies();
-	if($(".grupo_visiveis").length > 0){
-		for(var i=0; i<retorno.itens.length; i++){
-			$("#v_"+retorno.itens[i].item).prop('checked', retorno.itens[i].marcado);
-		}
-	}else $("#poc-form-propriedades-pagina").append(retorno.html);
-});
-
 /** FIM CONFIGURAÇÕES INICIAIS **/
 
 
@@ -266,7 +258,8 @@ $(document).on('click','.radio-item-textura', function(){
 	var imagem = posicao[0] + posicao[1] + ".png"; //o nome da imagem será textura-posicao[1].png
 	var propriedade = 'url(img/texturas/'+imagem+') repeat';
 	
-	$("#poc-page").css('background', propriedade);
+	objetoAtual.css('background', propriedade);
+	background.valor = propriedade;
 });
 
 function addBoxTexturas(){
@@ -296,37 +289,54 @@ function addBoxTexturas(){
 }
 
 $(document).on('change', '#background-image', function(e){
-	var arquivo = e.target.files;
+	var arquivo = e.target.files; 
+	var url = 'upload.php?arquivo';
+
+	objetoAtual.css('background-image', 'none'); //remove a imagem atual
 
 	var valor = new FormData();
 	$.each(arquivo, function(chave, item){
 		valor.append(chave, item);
 	});
+
+	valor.append("nome", objetoAtual[0].id);
 	
 	
 	$.ajax({
-		url: 'upload.php?arquivo',
+		url: url,
 		type: 'POST',
 		dataType: 'JSON',
 		data: valor,
 		processData: false,
 		contentType: false,
+		cache: false,
 
 		success: function(data){
+
 			if(data.success){
 				var repeticao = $("#repeticao").val();
+				objetoAtual.css('background', $("#background-color").val()); //remove a imagem atual
+				var aux = 'url('+ data.imagem + ') no-repeat center center fixed';
 				if(repeticao == 'no-repeat'){
-					//background full size
-					$("#poc-page").css({
-						'background' : 'url('+ data.imagem +') no-repeat center center fixed',
+					var opcoes = {
+						'background' : 'url('+ data.imagem +'?'+ Math.random() + ') no-repeat center center fixed',
 						'-webkit-background-size' : 'cover',
 						'-moz-background-size' : 'cover',
 						'-o-background-size' : 'cover',
 						'background-size' : 'cover'
-					});	
+					}
+					//background full size
+					objetoAtual.css(opcoes);
+
+					opcoes.background = aux; //remove a versão da imagem
+					background.valor = opcoes;
+
 				}else {
-					$("#poc-page").css('background', 'url('+ data.imagem +') ' + $("#repeticao").val());
+					objetoAtual.css('background', 'url('+ data.imagem +'?'+ Math.random() + ') ' + $("#repeticao").val());
+					background.valor = 'background', 'url('+ data.imagem + ') ' + $("#repeticao").val();
 				}
+
+
 				
 			}else{
 				alert('ERRO: ' + data.mensagem);
@@ -338,19 +348,20 @@ $(document).on('change', '#background-image', function(e){
 $(document).on('change', "#repeticao", function(){
 	$.ajax({
 		url: 'img/background-image/',
+		cache: false,
 		success: function(data){
+			var contem = objetoAtual[0].id.split("-")[1];
+			
 			var arquivo="";
-			$(data).find("a:not(:contains(.html))").each(function(indice, valor){
-				console.log(valor);
+			$(data).find("a:contains("+contem+")").each(function(indice, valor){
 				arquivo = 'img/background-image/' + $.trim(this.innerHTML);
 			});
 
-			console.log(arquivo);
 			if(arquivo.length > 0){
 				var repeticao = $("#repeticao").val();
 				if(repeticao == 'no-repeat'){
 					//background full size
-					$("#poc-page").css({
+					objetoAtual.css({
 						'background' : 'url('+ arquivo +') no-repeat center center fixed',
 						'-webkit-background-size' : 'cover',
 						'-moz-background-size' : 'cover',
@@ -358,7 +369,7 @@ $(document).on('change', "#repeticao", function(){
 						'background-size' : 'cover'
 					});	
 				}else {
-					$("#poc-page").css('background', 'url('+ arquivo +') ' + repeticao);
+					objetoAtual.css('background', 'url('+ arquivo +') ' + repeticao);
 				}
 			}else {
 				alert("Selecione uma imagem!");
@@ -368,18 +379,15 @@ $(document).on('change', "#repeticao", function(){
 	})
 });
 
-function addFontsToSelect(){
-	//ordena o vetor pelo nome da fonte
-	fonts.sort(function (a, b){
-		if(a.nome > b.nome) return 1;
-		if(a.nome < b.nome) return -1;
-		return 0;
-	});
 
-	for(var i=0; i<fonts.length; i++){
-		$("#fonte").append('<option value="' + fonts[i].familia + '" style="font-family: ' + fonts[i].familia + '">' + fonts[i].nome + '</option>');	
+$(document).on("hide.bs.modal", "#modalFundoSite", function(){
+	var pageBackground = $("#page-background");
+	if(background.valor instanceof Object ){
+		pageBackground.val(background.valor.background);
+	}else{
+		pageBackground.val(background.valor);
 	}
-}
+});
 
 function configurarModalFundoSite(){
 	var cor = $('.background-color'), 
@@ -395,7 +403,7 @@ function configurarModalFundoSite(){
 		case 0: 
 			textura.hide(); imagem.hide(); repeticao.hide();
 			cor.show();
-			$('#background-color').val(background.valor);
+			$('#background-color').val(objetoAtual.css('background-color'));
 			break;
 
 		case 1:
@@ -432,6 +440,12 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	}
 	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
 
+	componentes_fixos.cabecalho = $("#poc-header").html();
+	componentes_fixos.menuPrincipal = $("#poc-menu").html();
+	componentes_fixos.menuEsquerdo = $("#poc-menu-left").html();
+	componentes_fixos.menuMenuDireito = $("#poc-menu-right").html();
+	componentes_fixos.rodape = $("#poc-footer").html();
+
 	var home = {
 		nome: 			"Home",
 		isHome: 		true,
@@ -443,12 +457,6 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	};
 
 	paginas.push(home);
-
-	componentes_fixos.cabecalho = $("#poc-header").html();
-	componentes_fixos.menuPrincipal = $("#poc-menu").html();
-	componentes_fixos.menuEsquerdo = $("#poc-menu-left").html();
-	componentes_fixos.menuMenuDireito = $("#poc-menu-right").html();
-	componentes_fixos.rodape = $("#poc-footer").html();
 
 	
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
@@ -557,7 +565,19 @@ function definirTooltip(selecionado, livre, onepage, administrativo){
 
 /** FIM PROPRIEDADES NO MODAL **/
 
+
 /** PROPRIEDADES DA PÁGINA **/
+$(document).on('click', '#prop-pagina', function(){
+	/*
+	var retorno = definirElementosVisivies();
+	if($(".grupo_visiveis").length > 0){
+		for(var i=0; i<retorno.itens.length; i++){
+			$("#v_"+retorno.itens[i].item).prop('checked', retorno.itens[i].marcado);
+		}
+	}else $("#poc-form-propriedades-pagina").append(retorno.html);
+	*/
+});
+
 
 /*incluir no formulario as opções de visibilidade */
 function definirElementosVisivies(){
@@ -604,13 +624,26 @@ function definirElementosVisivies(){
 		itens[i].marcado ? marcado = 'checked' : marcado = '';
 
 		html += '<div class="checkbox">'+
-  					'<label><input type="checkbox" value="'+item+'" '+marcado+' id="v_'+item+'">'+nome+'</label>'+
+  					'<label><input class="definir_visivel" type="checkbox" value="'+item+'" '+marcado+' id="v_'+item+'">'+nome+'</label>'+
   				'</div>';
 	}
 
 	html +='</div>';
 
 	return {itens: itens, html: html};
+}
+
+function addFontsToSelect(){
+	//ordena o vetor pelo nome da fonte
+	fonts.sort(function (a, b){
+		if(a.nome > b.nome) return 1;
+		if(a.nome < b.nome) return -1;
+		return 0;
+	});
+
+	for(var i=0; i<fonts.length; i++){
+		$("#fonte").append('<option value="' + fonts[i].familia + '" style="font-family: ' + fonts[i].familia + '">' + fonts[i].nome + '</option>');	
+	}
 }
 
 //funções que serão chamadas quando alguma coisa mudar nos formularios
@@ -632,20 +665,11 @@ $(document).on('change', '#poc-form-propriedades-pagina', function(){
 		}
 	}
 
-
-
-	//adiciona a cor de fundo 
-	//se foi setada alguma cor, então altera o fundo da div
-	if(dados[1].value){
-		console.log('alterou aqui');
-		$("#poc-page").css("background-color", dados[1].value);
-	}else{
-		//deixa com o branco
-		$("#poc-page").css("background-color", "#fff");
-	}
+	pagina.css('font-family', dados[1].value); //adiciona a fonte que está selecionada
+	pagina.css('font-size', dados[2].value);//tamanho da fonte
 	
-	//imagem de fundo
 });
+
 /** FIM PROPRIEDADES DAS PÁGINAS **/
 
 

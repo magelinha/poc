@@ -15,10 +15,58 @@
 			  <div class="form-group">
 			    <label for="page-background">Plano de fundo</label>
 			    <div class="input-group input-group-sm">
-			    	<div class="input-group-btn">
-		        		<button class="btn btn-danger clear-input" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+			    	<input type="text" name="page-background" id="page-background" class="form-control" disabled>
+	        		<div class="input-group-btn">
+		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite" id="btnFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
 		        	</div>
-		        	<input type="text" name="page-background" id="page-background" class="form-control">
+		        </div><!-- /input-group -->
+			  </div>
+			  <div class="form-group">
+			    <label for="fonte">Fonte</label>
+			    <select id="fonte" class="form-control" name="fonte">
+			    	<option value="Glyphicons Halflings" style="font-family:'Glyphicons Halflings', sans-serif">Padrão (Glyphicons Halflings)</option>
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="tamanho_fonte">Tamanho da Fonte</label>
+			    <select name="tamanho_fonte" id="tamanho_fonte" class="form-control">
+			    	<option value="10px">10px</option>
+			    	<option value="11px">11px</option>
+			    	<option value="12px">12px</option>
+			    	<option value="13px">13px</option>
+			    	<option value="14px" selected>14px</option>
+			    	<option value="15px">15px</option>
+			    	<option value="16px">16px</option>
+			    	<option value="17px">17px</option>
+			    	<option value="18px">18px</option>
+			    	<option value="19px">19px</option>
+			    	<option value="20px">20px</option>
+			    </select>
+			  </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+	<formulario>
+		<nome>cabecalho</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do cabeçalho-->
+			<form id="poc-form-propriedades-pagina" role="form">
+			  <div class="form-group">
+			    <label for="hedader-background">Plano de fundo</label>
+			    <div class="input-group input-group-sm">
+			    	<input type="text" name="header-background" id="page-background" class="form-control" disabled>
+	        		<div class="input-group-btn">
+		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+		        	</div>
+		        </div><!-- /input-group -->
+			  </div>
+
+
+			  <div class="form-group">
+			    <label for="page-background">Plano de fundo</label>
+			    <div class="input-group input-group-sm">
+			    	<input type="text" name="page-background" id="page-background" class="form-control" disabled>
 	        		<div class="input-group-btn">
 		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
 		        	</div>
@@ -32,10 +80,23 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="tamanho_fonte">Tamanho da Fonte</label>
-			    <input type="number" min="10" max="20" id="tamanho_fonte" class="form-control" name="tamanho_fonte">
+			    <select name="tamanho_fonte" id="tamanho_fonte" class="form-control">
+			    	<option value="10px">10px</option>
+			    	<option value="11px">11px</option>
+			    	<option value="12px">12px</option>
+			    	<option value="13px">13px</option>
+			    	<option value="14px" selected>14px</option>
+			    	<option value="15px">15px</option>
+			    	<option value="16px">16px</option>
+			    	<option value="17px">17px</option>
+			    	<option value="18px">18px</option>
+			    	<option value="19px">19px</option>
+			    	<option value="20px">20px</option>
+			    </select>
 			  </div>
 			</form>
 		]]>
 		</html>
 	</formulario>
+
 </listaFormularios>
