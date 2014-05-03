@@ -1,3 +1,4 @@
+/** VARIAVEIS GLOBAIS **/ 
 var componentes_basicos = [];
 var layouts = [];
 var paginas = [];
@@ -38,6 +39,9 @@ var fonts = [
 	{nome: 'Verdana',				familia: "'Verdana', sans-serif"}
 ];
 
+/** FIM VARIAVEIS GLOBAIS **/
+
+/** CARREGAMENTOS OS XMLS **/
 
 /** adiciona o eventos de arrastar à todos os compenentes **/ 
 function getComponent(nome){
@@ -109,7 +113,10 @@ function readXml(){
 
 	});
 }
+/** FIM VARIAVEIS GLOBAIS **/
 
+
+/** CONFIGURAÇÕES INICIAIS DA FERRAMENTA DE PROTOTIPAÇÃO **/
 
 /** pega todos os itens do menu que são arrastáveis e insere o efeito de arraste (drag)**/
 function addDraggableToComponents(){
@@ -215,6 +222,40 @@ function addSidrToComponents(){
 }
 
 
+function addBotaoPropriedade(content, id){
+	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#prop-'+id+'" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
+	'<span class="glyphicon glyphicon-cog"></span></a>';
+
+	$(content).prepend(html);
+}
+
+//sempre que clicar em um botão 
+$(document).on('click', '.link-propriedades', function(el){
+	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
+	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
+});
+
+$(document).on('click', '.clear-input', function(){
+	var campo = $($(this).data("input"));
+	campo.prop("value", "");
+	campo.change();
+	//adiciona a cor de fundo 
+});
+
+$(document).on('click', '#prop-pagina', function(){
+	var retorno = definirElementosVisivies();
+	if($(".grupo_visiveis").length > 0){
+		for(var i=0; i<retorno.itens.length; i++){
+			$("#v_"+retorno.itens[i].item).prop('checked', retorno.itens[i].marcado);
+		}
+	}else $("#poc-form-propriedades-pagina").append(retorno.html);
+});
+
+/** FIM CONFIGURAÇÕES INICIAIS **/
+
+
+
+/** JS PARA PROPRIEDADE PLANO DE FUNDO **/
 $(document).on('click','.radio-item-textura', function(){
 	//caso a posicao da imagem seja menor que 10, deve-se inserir o 0 na frente. Ex.: 9 = 09
 	var posicao = $(this)[0].id.split("-");
@@ -325,7 +366,7 @@ $(document).on('change', "#repeticao", function(){
 		}
 
 	})
-})
+});
 
 function addFontsToSelect(){
 	//ordena o vetor pelo nome da fonte
@@ -340,6 +381,47 @@ function addFontsToSelect(){
 	}
 }
 
+function configurarModalFundoSite(){
+	var cor = $('.background-color'), 
+		textura = $('.background_texture'), 
+		imagem = $('.background-image'),
+		repeticao = $('.background-repeat');
+
+	cor.hide(); textura.hide(); imagem.hide(); repeticao.hide();
+
+
+	$("#tipo_fundo option[value='"+background.tipo+"']").prop('selected', true);
+	switch(parseInt(background.tipo)){
+		case 0: 
+			textura.hide(); imagem.hide(); repeticao.hide();
+			cor.show();
+			$('#background-color').val(background.valor);
+			break;
+
+		case 1:
+			cor.hide(); imagem.hide(); repeticao.hide();
+			textura.show();
+			break;
+
+		case 2:
+			textura.hide(); cor.hide();
+			imagem.show(); repeticao.show();
+			break;
+	}
+}
+
+$(document).on('change', '#tipo_fundo', function(){
+	background.tipo = $("#tipo_fundo").val();
+	configurarModalFundoSite();
+
+});
+
+
+/** FIM JS PARA PROPRIEDADE PLANO DE FUNDO **/
+
+
+
+/** PROPRIEDADES NO MODAL **/
 $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	
 	template = $('input[name=layout]:checked', '#formLayout').val();
@@ -383,11 +465,152 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	addSidrToComponents(); //exibição das propriedades ao clicar no componente
 });
 
-function addBotaoPropriedade(content, id){
-	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#prop-'+id+'" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
-	'<span class="glyphicon glyphicon-cog"></span></a>';
+$(document).on('change', '#select-tipo-site', function(){
+	
+	var selecionado = $(this).val();
+	
+	//insere os tooltips
+	var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
+	"começando do zero.</p><p><a href='#'>Exemplo</a></p>";
 
-	$(content).prepend(html);
+	var infoOnePage = "<p>Em um site com única página, sub-páginas são exibidas em sessões.</p><p><a href='#'>Exemplo</a></p>";
+	var infoAdministrativo = "<p>Site pre-preparado com login e área de controle.</p><p><a href='#'>Exemplo</a></p>";
+
+	$(".tooltip-tipo-site").popover('destroy').popover({
+		content: function(){ return  definirTooltip(selecionado, infoEstiloLivre, infoOnePage, infoAdministrativo) },
+		trigger: 'click',
+		title: 'Ajuda',
+		html: true,
+		placement: 'left'
+	});
+});
+
+$(document).on('hide.bs.modal', '#selecionarTipoSite', function(e){
+	var selecionado = $('#select-tipo-site').val();
+
+	switch(parseInt(selecionado)){
+		case 1: abrirModalSelecionarLayout(); break;
+	}
+
+});
+
+//quando o modal fundo site for aberto, paga-se o valor contido no campo texto
+$(document).on('show.bs.modal', '#modalFundoSite', function(e){
+	configurarModalFundoSite();
+});
+
+//quando o modal para adiocionar um nova página surgir
+$('#add-page').on('show.bs.modal', function(e){
+	addPaiSelect(paginas, 0);
+	addPosicaoMenu();
+});
+
+//caso seja escolhido estilo livre, deve-se escolher a estrutura do site
+function abrirModalSelecionarLayout(){
+	//abre o modal para selecionar o layout
+	$('#selecionarLayout').modal({
+		keyboard: false,
+		show: true,
+		backdrop: 'static'
+	});
+}
+
+function carregarModalInicial(){
+	//carrega os modais
+	$("#content-modal").load("modal.html", function(){
+		//insere os tooltips
+		var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
+		"começando do 0</p><p><a href='#'>Exemplo</a></p>";
+
+		$(".tooltip-tipo-site").popover({
+			content: infoEstiloLivre,
+			trigger: 'click',
+			title: 'Ajuda',
+			html: true,
+			placement: 'left'
+			
+		});
+
+
+		//abre o modal para selecionar o layout
+		$('#selecionarTipoSite').modal({
+			keyboard: false,
+			show: true,
+			backdrop: 'static'
+		});
+	});
+}
+
+
+//quando alterar o valor do select para o tipo de site, deve-se alterar o conteúdo do popover
+function definirTooltip(selecionado, livre, onepage, administrativo){
+	var retorno;
+	switch(parseInt(selecionado)){
+		case 1: retorno = livre; break;
+		case 2: retorno = onepage; break;
+		case 3: retorno = administrativo; break;
+		default: retorno = livre;
+	}
+
+	return retorno;
+}
+
+/** FIM PROPRIEDADES NO MODAL **/
+
+/** PROPRIEDADES DA PÁGINA **/
+
+/*incluir no formulario as opções de visibilidade */
+function definirElementosVisivies(){
+	var itens = [];
+	var cabecalho = $("#poc-header");
+	var rodape = $("#poc-footer");
+	var menuPrincipal = $("#poc-menu");
+	var menuEsquerdo = $("#poc-menu-left");
+	var menuDireito = $("#poc-menu-right");
+
+	if(cabecalho.length > 0){
+		if(cabecalho.is(":visible")) itens.push({nome: "Cabeçalho", marcado: true, item: 'cabecalho'});
+		else itens.push({nome: "Cabeçalho", marcado: false, item: 'cabecalho'});
+	}
+
+	if(menuPrincipal.length > 0){
+		if(menuPrincipal.is(":visible")) itens.push({nome: "Menu Principal", marcado: true, item: 'menuPrincipal'});
+		else itens.push({nome: "Menu Principal", marcado: false, item: 'menuPrincipal'});
+	}
+
+	if(menuEsquerdo.length > 0){
+		if(menuEsquerdo.is(":visible")) itens.push({nome: "Menu Esquerdo", marcado: true, item: 'menuEsquerdo'});
+		else itens.push({nome: "Menu Esquerdo", marcado: false, item: 'menuEsquerdo'});
+	}
+
+	if(menuDireito.length > 0){
+		if(menuDireito.is(":visible")) itens.push({nome: "Menu Direito", marcado: true, item: 'menuDireito'});
+		else itens.push({nome: "Menu Direito", marcado: false, item: 'menuDireito'});
+	}
+
+	if(rodape.length > 0){
+		if(rodape.is(":visible")) itens.push({nome: "Rodapé", marcado: true, item: 'rodape'});
+		else itens.push({nome: "Rodapé", marcado: false, item: 'rodape'});
+	}
+
+	//insere o html no formulario
+	var html = '<div class="form-group grupo_visiveis">' + 
+					'<label for="itens_visiveis">Itens visíveis</label>';
+
+	for(var i=0; i<itens.length; i++){
+		var nome = itens[i].nome;
+		var item = itens[i].item;
+		var marcado = ''; 
+		itens[i].marcado ? marcado = 'checked' : marcado = '';
+
+		html += '<div class="checkbox">'+
+  					'<label><input type="checkbox" value="'+item+'" '+marcado+' id="v_'+item+'">'+nome+'</label>'+
+  				'</div>';
+	}
+
+	html +='</div>';
+
+	return {itens: itens, html: html};
 }
 
 //funções que serão chamadas quando alguma coisa mudar nos formularios
@@ -423,124 +646,11 @@ $(document).on('change', '#poc-form-propriedades-pagina', function(){
 	
 	//imagem de fundo
 });
+/** FIM PROPRIEDADES DAS PÁGINAS **/
 
-
-//sempre que clicar em um botão 
-$(document).on('click', '.link-propriedades', function(el){
-	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
-	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
-});
-
-$(document).on('click', '.clear-input', function(){
-	var campo = $($(this).data("input"));
-	campo.prop("value", "");
-	campo.change();
-	//adiciona a cor de fundo 
-});
-
-$(document).on('hide.bs.modal', '#selecionarTipoSite', function(e){
-	var selecionado = $('#select-tipo-site').val();
-
-	switch(parseInt(selecionado)){
-		case 1: abrirModalSelecionarLayout(); break;
-	}
-
-});
-
-$(document).on('change', '#select-tipo-site', function(){
-	
-	var selecionado = $(this).val();
-	
-	//insere os tooltips
-	var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
-	"começando do zero.</p><p><a href='#'>Exemplo</a></p>";
-
-	var infoOnePage = "<p>Em um site com única página, sub-páginas são exibidas em sessões.</p><p><a href='#'>Exemplo</a></p>";
-	var infoAdministrativo = "<p>Site pre-preparado com login e área de controle.</p><p><a href='#'>Exemplo</a></p>";
-
-	$(".tooltip-tipo-site").popover('destroy').popover({
-		content: function(){ return  definirTooltip(selecionado, infoEstiloLivre, infoOnePage, infoAdministrativo) },
-		trigger: 'click',
-		title: 'Ajuda',
-		html: true,
-		placement: 'left'
-	});
-});
-
-$(document).on('click', '#prop-pagina', function(){
-	var retorno = definirElementosVisivies();
-	if($(".grupo_visiveis").length > 0){
-		for(var i=0; i<retorno.itens.length; i++){
-			$("#v_"+retorno.itens[i].item).prop('checked', retorno.itens[i].marcado);
-		}
-	}else $("#poc-form-propriedades-pagina").append(retorno.html);
-});
-
-
-
-function createMenuNestable(){
-	$("#lista-paginas").nestable('serialize');
-}
 
 function addPage(){
 
-}
-
-
-//quando o modal fundo site for aberto, paga-se o valor contido no campo texto
-$(document).on('show.bs.modal', '#modalFundoSite', function(e){
-	configurarModalFundoSite();
-});
-
-function configurarModalFundoSite(){
-	var cor = $('.background-color'), 
-		textura = $('.background_texture'), 
-		imagem = $('.background-image'),
-		repeticao = $('.background-repeat');
-
-	cor.hide(); textura.hide(); imagem.hide(); repeticao.hide();
-
-
-	$("#tipo_fundo option[value='"+background.tipo+"']").prop('selected', true);
-	switch(parseInt(background.tipo)){
-		case 0: 
-			textura.hide(); imagem.hide(); repeticao.hide();
-			cor.show();
-			$('#background-color').val(background.valor);
-			break;
-
-		case 1:
-			cor.hide(); imagem.hide(); repeticao.hide();
-			textura.show();
-			break;
-
-		case 2:
-			textura.hide(); cor.hide();
-			imagem.show(); repeticao.show();
-			break;
-	}
-}
-
-$(document).on('change', '#tipo_fundo', function(){
-	background.tipo = $("#tipo_fundo").val();
-	configurarModalFundoSite();
-
-});
-
-//quando o modal para adiocionar um nova página surgir
-$('#add-page').on('show.bs.modal', function(e){
-	addPaiSelect(paginas, 0);
-	addPosicaoMenu();
-});
-
-//caso seja escolhido estilo livre, deve-se escolher a estrutura do site
-function abrirModalSelecionarLayout(){
-	//abre o modal para selecionar o layout
-	$('#selecionarLayout').modal({
-		keyboard: false,
-		show: true,
-		backdrop: 'static'
-	});
 }
 
 
@@ -606,45 +716,7 @@ function getPai(itens, nome){
 }
 
 
-function carregarModalInicial(){
-	//carrega os modais
-	$("#content-modal").load("modal.html", function(){
-		//insere os tooltips
-		var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
-		"começando do 0</p><p><a href='#'>Exemplo</a></p>";
 
-		$(".tooltip-tipo-site").popover({
-			content: infoEstiloLivre,
-			trigger: 'click',
-			title: 'Ajuda',
-			html: true,
-			placement: 'left'
-			
-		});
-
-
-		//abre o modal para selecionar o layout
-		$('#selecionarTipoSite').modal({
-			keyboard: false,
-			show: true,
-			backdrop: 'static'
-		});
-	});
-}
-
-
-//quando alterar o valor do select para o tipo de site, deve-se alterar o conteúdo do popover
-function definirTooltip(selecionado, livre, onepage, administrativo){
-	var retorno;
-	switch(parseInt(selecionado)){
-		case 1: retorno = livre; break;
-		case 2: retorno = onepage; break;
-		case 3: retorno = administrativo; break;
-		default: retorno = livre;
-	}
-
-	return retorno;
-}
 
 
 //define a ação de acordo com o item selecionado no select para tipo de site
@@ -652,59 +724,7 @@ function definarAcaoTipoSite(selecionado){
 
 }
 
-/*incluir no formulario as opções de visibilidade */
-function definirElementosVisivies(){
-	var itens = [];
-	var cabecalho = $("#poc-header");
-	var rodape = $("#poc-footer");
-	var menuPrincipal = $("#poc-menu");
-	var menuEsquerdo = $("#poc-menu-left");
-	var menuDireito = $("#poc-menu-right");
 
-	if(cabecalho.length > 0){
-		if(cabecalho.is(":visible")) itens.push({nome: "Cabeçalho", marcado: true, item: 'cabecalho'});
-		else itens.push({nome: "Cabeçalho", marcado: false, item: 'cabecalho'});
-	}
-
-	if(menuPrincipal.length > 0){
-		if(menuPrincipal.is(":visible")) itens.push({nome: "Menu Principal", marcado: true, item: 'menuPrincipal'});
-		else itens.push({nome: "Menu Principal", marcado: false, item: 'menuPrincipal'});
-	}
-
-	if(menuEsquerdo.length > 0){
-		if(menuEsquerdo.is(":visible")) itens.push({nome: "Menu Esquerdo", marcado: true, item: 'menuEsquerdo'});
-		else itens.push({nome: "Menu Esquerdo", marcado: false, item: 'menuEsquerdo'});
-	}
-
-	if(menuDireito.length > 0){
-		if(menuDireito.is(":visible")) itens.push({nome: "Menu Direito", marcado: true, item: 'menuDireito'});
-		else itens.push({nome: "Menu Direito", marcado: false, item: 'menuDireito'});
-	}
-
-	if(rodape.length > 0){
-		if(rodape.is(":visible")) itens.push({nome: "Rodapé", marcado: true, item: 'rodape'});
-		else itens.push({nome: "Rodapé", marcado: false, item: 'rodape'});
-	}
-
-	//insere o html no formulario
-	var html = '<div class="form-group grupo_visiveis">' + 
-					'<label for="itens_visiveis">Itens visíveis</label>';
-
-	for(var i=0; i<itens.length; i++){
-		var nome = itens[i].nome;
-		var item = itens[i].item;
-		var marcado = ''; 
-		itens[i].marcado ? marcado = 'checked' : marcado = '';
-
-		html += '<div class="checkbox">'+
-  					'<label><input type="checkbox" value="'+item+'" '+marcado+' id="v_'+item+'">'+nome+'</label>'+
-  				'</div>';
-	}
-
-	html +='</div>';
-
-	return {itens: itens, html: html};
-}
 
 
 $(document).ready(function(){
@@ -713,7 +733,5 @@ $(document).ready(function(){
 
 	//faz a leitura dos componentes
 	readXml();
-
-	createMenuNestable();
 });
 
