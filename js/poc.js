@@ -1,12 +1,42 @@
-componentes_basicos = [];
-layouts = [];
-paginas = [];
-formularios = [];
+var componentes_basicos = [];
+var layouts = [];
+var paginas = [];
+var formularios = [];
 
 var elementoAtual;
 var objetoAtual;
 var template = 0;
 var tipoPagina = 0;
+
+var componentes_fixos = new Object();
+var background = {
+	/*
+		tipo de plano de fundo:
+		0 = cor
+		1 = textura
+		2 = imagem
+	*/
+	tipo: 0,
+	valor: "#fff" //padrão é branco;
+}
+
+//array com as fontes importadas do google, ou as mais usadas no windows
+var fonts = [
+	{nome: 'Source Sans Pro',		familia: "'Source Sans Pro', sans-serif"},
+	{nome: 'Droid Sans',			familia: "'Droid Sans', sans-serif"},
+	{nome: 'Lato',					familia: "'Lato', sans-serif"},
+	{nome: 'PT Sans',				familia: "'PT Sans', sans-serif"},
+	{nome: 'Ubuntu',				familia: "'Ubuntu', sans-serif"},
+	{nome: 'Open Sans',				familia: "'Open Sans', sans-serif"},
+	{nome: 'Roboto',				familia: "'Roboto', sans-serif"},
+	{nome: 'Oswald',				familia: "'Oswald', sans-serif"},
+	{nome: 'Open Sans Condensed',	familia: "'Open Sans Condensed', sans-serif"},
+	{nome: 'Roboto Condensed',		familia: "'Roboto Condensed', sans-serif"},
+	{nome: 'Montserrat',			familia: "'Montserrat', sans-serif"},
+	{nome: 'Arial',					familia: "'Arial', sans-serif"},
+	{nome: 'Tahoma',				familia: "'Tahoma', sans-serif"},
+	{nome: 'Verdana',				familia: "'Verdana', sans-serif"}
+];
 
 
 /** adiciona o eventos de arrastar à todos os compenentes **/ 
@@ -18,6 +48,8 @@ function getComponent(nome){
 	return "";
 }
 
+
+/* pega o formulario de propriedades de todos os componentes*/ 
 function getFormulario(nome){
 	for(i=0; i<formularios.length; i++){
 		if(formularios[i].nome === nome) return formularios[i].html;
@@ -120,9 +152,10 @@ function addSortableToComponents(classe){
 			removeStyle();
 
 			addDraggableToComponents();
-			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer");
-			startImageGallery();
-			addSidrToComponents();
+			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //informa quais elementos podem receber outros elementos
+			startImageGallery(); //inicia o fancybox para galerias
+			addSidrToComponents(); //adciona os formularios de propriedades
+			
 		}
 
 	}).disableSelection();
@@ -145,21 +178,15 @@ function startImageGallery(){
 }
 
 function addColorPicker(){
-	$(".cor-de-fundo").minicolors({
-		control: $(this).attr('data-control') || 'hue',
-		defaultValue: $(this).attr('data-defaultValue') || '',
-		inline: $(this).attr('data-inline') === 'true',
-		letterCase: $(this).attr('data-letterCase') || 'lowercase',
-		opacity: $(this).attr('data-opacity'),
-		position: $(this).attr('data-position') || 'bottom right',
-		change: function(hex, opacity) {
-			if( !hex ) return;
-			if( opacity ) hex += ', ' + opacity;
-			try {
-				//console.log(hex);
-			} catch(e) {}
+	$("#background-color").minicolors({
+		defaultValue: '#fff',
+		position: 'bottom right',
+		change: function(hex, opacity){
+			$('#poc-page').css('background', hex);
 		},
+
 		theme: 'bootstrap'
+
 	});
 }
 
@@ -183,6 +210,134 @@ function addSidrToComponents(){
 	});
 
 	addColorPicker();
+	addFontsToSelect(); //adiciona as possíveis fontes ao formulario
+	addBoxTexturas();
+}
+
+
+$(document).on('click','.radio-item-textura', function(){
+	//caso a posicao da imagem seja menor que 10, deve-se inserir o 0 na frente. Ex.: 9 = 09
+	var posicao = $(this)[0].id.split("-");
+	if(parseInt(posicao[1]) < 10){
+		posicao[1] = "0" + posicao[1].toString();
+	}
+
+	var imagem = posicao[0] + posicao[1] + ".png"; //o nome da imagem será textura-posicao[1].png
+	var propriedade = 'url(img/texturas/'+imagem+') repeat';
+	
+	$("#poc-page").css('background', propriedade);
+});
+
+function addBoxTexturas(){
+	//carrega todas as texturas que estão contidas na pasta img/textura
+	if($('.box-texturas').find('li').length == 0){
+		var html = '<ul class="lista-texturas">';
+		var caminho = 'img/texturas';
+		var extensao = '.png';
+
+		$.ajax({
+			url: caminho,
+			success: function(data){
+				$(data).find("a:contains(" + extensao + ")").each(function(indice, valor){
+					var arquivo = this.href.replace(window.location.host, "").replace("http:///", "");
+					html += '<li class="item-textura textura-'+(indice+1)+'">' + 
+								'<input class="radio-item-textura" name="radio-textura" type="radio" id="textura-' + (indice+1) + '">' +
+								'<label class="label-textura" for="textura-' + (indice+1) + '">'+arquivo+'</label>' +
+							'</li>'; 
+				});
+
+				html += '</ul>';
+
+				$('.box-texturas').html(html);
+			}
+		});
+	}
+}
+
+$(document).on('change', '#background-image', function(e){
+	var arquivo = e.target.files;
+
+	var valor = new FormData();
+	$.each(arquivo, function(chave, item){
+		valor.append(chave, item);
+	});
+	
+	
+	$.ajax({
+		url: 'upload.php?arquivo',
+		type: 'POST',
+		dataType: 'JSON',
+		data: valor,
+		processData: false,
+		contentType: false,
+
+		success: function(data){
+			if(data.success){
+				var repeticao = $("#repeticao").val();
+				if(repeticao == 'no-repeat'){
+					//background full size
+					$("#poc-page").css({
+						'background' : 'url('+ data.imagem +') no-repeat center center fixed',
+						'-webkit-background-size' : 'cover',
+						'-moz-background-size' : 'cover',
+						'-o-background-size' : 'cover',
+						'background-size' : 'cover'
+					});	
+				}else {
+					$("#poc-page").css('background', 'url('+ data.imagem +') ' + $("#repeticao").val());
+				}
+				
+			}else{
+				alert('ERRO: ' + data.mensagem);
+			}
+		}
+	});
+});
+
+$(document).on('change', "#repeticao", function(){
+	$.ajax({
+		url: 'img/background-image/',
+		success: function(data){
+			var arquivo="";
+			$(data).find("a:not(:contains(.html))").each(function(indice, valor){
+				console.log(valor);
+				arquivo = 'img/background-image/' + $.trim(this.innerHTML);
+			});
+
+			console.log(arquivo);
+			if(arquivo.length > 0){
+				var repeticao = $("#repeticao").val();
+				if(repeticao == 'no-repeat'){
+					//background full size
+					$("#poc-page").css({
+						'background' : 'url('+ arquivo +') no-repeat center center fixed',
+						'-webkit-background-size' : 'cover',
+						'-moz-background-size' : 'cover',
+						'-o-background-size' : 'cover',
+						'background-size' : 'cover'
+					});	
+				}else {
+					$("#poc-page").css('background', 'url('+ arquivo +') ' + repeticao);
+				}
+			}else {
+				alert("Selecione uma imagem!");
+			}
+		}
+
+	})
+})
+
+function addFontsToSelect(){
+	//ordena o vetor pelo nome da fonte
+	fonts.sort(function (a, b){
+		if(a.nome > b.nome) return 1;
+		if(a.nome < b.nome) return -1;
+		return 0;
+	});
+
+	for(var i=0; i<fonts.length; i++){
+		$("#fonte").append('<option value="' + fonts[i].familia + '" style="font-family: ' + fonts[i].familia + '">' + fonts[i].nome + '</option>');	
+	}
 }
 
 $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
@@ -207,30 +362,60 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 
 	paginas.push(home);
 
+	componentes_fixos.cabecalho = $("#poc-header").html();
+	componentes_fixos.menuPrincipal = $("#poc-menu").html();
+	componentes_fixos.menuEsquerdo = $("#poc-menu-left").html();
+	componentes_fixos.menuMenuDireito = $("#poc-menu-right").html();
+	componentes_fixos.rodape = $("#poc-footer").html();
+
 	
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
 	addDraggableToComponents();//capacidade de arrastar
 	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
-	addSidrToComponents(); //exibição das propriedades ao clicar no componente
 	startCarousel();
+
+	addBotaoPropriedade("#poc-page", "pagina");
+	addBotaoPropriedade("#poc-header", "cabecalho");
+	addBotaoPropriedade("#poc-menu", "menu");
+	addBotaoPropriedade("#poc-content", "conteudo");
+	addBotaoPropriedade("#poc-footer", "rodape");
+
+	addSidrToComponents(); //exibição das propriedades ao clicar no componente
 });
 
+function addBotaoPropriedade(content, id){
+	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#prop-'+id+'" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
+	'<span class="glyphicon glyphicon-cog"></span></a>';
+
+	$(content).prepend(html);
+}
+
 //funções que serão chamadas quando alguma coisa mudar nos formularios
-$(document).on('change', '#propriedades-pagina', function(){
-	var dados = $("#propriedades-pagina").serializeArray();
+$(document).on('change', '#poc-form-propriedades-pagina', function(){
+	var dados = $("#poc-form-propriedades-pagina").serializeArray();
 	
+	var pagina = $("#poc-page");
 	//se o valor de site centrazalido for "não", remove a div com class container
 	if(dados[0].value == 1){
-		$("#poc-page .content-center").removeClass('container');
+		//insere o conteúdo numa div centralizada
+		var conteudo = pagina.html();
+		pagina.html('<div class="container poc-pagina-centralizada">' + conteudo + '</div>');
 	}else{
-		//se não existe o container, então cria-se e insere o conteudo 
-		$("#poc-page .content-center").addClass('container');
+		//remove a div que centraliza o conteudo
+		if($('.poc-pagina-centralizada').length > 0){
+			var conteudo_centralizado = $('.poc-pagina-centralizada').html();
+			$('.poc-pagina-centralizada').remove();
+			pagina.html(conteudo_centralizado);
+		}
 	}
+
+
 
 	//adiciona a cor de fundo 
 	//se foi setada alguma cor, então altera o fundo da div
-	if(dados[3].value){
-		$("#poc-page").css("background-color", dados[3].value);
+	if(dados[1].value){
+		console.log('alterou aqui');
+		$("#poc-page").css("background-color", dados[1].value);
 	}else{
 		//deixa com o branco
 		$("#poc-page").css("background-color", "#fff");
@@ -239,9 +424,9 @@ $(document).on('change', '#propriedades-pagina', function(){
 	//imagem de fundo
 });
 
+
 //sempre que clicar em um botão 
 $(document).on('click', '.link-propriedades', function(el){
-	console.log('clicou aqui!');
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
 	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
 });
@@ -282,6 +467,15 @@ $(document).on('change', '#select-tipo-site', function(){
 	});
 });
 
+$(document).on('click', '#prop-pagina', function(){
+	var retorno = definirElementosVisivies();
+	if($(".grupo_visiveis").length > 0){
+		for(var i=0; i<retorno.itens.length; i++){
+			$("#v_"+retorno.itens[i].item).prop('checked', retorno.itens[i].marcado);
+		}
+	}else $("#poc-form-propriedades-pagina").append(retorno.html);
+});
+
 
 
 function createMenuNestable(){
@@ -292,14 +486,52 @@ function addPage(){
 
 }
 
+
+//quando o modal fundo site for aberto, paga-se o valor contido no campo texto
+$(document).on('show.bs.modal', '#modalFundoSite', function(e){
+	configurarModalFundoSite();
+});
+
+function configurarModalFundoSite(){
+	var cor = $('.background-color'), 
+		textura = $('.background_texture'), 
+		imagem = $('.background-image'),
+		repeticao = $('.background-repeat');
+
+	cor.hide(); textura.hide(); imagem.hide(); repeticao.hide();
+
+
+	$("#tipo_fundo option[value='"+background.tipo+"']").prop('selected', true);
+	switch(parseInt(background.tipo)){
+		case 0: 
+			textura.hide(); imagem.hide(); repeticao.hide();
+			cor.show();
+			$('#background-color').val(background.valor);
+			break;
+
+		case 1:
+			cor.hide(); imagem.hide(); repeticao.hide();
+			textura.show();
+			break;
+
+		case 2:
+			textura.hide(); cor.hide();
+			imagem.show(); repeticao.show();
+			break;
+	}
+}
+
+$(document).on('change', '#tipo_fundo', function(){
+	background.tipo = $("#tipo_fundo").val();
+	configurarModalFundoSite();
+
+});
+
 //quando o modal para adiocionar um nova página surgir
 $('#add-page').on('show.bs.modal', function(e){
 	addPaiSelect(paginas, 0);
 	addPosicaoMenu();
 });
-
-
-
 
 //caso seja escolhido estilo livre, deve-se escolher a estrutura do site
 function abrirModalSelecionarLayout(){
@@ -418,6 +650,60 @@ function definirTooltip(selecionado, livre, onepage, administrativo){
 //define a ação de acordo com o item selecionado no select para tipo de site
 function definarAcaoTipoSite(selecionado){
 
+}
+
+/*incluir no formulario as opções de visibilidade */
+function definirElementosVisivies(){
+	var itens = [];
+	var cabecalho = $("#poc-header");
+	var rodape = $("#poc-footer");
+	var menuPrincipal = $("#poc-menu");
+	var menuEsquerdo = $("#poc-menu-left");
+	var menuDireito = $("#poc-menu-right");
+
+	if(cabecalho.length > 0){
+		if(cabecalho.is(":visible")) itens.push({nome: "Cabeçalho", marcado: true, item: 'cabecalho'});
+		else itens.push({nome: "Cabeçalho", marcado: false, item: 'cabecalho'});
+	}
+
+	if(menuPrincipal.length > 0){
+		if(menuPrincipal.is(":visible")) itens.push({nome: "Menu Principal", marcado: true, item: 'menuPrincipal'});
+		else itens.push({nome: "Menu Principal", marcado: false, item: 'menuPrincipal'});
+	}
+
+	if(menuEsquerdo.length > 0){
+		if(menuEsquerdo.is(":visible")) itens.push({nome: "Menu Esquerdo", marcado: true, item: 'menuEsquerdo'});
+		else itens.push({nome: "Menu Esquerdo", marcado: false, item: 'menuEsquerdo'});
+	}
+
+	if(menuDireito.length > 0){
+		if(menuDireito.is(":visible")) itens.push({nome: "Menu Direito", marcado: true, item: 'menuDireito'});
+		else itens.push({nome: "Menu Direito", marcado: false, item: 'menuDireito'});
+	}
+
+	if(rodape.length > 0){
+		if(rodape.is(":visible")) itens.push({nome: "Rodapé", marcado: true, item: 'rodape'});
+		else itens.push({nome: "Rodapé", marcado: false, item: 'rodape'});
+	}
+
+	//insere o html no formulario
+	var html = '<div class="form-group grupo_visiveis">' + 
+					'<label for="itens_visiveis">Itens visíveis</label>';
+
+	for(var i=0; i<itens.length; i++){
+		var nome = itens[i].nome;
+		var item = itens[i].item;
+		var marcado = ''; 
+		itens[i].marcado ? marcado = 'checked' : marcado = '';
+
+		html += '<div class="checkbox">'+
+  					'<label><input type="checkbox" value="'+item+'" '+marcado+' id="v_'+item+'">'+nome+'</label>'+
+  				'</div>';
+	}
+
+	html +='</div>';
+
+	return {itens: itens, html: html};
 }
 
 

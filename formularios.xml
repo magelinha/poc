@@ -2,42 +2,37 @@
 	<formulario>
 		<nome>pagina</nome>
 		<html><![CDATA[
-			<form class="form-propriedades" id="propriedades-pagina" role="form">
+			<!-- formulario com as propriedades da pagina-->
+			<form id="poc-form-propriedades-pagina" role="form">
 			  <div class="form-group">
 			    <label for="site-centralizado">Site Centralizado</label>
-		    	<select id="site-centralizado" name="site_centralizado" class="form-control">
-		          	<option value="0">Sim</option>
-		          	<option value="1">Não</option>
-		        </select>
-			  </div>
-			  <div class="form-group">
-			    <label for="player-musica">Player de Música</label>
-		    	<select id="player-musica" name="player_musica" class="form-control">
-		          	<option value="0">Sim</option>
-		          	<option value="1">Não</option>
-		        </select>
-			  </div>
-			  <div class="form-group">
-			    <label for="redes-sociais">Redes Sociais</label>
-		    	<select id="redes-sociais" name="redes_sociais" class="form-control">
-		          	<option value="0">Sim</option>
-		          	<option value="1">Não</option>
-		        </select>
+			    <select id="site-centralizado" class="form-control" name="site-centralizado">
+			    	<option value="0">Não</option>
+			    	<option value="1">Sim</option>
+			    </select>
 			  </div>
 
 			  <div class="form-group">
-			    <label for="background-color">Cor de Fundo</label>
-			    <div class="input-group">
-			    	<span class="input-group-btn">
-			    		<button class="btn btn-default clear-input" data-input="#cor-fundo" type="button"><span class="glyphicon glyphicon-trash"></span></button>
-			      	</span>
-			    	<input type="text" id="cor-fundo" class="form-control cor-de-fundo" name="cor_fundo">
-			    </div>
+			    <label for="page-background">Plano de fundo</label>
+			    <div class="input-group input-group-sm">
+			    	<div class="input-group-btn">
+		        		<button class="btn btn-danger clear-input" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+		        	</div>
+		        	<input type="text" name="page-background" id="page-background" class="form-control">
+	        		<div class="input-group-btn">
+		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+		        	</div>
+		        </div><!-- /input-group -->
 			  </div>
-
 			  <div class="form-group">
-			    <label for="background-image">Imagem de Fundo</label>
-			    <input type="file" id="background-image" name="imagem_fundo">
+			    <label for="fonte">Fonte</label>
+			    <select id="fonte" class="form-control" name="fonte">
+			    	<option value="Glyphicons Halflings" style="font-family:'Glyphicons Halflings', sans-serif">Padrão (Glyphicons Halflings)</option>
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="tamanho_fonte">Tamanho da Fonte</label>
+			    <input type="number" min="10" max="20" id="tamanho_fonte" class="form-control" name="tamanho_fonte">
 			  </div>
 			</form>
 		]]>

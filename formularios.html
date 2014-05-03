@@ -11,16 +11,19 @@
   </div>
 
   <div class="form-group">
-    <label for="background-color" class="col-sm-4 control-label">Cor de Fundo</label>
+    <label for="page-background" class="col-sm-4 control-label">Plano de fundo</label>
     <div class="col-sm-8">
-      <input type="color" id="background-color" class="form-control">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+        </span>
+        <input type="text" class="form-control">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite">Selecionar</span></button>
+        </span>
+      </div><!-- /input-group -->    
     </div>
   </div>
+  
 
-  <div class="form-group">
-    <label for="background-image" class="col-sm-4 control-label">Imagem de Fundo</label>
-    <div class="col-sm-8">
-      <input type="file" id="background-image" class="form-control">
-    </div>
-  </div>
 </form>

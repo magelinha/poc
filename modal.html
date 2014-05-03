@@ -105,7 +105,6 @@
 		      	<option value="4">Categoria de Blog</option>
 		      	<option value="5">Galeria de Imagens</option>
 		      	<option value="6">Galeria de Vídeos</option>
-		      	<option value="7">Estilo Livre</option>
 		      </select>
 		    </div>
 		  </div>
@@ -136,6 +135,70 @@
 		    </div>
 		  </div>
 		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- para adicinar nova página -->
+<div class="modal fade" id="modalFundoSite" tabindex="-1" role="dialog" aria-labelledby="alterarFundo" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Definir Fundo do site</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" enctype="multipart/form-data" id="poc-form-fundo-site">
+          
+          <div class="form-group">
+            <label for="tipo_fundo" class="col-sm-2 control-label">Tipo de Fundo</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="tipo_fundo" id="tipo_fundo">
+                <option value="0">Cor</option>
+                <option value="1">Textura</option>
+                <option value="2">Imagem</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group background-color">
+            <label for="background-color" class="col-sm-2 control-label">Cor de Fundo</label>
+            <div class="col-sm-10">
+              <input type="color" id="background-color" class="form-control" name="background-color">
+            </div>
+          </div>
+
+          <div class="form-group background_texture">
+            <label for="background-texture" class="col-sm-2 control-label">Textura</label>
+            <div class="col-sm-10 box-texturas">
+              
+            </div>
+          </div>
+
+          <div class="form-group background-image">
+            <label for="background-image" class="col-sm-2 control-label">Imagem</label>
+            <div class="col-sm-10">
+              <input type="file" id="background-image" size="5000" name="background-image">
+            </div>
+          </div>
+
+          <div class="form-group background-repeat">
+            <label for="repeticao" class="col-sm-2 control-label">Repetição</label>
+            <div class="col-sm-10">
+              <select class="form-control" id="repeticao" name="repeticao">
+                <option value="no-repeat">Sem Repetição</option>
+                <option value="repeat-y">Repetição Vertical</option>
+                <option value="repeat-x">Repetição Horizontal</option>
+                <option value="repeat">Repetição Horizontal e Vertical</option>
+              </select>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

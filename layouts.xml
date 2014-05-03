@@ -9,7 +9,7 @@
 			<!-- Fim Cabeçalho -->
 
 			<!-- Menu -->
-			<div class="poc-menu">
+			<div id="poc-menu" class="poc-menu">
 				<div class="navbar navbar-inverse" role="navigation">
 			      <div class="container">
 			        <div class="collapse navbar-collapse">

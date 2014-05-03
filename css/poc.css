@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro|Droid+Sans|Lato|PT+Sans|Ubuntu|Droid+Serif|Open+Sans|Roboto|Oswald|Open+Sans+Condensed:300|Roboto+Condensed|Montserrat);
+
 .conteudo-gerado:after {
 	content: "Página";
 	border:1px solid #dddddd;
@@ -159,3 +161,99 @@ header, footer {
 }
 
 
+.sidr form {
+	padding: 11px;
+}
+
+/* estilo voltado para as texturas */
+
+.label-textura {
+	margin-bottom: 0px !important;
+}
+
+.lista-texturas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-texturas:after {
+  content: "";
+  clear: both;
+}
+
+.item-textura {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  float: left;
+  height: 70px;
+  position: relative;
+  width: 120px;
+}
+
+.item-textura label {
+  background: #fff no-repeat center center;
+  bottom: 1px;
+  cursor: pointer;
+  display: block;
+  font-size: 0;
+  left: 1px;
+  position: absolute;
+  right: 1px;
+  text-indent: 100%;
+  top: 1px;
+  white-space: nowrap;
+}
+
+.item-textura {
+  margin-right: 10px;
+  margin-bottom: 10px;
+
+}
+
+.textura-1 label {background-image: url(../img/texturas/textura01.png)}
+.textura-2 label {background-image: url(../img/texturas/textura02.png)}
+.textura-3 label {background-image: url(../img/texturas/textura03.png)}
+.textura-4 label {background-image: url(../img/texturas/textura04.png)}
+.textura-5 label {background-image: url(../img/texturas/textura05.png)}
+.textura-6 label {background-image: url(../img/texturas/textura06.png)}
+.textura-7 label {background-image: url(../img/texturas/textura07.png)}
+.textura-8 label {background-image: url(../img/texturas/textura08.png)}
+.textura-9 label {background-image: url(../img/texturas/textura09.png)}
+.textura-10 label {background-image: url(../img/texturas/textura10.png)}
+.textura-11 label {background-image: url(../img/texturas/textura11.png)}
+.textura-12 label {background-image: url(../img/texturas/textura12.png)}
+.textura-13 label {background-image: url(../img/texturas/textura13.png)}
+.textura-14 label {background-image: url(../img/texturas/textura14.png)}
+.textura-15 label {background-image: url(../img/texturas/textura15.png)}
+.textura-16 label {background-image: url(../img/texturas/textura16.png)}
+.textura-17 label {background-image: url(../img/texturas/textura17.png)}
+.textura-18 label {background-image: url(../img/texturas/textura18.png)}
+.textura-19 label {background-image: url(../img/texturas/textura19.png)}
+
+.lista-texturas input:focus + label {
+  outline: 2px dotted #21b4d0;
+}
+
+.lista-texturas input:checked + label {
+  outline: 4px solid #21b4d0;
+}
+
+.lista-texturas input:checked + label:after {
+  background: url(../img/checked.png);
+  bottom: 0px;
+  content: "";
+  display: inline-block;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+  width: 20px;
+}
+
+@-moz-document url-prefix() {
+  .payment-methods input:checked + label:after {
+    bottom: 0;
+    right: 0;
+    background-color: #21b4d0;
+  }
+}
