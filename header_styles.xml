@@ -1,0 +1,55 @@
+<listaHeaderStyles>
+	<headerStyle>
+		<nome>poc-header-style-1</nome>
+		<html><![CDATA[
+			<div class="row previa poc-header-style-1">
+				<div class="col-md-3 coluna">
+					<a class="thumbnail poc-logomarca" href="#">
+						<img src="img/logolinked.png" alt="Logomarca" />
+					</a>
+				</div>
+				<div class="col-md-9 coluna text-center">
+					<div class="poc-componente-titulo-texto">
+						<h1> Título </h1>
+						<p> Sub-Título</p>
+					</div>
+					<div class="poc-componente-redes-sociais">
+						<div>
+							facebook
+							youtube
+							etc
+						</div>
+					</div>
+				</div>
+			</div>
+		]]>
+		</html>
+	</headerStyle>
+
+	<headerStyle>
+		<nome>poc-header-style-2</nome>
+		<html><![CDATA[
+			
+			<div class="row previa poc-header-style-2">
+				<div class="col-md-12 coluna text-center">
+					<a class="thumbnail poc-logomarca" href="#">
+						<img src="img/logolinked.png" alt="Logomarca" />
+					</a>
+					<div class="poc-componente-titulo-texto">
+						<h1> Título </h1>
+						<p> Sub-Título</p>
+					</div>
+
+					<div class="poc-componente-redes-sociais">
+						<div>
+							facebook
+							youtube
+							etc
+						</div>
+					</div>
+				</div>
+			</div>
+		]]>
+		</html>
+	</headerStyle>
+</listaHeaderStyles>

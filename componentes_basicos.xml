@@ -366,4 +366,18 @@
 		]]>
 		</html>
 	</componente>
+	<componente>
+		<nome>redes-sociais</nome>
+		<html><![CDATA[
+			<div class="poc-componente-redes-sociais">
+				<a data-prop="slideshow" href="#" class="btn btn-primary link-propriedades link-propriedades-redes-sociais">Propriedades</a>
+				<div>
+					facebook
+					youtube
+					etc
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
 </listaComponentes>

@@ -3,6 +3,7 @@ var componentes_basicos = [];
 var layouts = [];
 var paginas = [];
 var formularios = [];
+var headerStyle = [];
 
 var elementoAtual;
 var objetoAtual;
@@ -34,7 +35,7 @@ var fonts = [
 	{nome: 'Open Sans Condensed',	familia: "'Open Sans Condensed', sans-serif"},
 	{nome: 'Roboto Condensed',		familia: "'Roboto Condensed', sans-serif"},
 	{nome: 'Montserrat',			familia: "'Montserrat', sans-serif"},
-	{nome: 'Arial',					familia: "'Arial', sans-serif"},
+	{nome: 'Glyphicons Halflings',	familia: "'Glyphicons Halflings', sans-serif"},
 	{nome: 'Tahoma',				familia: "'Tahoma', sans-serif"},
 	{nome: 'Verdana',				familia: "'Verdana', sans-serif"}
 ];
@@ -57,6 +58,15 @@ function getComponent(nome){
 function getFormulario(nome){
 	for(i=0; i<formularios.length; i++){
 		if(formularios[i].nome === nome) return formularios[i].html;
+	}
+
+	return "";
+}
+
+/* pega o estilo para o cabeçalho*/ 
+function getHeaderStyle(nome){
+	for(i=0; i<headerStyle.length; i++){
+		if(headerStyle[i].nome === nome) return headerStyle[i].html;
 	}
 
 	return "";
@@ -112,8 +122,24 @@ function readXml(){
 		}
 
 	});
+
+	$.ajax({
+		type: "GET",
+		url: "header_styles.xml",
+		dataType: "xml",
+		success: function(xml){
+			$(xml).find("headerStyle").each(function(){
+				var obj = new Object();
+				obj.nome = $(this).find("nome").text();
+				obj.html = $(this).find("html").text();
+
+				headerStyle.push(obj);
+			});
+		}
+
+	});
 }
-/** FIM VARIAVEIS GLOBAIS **/
+/** FIM CARREGAMENTO DOS XMLS **/
 
 
 /** CONFIGURAÇÕES INICIAIS DA FERRAMENTA DE PROTOTIPAÇÃO **/
@@ -172,6 +198,8 @@ function removeStyle(){
 	$("*[style]").removeAttr('style');
 }
 
+
+
 function startCarousel(){
 	$(".carousel").carousel({
 		interval: 3000,
@@ -205,13 +233,13 @@ function addSidrToComponents(){
 		var lastclass = classes[classes.length-1];
 
 		if($("#sidr-propriedade-" + lastclass).length == 0){
-			
 			$(el).sidr({
 				name: "sidr-propriedade" + "-" + lastclass,
 				side: 'right',
 				source: function(name){
 					return "<h1>Propriedades</h1>" + getFormulario($(el).data('prop'));
-				}
+				},
+
 			});		
 		}
 		
@@ -471,6 +499,7 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	addBotaoPropriedade("#poc-footer", "rodape");
 
 	addSidrToComponents(); //exibição das propriedades ao clicar no componente
+
 });
 
 $(document).on('change', '#select-tipo-site', function(){
@@ -670,8 +699,27 @@ $(document).on('change', '#poc-form-propriedades-pagina', function(){
 	
 });
 
-/** FIM PROPRIEDADES DAS PÁGINAS **/
+/** FIM PROPRIEDADES DA PÁGINA **/
 
+/** PROPRIEDADES DO CABEÇALHO **/
+
+//carrega o estilo informado pelo usuário. Caso o estilo seja livre, limpa-se o header
+$(document).on('change', '#select-header-style', function(){
+	var item = $(this).val();
+	var cabecalho = $("#poc-header");
+	
+	//remove qualquer conteúdo já existente
+	cabecalho.find("div").each(function(){
+		$(this).remove();
+	});
+	
+	if(item != '0') $(getHeaderStyle(item)).appendTo(cabecalho);
+});
+/** FIM PROPRIEDADES DO CABEÇALHO **/
+
+$('.poc-img-resizable').ready(function(){
+	console.log('carregou');
+});
 
 function addPage(){
 
