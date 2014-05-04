@@ -15,7 +15,7 @@
 			  <div class="form-group">
 			    <label for="page-background">Plano de fundo</label>
 			    <div class="input-group input-group-sm">
-			    	<input type="text" name="page-background" id="page-background" class="form-control" disabled>
+			    	<input type="text" name="page-background" id="page-background" value="Padrão" class="form-control" disabled>
 	        		<div class="input-group-btn">
 		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite" id="btnFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
 		        	</div>
@@ -57,12 +57,13 @@
 			  <div class="form-group">
 			    <label for="hedader-background">Plano de fundo</label>
 			    <div class="input-group input-group-sm">
-			    	<input type="text" name="header-background" id="page-background" class="form-control" disabled>
+			    	<input type="text" name="header-background" id="header-background" value="Padrão" class="form-control" disabled>
 	        		<div class="input-group-btn">
 		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
 		        	</div>
 		        </div><!-- /input-group -->
 			  </div>
+			  
 			  <div class="form-group">
 			  	<label for="header-style">Estilo</label>
 			  	<select class="form-control" id="select-header-style" name="select-header-style">
@@ -70,6 +71,37 @@
 			  		<option value="poc-header-style-1">Estilo 1</div>
 			  		<option value="poc-header-style-2">Estilo 2</div>
 			  	</select>
+			  </div>
+
+			  <div class="form-group">
+			  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
+			  	<div class="input-group input-group-sm">
+			    	<input type="text" name="tamanho-minimo" id="header-tamanho-minimo" value="200" class="form-control tamanho-minimo">
+	        		<div class="input-group-btn">
+		        		<button class="btn btn-primary header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+		        		<button class="btn btn-primary header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+		        	</div>
+		        </div><!-- /input-group -->
+			  </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>conteudo</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do cabeçalho-->
+			<form id="poc-form-propriedades-content" role="form">
+			  <div class="form-group">
+			  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
+			  	<div class="input-group input-group-sm">
+			    	<input type="text" name="tamanho-minimo" id="header-tamanho-minimo" value="200" class="form-control tamanho-minimo">
+	        		<div class="input-group-btn">
+		        		<button class="btn btn-primary header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+		        		<button class="btn btn-primary header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+		        	</div>
+		        </div><!-- /input-group -->
 			  </div>
 			</form>
 		]]>

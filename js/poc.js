@@ -214,10 +214,10 @@ function startImageGallery(){
 
 function addColorPicker(){
 	$("#background-color").minicolors({
-		defaultValue: '#fff',
+		defaultValue: '#000000',
 		position: 'bottom right',
 		change: function(hex, opacity){
-			$('#poc-page').css('background', hex);
+			objetoAtual.css('background', hex);
 			background.valor = hex;
 		},
 
@@ -409,11 +409,13 @@ $(document).on('change', "#repeticao", function(){
 
 
 $(document).on("hide.bs.modal", "#modalFundoSite", function(){
-	var pageBackground = $("#page-background");
+	var local = objetoAtual[0].id.split("-")[1];
+	var backgroundObject = '#' + local + '-background';
+	
 	if(background.valor instanceof Object ){
-		pageBackground.val(background.valor.background);
+		$(backgroundObject).val(background.valor.background);
 	}else{
-		pageBackground.val(background.valor);
+		$(backgroundObject).val(background.valor);
 	}
 });
 
@@ -454,8 +456,6 @@ $(document).on('change', '#tipo_fundo', function(){
 
 
 /** FIM JS PARA PROPRIEDADE PLANO DE FUNDO **/
-
-
 
 /** PROPRIEDADES NO MODAL **/
 $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
@@ -699,6 +699,42 @@ $(document).on('change', '#poc-form-propriedades-pagina', function(){
 	
 });
 
+
+//quando tiver alguma alteração no campo tamanho. Servirá para campos de qualquer propriedade
+$(document).on('change paste keyup', '.tamanho-minimo', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || (valor.toString().length > 2 && valor < 200)){
+		$(this).val('200');
+		$(this).change();
+	}else if(valor.toString().length > 2 && valor > 199){
+		objetoAtual.css('min-height', valor+'px');
+	}
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.header-btn-up', function(){
+	var header = $("#header-tamanho-minimo");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor < 200) valor = 200;
+
+	header.val(valor+1);
+	header.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.header-btn-down', function(){
+	var header = $("#header-tamanho-minimo");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 200)) atual = 200;
+	else atual = atual-1;
+
+	header.val(atual);
+	header.change();
+})
+
 /** FIM PROPRIEDADES DA PÁGINA **/
 
 /** PROPRIEDADES DO CABEÇALHO **/
@@ -716,10 +752,6 @@ $(document).on('change', '#select-header-style', function(){
 	if(item != '0') $(getHeaderStyle(item)).appendTo(cabecalho);
 });
 /** FIM PROPRIEDADES DO CABEÇALHO **/
-
-$('.poc-img-resizable').ready(function(){
-	console.log('carregou');
-});
 
 function addPage(){
 
