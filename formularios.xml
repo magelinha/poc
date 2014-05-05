@@ -96,13 +96,93 @@
 			  <div class="form-group">
 			  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
 			  	<div class="input-group input-group-sm">
-			    	<input type="text" name="tamanho-minimo" id="header-tamanho-minimo" value="200" class="form-control tamanho-minimo">
+			    	<input type="text" name="tamanho-minimo" id="content-tamanho-minimo" value="600" class="form-control tamanho-minimo">
 	        		<div class="input-group-btn">
-		        		<button class="btn btn-primary header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
-		        		<button class="btn btn-primary header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+		        		<button class="btn btn-primary content-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+		        		<button class="btn btn-primary content-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
 		        	</div>
 		        </div><!-- /input-group -->
 			  </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+	<formulario>
+		<nome>menu</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do menu-->
+			<form id="poc-form-propriedades-menu" role="form">
+				<div class="form-group">
+					<label for="poc-menu-fixo">
+						Menu Fixo no Topo
+					</label>
+					<select id="poc-menu-fixo" name="poc-menu-fixo" class="form-control">
+		            	<option value="0">Não</option>
+		            	<option value="1">Sim</option>
+		            </select>
+		            <span class="help-block">
+		            	<p>Marcando essa opção como 'Sim', o menu ficará fixo no topo da página. Entretanto está alteração não poderá ser vista na ferramenta de prototipação</p>
+
+		            	<p><a href='#'>Exemplo</a></p>
+		            </span>
+		        </div>
+
+		    	<div class="form-group background-color">
+		    		<label for="menu-background-color">Cor de Fundo</label>
+		            <input type="text" id="menu-background-color" class="form-control" name="menu-background-color">
+	            </div>
+		       
+			  	<div class="form-group">
+		            <label for="menu-font-color">Cor da Fonte</label>
+		            <input type="text" id="menu-font-color" class="form-control" name="menu-font-color">
+	            </div>
+		        
+
+	          	<div class="form-group">
+		            <label for="poc-border-menu">Borda</label>
+		            <select id="poc-border-menu" name="poc-border-menu" class="form-control">
+		            	<option value="1">Sim</option>
+		            	<option value="0">Não</option>
+		            </select>
+		        </div>
+			    
+		      	<div class="form-group poc-group-border-radius">
+		            <label for="poc-border-radius-menu">Arredondamento das Bordas</label>
+		            <div class="input-group input-group-sm">
+				    	<input type="text" name="poc-border-radius-menu" id="poc-border-radius-menu" value="4" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary menu-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary menu-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+		        </div>
+
+			    
+		    	<div class="form-group">
+		            <label for="poc-menu-search">Campo de Pesquisa</label>
+		            <select id="poc-menu-search" name="poc-menu-search" class="form-control">
+		            	<option value="0">Não</option>
+		            	<option value="1">Sim</option>
+		            </select>
+		        </div>
+
+		      	<div class="form-group">
+		            <label for="poc-menu-login">Login/Logout</label>
+		            <select id="poc-menu-login" name="poc-menu-login" class="form-control">
+		            	<option value="0">Não</option>
+		            	<option value="1">Sim</option>
+		            </select>
+		        </div>
+
+		        <div class="form-group group-tipo-login" style="display:none">
+		            <label for="poc-menu-tipo-login">Exemplo de Login/Logout</label>
+		            <select id="poc-menu-tipo-login" name="poc-menu-tipo-login" class="form-control">
+		            	<option value="0">Dados do Usuário (Logout)</option>
+		            	<option value="1">Formulário de Login (Login)</option>
+		            </select>
+		            <span class="help-block">Clique no item do menu 'Meus Dados' para visualizar a mudança.</span>
+		        </div>
+		        <span class="help-block"></span>
 			</form>
 		]]>
 		</html>

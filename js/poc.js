@@ -4,6 +4,7 @@ var layouts = [];
 var paginas = [];
 var formularios = [];
 var headerStyle = [];
+var tipoAccount = [];
 
 var elementoAtual;
 var objetoAtual;
@@ -138,6 +139,22 @@ function readXml(){
 		}
 
 	});
+
+	$.ajax({
+		type: "GET",
+		url: "account.xml",
+		dataType: "xml",
+		success: function(xml){
+			$(xml).find("tipo").each(function(){
+				var obj = new Object();
+				obj.nome = $(this).find("nome").text();
+				obj.html = $(this).find("html").text();
+
+				tipoAccount.push(obj);
+			});
+		}
+
+	});
 }
 /** FIM CARREGAMENTO DOS XMLS **/
 
@@ -214,7 +231,7 @@ function startImageGallery(){
 
 function addColorPicker(){
 	$("#background-color").minicolors({
-		defaultValue: '#000000',
+		defaultValue: "#ffffff",
 		position: 'bottom right',
 		change: function(hex, opacity){
 			objetoAtual.css('background', hex);
@@ -223,6 +240,28 @@ function addColorPicker(){
 
 		theme: 'bootstrap'
 
+	});
+
+	$("#menu-background-color").minicolors({
+		defaultValue: $(".poc-navbar").css('background-color'),
+		position: 'bottom right',
+		change: function(hex, opacity){
+			$('.poc-navbar').css('background', hex);
+			background.valor = hex;
+		},
+
+		theme: 'bootstrap'
+	});
+
+	$("#menu-font-color").minicolors({
+		defaultValue: $(".poc-navbar").css('color'),
+		position: 'bottom right',
+		change: function(hex, opacity){
+			$('.poc-navbar a').css('color', hex);
+			background.valor = hex;
+		},
+
+		theme: 'bootstrap'
 	});
 }
 
@@ -752,6 +791,123 @@ $(document).on('change', '#select-header-style', function(){
 	if(item != '0') $(getHeaderStyle(item)).appendTo(cabecalho);
 });
 /** FIM PROPRIEDADES DO CABEÇALHO **/
+
+/** PROPRIEDADE DO MENU **/
+$(document).on('change', '#poc-border-menu', function(){
+	var valor = parseInt($(this).val());
+	var menu = $('.poc-navbar');
+	var radius = $('.poc-group-border-radius');
+	
+	//não
+	if(valor == 0){
+		menu.css('border', '0px');
+		menu.css('border-radius', '0px');
+		radius.hide();
+	}else{
+		menu.css('border', '1px solid');
+		menu.css('border-radius', radius.val());
+		radius.show();
+	}
+})
+
+//quando tiver alguma alteração no campo borda arredondada.
+$(document).on('change paste keyup', '#poc-border-radius-menu', function(){
+	var valor = parseInt($(this).val());
+	var menu = $('.poc-navbar');
+	
+	if(valor === NaN || valor < 0){
+		$(this).val('0');
+		$(this).change();
+	}else {
+		menu.css('border-radius', valor+'px');
+	}
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.menu-btn-up', function(){
+	var menu = $("#poc-border-radius-menu");
+	var valor = parseInt(menu.val());
+
+	if(valor === NaN || valor < 0) valor = 0;
+
+	menu.val(valor+1);
+	menu.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.menu-btn-down', function(){
+	var menu = $("#poc-border-radius-menu");
+	var atual = parseInt(menu.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 200;
+	else atual = atual-1;
+
+	menu.val(atual);
+	menu.change();
+})
+
+//exibe ou não o campo de pesquisa no menu
+$(document).on('change', '#poc-menu-search', function(){
+	var valor = parseInt($(this).val());
+	var search = $('.poc-navbar-search');
+	
+	if(valor == 0) search.hide();
+	else search.show();
+});
+
+
+//ativa ou não o campo de login/dados.
+$(document).on('change', '#poc-menu-login', function(){
+	var dropdown = $('.poc-menu-account');
+	var grupoTipoLogin = $('.group-tipo-login');
+	var tipoLogin = parseInt($('#poc-menu-tipo-login').val());
+	var valor = parseInt($(this).val());
+
+	console.log(dropdown);
+	console.log(tipoLogin);
+
+	if(valor == 0){
+		grupoTipoLogin.hide();
+		dropdown.hide();
+	}else{
+		grupoTipoLogin.show();
+		dropdown.html(tipoAccount[tipoLogin].html);
+		dropdown.show();
+	}
+})
+
+$(document).on('change', '#poc-menu-tipo-login', function(){
+	var dropdown = $('.poc-menu-account');
+	var tipoLogin = parseInt($(this).val());
+	dropdown.html(tipoAccount[tipoLogin].html);
+})
+/** FIM PROPRIEDADE DO MENU **/ 
+
+/** PROPRIEDADE DO CONTEÚDO **/
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.content-btn-up', function(){
+	var conteudo = $("#content-tamanho-minimo");
+	var valor = parseInt(conteudo.val());
+
+	if(valor === NaN || valor < 200) valor = 200;
+
+	conteudo.val(valor+1);
+	conteudo.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.content-btn-down', function(){
+	var conteudo = $("#content-tamanho-minimo");
+	var atual = parseInt(conteudo.val());
+
+	if(atual === NaN || ((atual-1) < 200)) atual = 200;
+	else atual = atual-1;
+
+	conteudo.val(atual);
+	conteudo.change();
+})
+
+/** FIM PROPRIEDADE DO CONTEÚDO **/
 
 function addPage(){
 

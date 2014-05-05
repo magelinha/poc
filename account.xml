@@ -1,0 +1,47 @@
+<listaTipos>
+    <tipo>
+        <nome>logout</nome>
+        <html><![CDATA[
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="navbar-content">
+                        <div class="col-md-5">
+                            <img src="http://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/twDq00QDud4/s120-c/photo.jpg"
+                                alt="Alternate Text" class="img-responsive" />
+                            <p class="text-center small">
+                        </div>
+                        <div class="col-md-7">
+                            <span>Usuário Exemplo</span>
+                            <p class="text-muted small">
+                                exemplo@email.com</p>
+                            <div class="divider">
+                            </div>
+                            <a href="#" class="">Sair</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        ]]>
+        </html>
+    </tipo>
+    <tipo>
+        <nome>login</nome>
+        <html><![CDATA[
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
+            <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; height:320px; width:300px">
+                <form method="post" action="login" accept-charset="UTF-8">
+                    <input style="margin-bottom: 15px;" type="text" placeholder="Usuário" id="username" name="username" class="form-control">
+                    <input style="margin-bottom: 15px;" type="password" placeholder="Senha" id="password" name="password" class="form-control">
+                    <input style="float: left; margin-right: 10px;" type="checkbox" name="remember-me" id="remember-me" value="1">
+                    <label class="string optional" for="user_remember_me"> Lembrar-me</label>
+                    <input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Entrar">
+                    <label style="text-align:center;margin-top:5px">ou</label>
+                    <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Entrar com o Google+">
+                    <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Entrar com o Twitter">
+                </form>
+            </div>
+        ]]>
+        </html>
+    </tipo>
+</listaTipos>
