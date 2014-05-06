@@ -54,35 +54,43 @@
 		<html><![CDATA[
 			<!-- formulario com as propriedades do cabeçalho-->
 			<form id="poc-form-propriedades-header" role="form">
-			  <div class="form-group">
-			    <label for="hedader-background">Plano de fundo</label>
-			    <div class="input-group input-group-sm">
-			    	<input type="text" name="header-background" id="header-background" value="Padrão" class="form-control" disabled>
-	        		<div class="input-group-btn">
-		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
-		        	</div>
-		        </div><!-- /input-group -->
-			  </div>
-			  
-			  <div class="form-group">
-			  	<label for="header-style">Estilo</label>
-			  	<select class="form-control" id="select-header-style" name="select-header-style">
-			  		<option value="0">Estilo Livre</div>
-			  		<option value="poc-header-style-1">Estilo 1</div>
-			  		<option value="poc-header-style-2">Estilo 2</div>
-			  	</select>
-			  </div>
+				<div class="form-group">
+				    <label for="poc-header-centralizado">Conteúdo Centralizado</label>
+				    <select id="poc-header-centralizado" class="form-control" name="poc-header-centralizado">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				</div>
 
-			  <div class="form-group">
-			  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
-			  	<div class="input-group input-group-sm">
-			    	<input type="text" name="tamanho-minimo" id="header-tamanho-minimo" value="200" class="form-control tamanho-minimo">
-	        		<div class="input-group-btn">
-		        		<button class="btn btn-primary header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
-		        		<button class="btn btn-primary header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
-		        	</div>
-		        </div><!-- /input-group -->
-			  </div>
+				<div class="form-group">
+					<label for="hedader-background">Plano de fundo</label>
+				    <div class="input-group input-group-sm">
+				    	<input type="text" name="header-background" id="header-background" value="Padrão" class="form-control" disabled>
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group">
+				  	<label for="header-style">Estilo</label>
+				  	<select class="form-control" id="select-header-style" name="select-header-style">
+				  		<option value="0">Estilo Livre</div>
+				  		<option value="poc-header-style-1">Estilo 1</div>
+				  		<option value="poc-header-style-2">Estilo 2</div>
+				  	</select>
+			  	</div>
+
+			  	<div class="form-group">
+				  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="tamanho-minimo" id="header-tamanho-minimo" value="200" class="form-control tamanho-minimo">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -91,18 +99,26 @@
 	<formulario>
 		<nome>conteudo</nome>
 		<html><![CDATA[
-			<!-- formulario com as propriedades do cabeçalho-->
+			<!-- formulario com as propriedades do conteudo-->
 			<form id="poc-form-propriedades-content" role="form">
-			  <div class="form-group">
-			  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
-			  	<div class="input-group input-group-sm">
-			    	<input type="text" name="tamanho-minimo" id="content-tamanho-minimo" value="600" class="form-control tamanho-minimo">
-	        		<div class="input-group-btn">
-		        		<button class="btn btn-primary content-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
-		        		<button class="btn btn-primary content-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
-		        	</div>
-		        </div><!-- /input-group -->
-			  </div>
+				<div class="form-group">
+				    <label for="poc-content-centralizado">Conteúdo Centralizado</label>
+				    <select id="poc-content-centralizado" class="form-control" name="poc-content-centralizado">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				</div>
+
+				<div class="form-group">
+					<label for="header-tamanho-minimo">Tamanho Mínimo</label>
+					<div class="input-group input-group-sm">
+						<input type="text" name="tamanho-minimo" id="content-tamanho-minimo" value="600" class="form-control tamanho-minimo">
+						<div class="input-group-btn">
+							<button class="btn btn-primary content-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+							<button class="btn btn-primary content-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+						</div>
+					</div><!-- /input-group -->
+				</div>
 			</form>
 		]]>
 		</html>
@@ -183,6 +199,54 @@
 		            <span class="help-block">Clique no item do menu 'Meus Dados' para visualizar a mudança.</span>
 		        </div>
 		        <span class="help-block"></span>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>rodape</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do rodapé-->
+			<form id="poc-form-propriedades-footer" role="form">
+				<div class="form-group">
+				    <label for="poc-footer-centralizado">Conteúdo Centralizado</label>
+				    <select id="poc-footer-centralizado" class="form-control" name="poc-footer-centralizado">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				</div>
+
+				<div class="form-group">
+					<label for="footer-background">Plano de fundo</label>
+				    <div class="input-group input-group-sm">
+				    	<input type="text" name="footer-background" id="footer-background" value="Padrão" class="form-control" disabled>
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <!-- futuramente
+			    <div class="form-group">
+				  	<label for="header-style">Estilo</label>
+				  	<select class="form-control" id="select-header-style" name="select-header-style">
+				  		<option value="0">Estilo Livre</div>
+				  		<option value="poc-header-style-1">Estilo 1</div>
+				  		<option value="poc-header-style-2">Estilo 2</div>
+				  	</select>
+			  	</div> -->
+
+			  	<div class="form-group">
+				  	<label for="footer-tamanho-minimo">Tamanho Mínimo</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="tamanho-minimo" id="footer-tamanho-minimo" value="200" class="form-control tamanho-minimo">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary footer-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary footer-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
 			</form>
 		]]>
 		</html>

@@ -1,7 +1,7 @@
 /** VARIAVEIS GLOBAIS **/ 
-var componentes_basicos = [];
-var layouts = [];
-var paginas = [];
+var componentes_basicos = []; //componentes da ferramenta
+var layouts = []; //layout disponíveis, caso a escolha seja estilo livre
+var paginas = []; //paginas criadas pelo usuário, incluindo a Home
 var formularios = [];
 var headerStyle = [];
 var tipoAccount = [];
@@ -514,13 +514,14 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	componentes_fixos.rodape = $("#poc-footer").html();
 
 	var home = {
+		id: 1,
 		nome: 			"Home",
 		isHome: 		true,
 		descricao: 		"",
 		propriedades: 	[],
 		children: 		[],
 		pai: 			"nenhum",
-		conteudo: 		$("#poc-page").html()
+		conteudo: 		$("#poc-content");
 	};
 
 	paginas.push(home);
@@ -576,9 +577,13 @@ $(document).on('show.bs.modal', '#modalFundoSite', function(e){
 });
 
 //quando o modal para adiocionar um nova página surgir
-$('#add-page').on('show.bs.modal', function(e){
+$(document).on('show.bs.modal','#add-page', function(e){
+	$('#pai').empty();
+	$('#pai').append('<option value="nenhum">Nenhum</option>')
+
 	addPaiSelect(paginas, 0);
-	addPosicaoMenu();
+	$('#pai').change();
+
 });
 
 //caso seja escolhido estilo livre, deve-se escolher a estrutura do site
@@ -777,6 +782,25 @@ $(document).on('click','.header-btn-down', function(){
 /** FIM PROPRIEDADES DA PÁGINA **/
 
 /** PROPRIEDADES DO CABEÇALHO **/
+$(document).on('change', '#poc-header-centralizado', function(){
+	var cabacalho = $('#poc-header');
+	var valor = parseInt($(this).val());
+
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var conteudo = cabecalho.html();
+		cabecalho.html('<div class="container poc-header-centralizado">' + conteudo + '</div>');
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-header-centralizado').length > 0){
+			var conteudo_centralizado = $('.poc-header-centralizado').html();
+			$('.poc-header-centralizado').remove();
+			cabecalho.html(conteudo_centralizado);
+		}
+	}
+});
+
 
 //carrega o estilo informado pelo usuário. Caso o estilo seja livre, limpa-se o header
 $(document).on('change', '#select-header-style', function(){
@@ -863,9 +887,6 @@ $(document).on('change', '#poc-menu-login', function(){
 	var tipoLogin = parseInt($('#poc-menu-tipo-login').val());
 	var valor = parseInt($(this).val());
 
-	console.log(dropdown);
-	console.log(tipoLogin);
-
 	if(valor == 0){
 		grupoTipoLogin.hide();
 		dropdown.hide();
@@ -884,6 +905,26 @@ $(document).on('change', '#poc-menu-tipo-login', function(){
 /** FIM PROPRIEDADE DO MENU **/ 
 
 /** PROPRIEDADE DO CONTEÚDO **/
+$(document).on('change', '#poc-content-centralizado', function(){
+	var conteudo = $('#poc-content');
+	var valor = parseInt($(this).val());
+
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var aux = conteudo.html();
+		conteudo.html('<div class="container poc-content-centralizado">' + aux + '</div>');
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-content-centralizado').length > 0){
+			var conteudo_centralizado = $('.poc-content-centralizado').html();
+			$('.poc-content-centralizado').remove();
+			conteudo.html(conteudo_centralizado);
+		}
+	}
+});
+
+
 //quando clicar no botão de aumentar, incrementa
 $(document).on('click','.content-btn-up', function(){
 	var conteudo = $("#content-tamanho-minimo");
@@ -906,18 +947,64 @@ $(document).on('click','.content-btn-down', function(){
 	conteudo.val(atual);
 	conteudo.change();
 })
-
 /** FIM PROPRIEDADE DO CONTEÚDO **/
 
-function addPage(){
+/** PROPRIEDADES DO RODAPÉ **/
+$(document).on('change', '#poc-footer-centralizado', function(){
+	var rodape = $('#poc-footer');
+	var valor = parseInt($(this).val());
 
-}
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var conteudo = rodape.html();
+		rodape.html('<div class="container poc-footer-centralizado">' + conteudo + '</div>');
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-footer-centralizado').length > 0){
+			var conteudo_centralizado = $('.poc-footer-centralizado').html();
+			$('.poc-footer-centralizado').remove();
+			rodape.html(conteudo_centralizado);
+		}
+	}
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.footer-btn-up', function(){
+	var footer = $("#footer-tamanho-minimo");
+	var valor = parseInt(footer.val());
+
+	if(valor === NaN || valor < 200) valor = 200;
+
+	footer.val(valor+1);
+	footer.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.footer-btn-down', function(){
+	var footer = $("#footer-tamanho-minimo");
+	var atual = parseInt(footer.val());
+
+	if(atual === NaN || ((atual-1) < 200)) atual = 200;
+	else atual = atual-1;
+
+	footer.val(atual);
+	footer.change();
+})
+
+/** FIM PROPRIEDADES DO RODAPÉ **/
+
+
+
+/** ADICIONAR PÁGINA **/
 
 
 //adiciona possíveis pais para serem escolhidos
 function addPaiSelect(itens, nivel){
 	//nível máximo é 3
 	if(nivel > 2) return;
+
+	console.log(itens);
 
 	var lista = $('#pai');
 	for(var i=0; i<itens.length; i++){
@@ -926,6 +1013,21 @@ function addPaiSelect(itens, nivel){
 
 		//se essa página tem filhos, então faz a busca nesses filhos
 		if(itens[i].children.length > 0) addPaiSelect(itens[i].children, nivel+1);
+	}
+}
+
+//percorre todos as páginas para verificar se algum deles é o item selecionado como pai
+function getPai(itens, nome){
+
+	for(var i=0; i<itens.length; i++){
+		if(itens[i].nome == nome){
+			for(var j=0; j<itens[i].children.length+1; j++){
+				$("#posicao").append("<option value='" + (j+1) + "'>" + (j+1) + "</option>");
+			}
+
+			return false;
+
+		} else if(itens[i].children.length > 0 && !getPai(itens[i].children, nome)) return;
 	}
 }
 
@@ -942,41 +1044,40 @@ function addTabulacao(nivel){
 }
 
 //adiciona as opções de posição de acordo com o pai selecionado.
-function addPosicaoMenu(){
-	$("#pai").change(function(){
-		var selecionado = $(this).val();
+$(document).on('change', '#pai', function(){
+	var selecionado = $(this).val();
 
-		if(selecionado == 'nenhum'){
-			//selecionado == 0 indica que foi selecionado a opção Nenhum
-			for(var i=0; i<paginas.length; i++){
-				$("#posicao").append("<option value='" + paginas[i].nome + "'>" + paginas[i].nome + "</option>");
-			}
-		}else{
-			//caso contrario, é necessário procurar 
-			getPai(paginas, selecionado);
+	$('#posicao').empty(); //limpa o select
+	console.log(paginas);
+
+	if(selecionado == 'nenhum'){
+		//selecionado == 0 indica que foi selecionado a opção Nenhum
+		for(var i=0; i<paginas.length+1; i++){
+			$("#posicao").append("<option value='" + (i+1) + "'>" + (i+1) + "</option>");
 		}
-
-	});
-}
-
-
-//percorre todos as páginas para verificar se algum deles é o item selecionado como pai
-function getPai(itens, nome){
-
-	for(var i=0; i<itens.length; i++){
-		if(itens[i].nome == nome){
-			for(var j=0; j<itens[i].children.length; j++){
-				$("#posicao").append("<option value='" + itens[i].children[j].nome + "'>" + itens[i].children[j].nome + "</option>");
-			}
-
-			return false;
-
-		} else if(itens[i].children.length > 0 && !getPai(itens[i].children, nome)) return;
+	}else{
+		//caso contrario, é necessário procurar 
+		getPai(paginas, selecionado);
 	}
-}
+
+})
+
+$(document).on('click', '#btn-salvar-nova-pagina', function(){
+	var dados = $('#poc-form-add-page').serializeArray(); //pega os dados do formulário
+	var pagina = new Object();
+	//processo de validação
+
+	//nome
+	var nome = $.trim(dados[0].val();
+	if(nome == '') alert('Dê um nome para a página!');
+	else pagina.nome = nome;
+
+	pagina.descricao = dados[2].val();
 
 
 
+
+})
 
 
 //define a ação de acordo com o item selecionado no select para tipo de site
