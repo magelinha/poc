@@ -580,7 +580,7 @@ $(document).on('show.bs.modal', '#modalFundoSite', function(e){
 //quando o modal para adiocionar um nova página surgir
 $(document).on('show.bs.modal','#add-page', function(e){
 	$('#pai').empty();
-	$('#pai').append('<option value="nenhum">Nenhum</option>')
+	$('#pai').append('<option value="0">Nenhum</option>')
 
 	addPaiSelect(paginas, 0);
 	$('#pai').change();
@@ -1087,7 +1087,7 @@ $(document).on('change', '#pai', function(){
 
 	$('#posicao').empty(); //limpa o select
 
-	if(selecionado == 'nenhum'){
+	if(selecionado == '0'){
 		//selecionado == 0 indica que foi selecionado a opção Nenhum
 		for(var i=0; i<paginas.length+1; i++){
 			$("#posicao").append("<option value='" + (i+1) + "'>" + (i+1) + "</option>");
@@ -1110,7 +1110,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	var pai = parseInt(dados[4].value);
 	var posicao = parseInt(dados[5].value);
 
-	console.log(posicao);
+	console.log(dados[4]);
 	if(nome == '') alert('Dê um nome para a página!')
 	else {
 
