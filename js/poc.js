@@ -4,8 +4,10 @@ var layouts = []; //layout disponíveis, caso a escolha seja estilo livre
 var paginas = []; //paginas criadas pelo usuário, incluindo a Home
 var formularios = [];
 var headerStyle = [];
+var pageStyle = [];
 var tipoAccount = [];
 
+var lastId = 1;
 var elementoAtual;
 var objetoAtual;
 var template = 0;
@@ -507,21 +509,20 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	}
 	$(".conteudo-gerado").append(layouts[template-1].html); //insere o layout escolhido na tela
 
-	componentes_fixos.cabecalho = $("#poc-header").html();
-	componentes_fixos.menuPrincipal = $("#poc-menu").html();
-	componentes_fixos.menuEsquerdo = $("#poc-menu-left").html();
-	componentes_fixos.menuMenuDireito = $("#poc-menu-right").html();
-	componentes_fixos.rodape = $("#poc-footer").html();
+	componentes_fixos.cabecalho = $("#poc-header");
+	componentes_fixos.menuPrincipal = $("#poc-menu");
+	componentes_fixos.menuEsquerdo = $("#poc-menu-left");
+	componentes_fixos.menuMenuDireito = $("#poc-menu-right");
+	componentes_fixos.rodape = $("#poc-footer");
 
 	var home = {
-		id: 1,
+		id: 			1,
 		nome: 			"Home",
 		isHome: 		true,
 		descricao: 		"",
-		propriedades: 	[],
 		children: 		[],
-		pai: 			"nenhum",
-		conteudo: 		$("#poc-content");
+		pai: 			0,
+		conteudo: 		$("#poc-content"),
 	};
 
 	paginas.push(home);
@@ -754,6 +755,8 @@ $(document).on('change paste keyup', '.tamanho-minimo', function(){
 	}else if(valor.toString().length > 2 && valor > 199){
 		objetoAtual.css('min-height', valor+'px');
 	}
+
+	componentes_fixos.cabecalho = objetoAtual;
 })
 
 //quando clicar no botão de aumentar, incrementa
@@ -998,18 +1001,15 @@ $(document).on('click','.footer-btn-down', function(){
 
 /** ADICIONAR PÁGINA **/
 
-
 //adiciona possíveis pais para serem escolhidos
 function addPaiSelect(itens, nivel){
 	//nível máximo é 3
 	if(nivel > 2) return;
 
-	console.log(itens);
-
 	var lista = $('#pai');
 	for(var i=0; i<itens.length; i++){
 		//adiciona o nome da página na lista
-		lista.append("<option value='" + itens[i].nome + "'>" + addTabulacao(nivel) + " " + itens[i].nome + "</option>");
+		lista.append("<option value='" + itens[i].id + "'>" + addTabulacao(nivel) + " " + itens[i].nome + "</option>");
 
 		//se essa página tem filhos, então faz a busca nesses filhos
 		if(itens[i].children.length > 0) addPaiSelect(itens[i].children, nivel+1);
@@ -1035,7 +1035,7 @@ function getPai(itens, nome){
 function addTabulacao(nivel){
 	if(nivel == 0) return "-";
 
-	var retorno = "";
+	var retorno = "-";
 	for(var i=0; i<nivel; i++){
 		retorno += "-";
 	}
@@ -1043,12 +1043,49 @@ function addTabulacao(nivel){
 	return retorno;
 }
 
+//troca a propriedade isHome de todas as páginas para false
+function setIsHomeFalse(itens){
+	for(posicao in itens){
+		itens[posicao].isHome = false;
+
+		if(itens[posicao].children.length > 0) setIsHomeFalse(itens[posicao].children);
+	}
+}
+
+function setPai(itens, idPage, page, position){
+	for(posicao in itens){
+		if(itens[posicao].id == idPage) {
+			if(itens[posicao].children.length <= position)itens[posicao].children.push(page); //se a posição escolhida for a ultima, adiciona com o push	
+			else itens[posicao].children.splice(position, 0, page); //se for alguma posição antes da ultima, adiciona com o splice
+
+		}else if(itens[posicao].children.length > 0) setPai(itens[posicao].children, idPage, page, position); //busca pela página nos filhos de uma determinada página
+	}
+}
+
+
+function redefinirMenu(lista, nivel){
+	var menu = $('#lista-paginas');
+	for(posicao in lista){
+		menu.append('<li><a href="#" data-id="'+lista[posicao].id+'">' + addTabulacao(nivel) + ' ' + lista[posicao].nome + '</a></li>');
+
+		if(lista[posicao].children.length > 0) redefinirMenu(lista[posicao].children, nivel+1);
+	}
+}
+
+function openPage(pagina){
+	$("#poc-header").replaceWith(componentes_fixos.cabecalho);
+	$("#poc-menu").replaceWith(componentes_fixos.menuPrincipal);
+	$("#poc-menu-left").replaceWith(componentes_fixos.menuEsquerdo);
+	$("#poc-menu-right").replaceWith(componentes_fixos.menuDireito);
+	$("#poc-content").replaceWith(pagina.conteudo);
+	$("poc-footer").replaceWith(componentes_fixos.rodape);	
+}
+
 //adiciona as opções de posição de acordo com o pai selecionado.
 $(document).on('change', '#pai', function(){
 	var selecionado = $(this).val();
 
 	$('#posicao').empty(); //limpa o select
-	console.log(paginas);
 
 	if(selecionado == 'nenhum'){
 		//selecionado == 0 indica que foi selecionado a opção Nenhum
@@ -1060,7 +1097,7 @@ $(document).on('change', '#pai', function(){
 		getPai(paginas, selecionado);
 	}
 
-})
+});
 
 $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	var dados = $('#poc-form-add-page').serializeArray(); //pega os dados do formulário
@@ -1068,14 +1105,52 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	//processo de validação
 
 	//nome
-	var nome = $.trim(dados[0].val();
-	if(nome == '') alert('Dê um nome para a página!');
-	else pagina.nome = nome;
+	var nome = $.trim(dados[0].value);
+	var isHome = false;
+	var pai = parseInt(dados[4].value);
+	var posicao = parseInt(dados[5].value);
 
-	pagina.descricao = dados[2].val();
+	console.log(posicao);
+	if(nome == '') alert('Dê um nome para a página!')
+	else {
 
+		$('#poc-content').find(':not(a)').each(function(){
+			$(this).remove;
+		});
 
+		$('#poc-content').html('<p>Teste</p>');
 
+		if(dados[1].value == '1'){
+			isHome = true;
+			setIsHomeFalse(paginas);
+
+		}
+
+		pagina = {
+			id: 			(lastId + 1),
+			nome: 			nome,
+			isHome: 		isHome,
+			descricao: 		dados[3].value,
+			children: 		[],
+			pai: 			pai,
+			conteudo: 		$("#poc-content")
+		}
+
+		//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
+		if(pai != 0)setPai(paginas, pai, pagina, posicao);
+		else{
+			if(paginas.length <= posicao) paginas.push(pagina);
+			else paginas.splice(posicao, 0, pagina);
+		}
+
+		console.log(paginas);
+
+		lastId = lastId + 1;
+
+		$('#lista-paginas').empty();
+		redefinirMenu(paginas,0);
+		openPage(pagina);
+	}
 
 })
 
