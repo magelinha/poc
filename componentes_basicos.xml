@@ -5,7 +5,7 @@
 		<nome>1coluna</nome>
 		<html><![CDATA[
 			<div class="row previa" data-id="0">
-				<a data-prop="bloco" href="#" class="btn btn-primary link-propriedades link-propriedades-bloco">Propriedades</a>
+				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="col-md-12 coluna"></div>
 			</div>
 		]]>
@@ -17,7 +17,7 @@
 		<nome>2colunas</nome>
 		<html><![CDATA[
 			<div class="row previa" data-id="1">
-				<a data-prop="bloco" href="#" class="btn btn-primary link-propriedades link-propriedades-bloco">Propriedades</a>
+				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="col-md-6 coluna"></div>
 				<div class="col-md-6 coluna"></div>
 			</div>
@@ -30,7 +30,7 @@
 		<nome>3colunas</nome>
 		<html><![CDATA[
 			<div class="row previa" data-id="2">
-				<a data-prop="bloco" href="#" class="btn btn-primary link-propriedades link-propriedades-bloco">Propriedades</a>
+				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="col-md-4 coluna"></div>
 				<div class="col-md-4 coluna"></div>
 				<div class="col-md-4 coluna"></div>
@@ -44,7 +44,7 @@
 		<nome>4colunas</nome>
 		<html><![CDATA[
 			<div class="row previa" data-id="3">
-				<a data-prop="bloco" href="#" class="btn btn-primary link-propriedades link-propriedades-bloco">Propriedades</a>
+				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="col-md-3 coluna"></div>
 				<div class="col-md-3 coluna"></div>
 				<div class="col-md-3 coluna"></div>
@@ -59,7 +59,7 @@
 		<nome>titulo-texto</nome>
 		<html><![CDATA[
 			<div class="poc-componente-titulo-texto">
-				<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+				<a data-prop="titulo-texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-titulo-texto"><span class="glyphicon glyphicon-cog"></span></a>
 				<h1> Título </h1>
 				<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -77,7 +77,7 @@
 		<nome>texto</nome>
 		<html><![CDATA[
 			<div class="poc-componente-texto">
-				<a data-prop="texto" href="#" class="btn btn-primary link-propriedades link-propriedades-texto">Propriedades</a>
+				<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -91,10 +91,7 @@
 		<nome>conteudo-paginacao</nome>
 		<html><![CDATA[
 			<div class="poc-componente-conteudo-paginacao">
-				<a data-prop="conteudo-paginacao" href="#" class="btn btn-primary link-propriedades link-propriedades-conteudo-paginacao">Propriedades</a>
-				<div class="conteudo-paginacao">
-					
-				</div>
+				<a data-prop="conteudo-paginacao" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-conteudo-paginacao"><span class="glyphicon glyphicon-cog"></span></a>
 				<ul class="pagination">
 					<li><a class="link-paginacao" href="#">1</a></li>
 					<li><a class="link-paginacao" href="#">2</a></li>
@@ -110,7 +107,7 @@
 		<nome>Tabela</nome>
 		<html><![CDATA[
 			<div class="poc-componente-tabela">
-				<a data-prop="tabela" href="#" class="btn btn-primary link-propriedades link-propriedades-tabela">Propriedades</a>
+				<a data-prop="tabela" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-tabela"><span class="glyphicon glyphicon-cog"></span></a>
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -152,7 +149,7 @@
 		<nome>formulario</nome>
 		<html><![CDATA[
 				<div class="poc-componente-formulario">
-					<a data-prop="formulario" href="#" class="btn btn-primary link-propriedades link-propriedades-formulario">Propriedades</a>
+					<a data-prop="formulario" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-formulario"><span class="glyphicon glyphicon-cog"></span></a>
 					<form role="form">
 						<div class="form-group">
 							<label for="usuario">Usuário</label>
@@ -173,7 +170,7 @@
 		<nome>painel</nome>
 		<html><![CDATA[
 			<div class="poc-componente-painel">
-				<a data-prop="painel" href="#" class="btn btn-primary link-propriedades link-propriedades-painel">Propriedades</a>
+				<a data-prop="painel" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="panel panel-default">
 					<div class="panel-heading">Cabeçalho do Painel</div>
 					<div class="panel-body">
@@ -191,7 +188,7 @@
 		<html><![CDATA[
 			
 			<div class="poc-componente-conteudo-destaque">
-				<a data-prop="conteudo-destaque" href="#" class="btn btn-primary link-propriedades link-propriedades-conteudo-destaque">Propriedades</a>
+				<a data-prop="conteudo-destaque" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-conteudo-destaque"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="jumbotron">
 					<h1>Título do Destaque</h1>
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -210,7 +207,7 @@
 		<nome>alerta</nome>
 		<html><![CDATA[
 			<div class="poc-componente-alerta">
-				<a data-prop="alerta" href="#" class="btn btn-primary link-propriedades link-propriedades-alerta">Propriedades</a>
+				<a data-prop="alerta" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-alerta"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="alert alert-success">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -227,7 +224,7 @@
 		<nome>menu-tabulado</nome>
 		<html><![CDATA[
 			<div class="poc-componente-menu-tabulado">
-				<a data-prop="bloco" href="#" class="btn btn-primary link-propriedades link-propriedades-menu-tabulado">Propriedades</a>
+				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-menu-tabulado"><span class="glyphicon glyphicon-cog"></span></a>
 				<ul id="myTab" menu-tabulado="nav nav-tabs">
 					<li class="active"><a href="#menu1" data-toggle="tab">Menu 1</a></li>
 					<li class=""><a href="#menu2" data-toggle="tab">Menu 2</a></li>
@@ -268,7 +265,7 @@
 		<nome>video</nome>
 		<html><![CDATA[
 			<div class="poc-componente-video">
-				<a data-prop="video" href="#" class="btn btn-primary link-propriedades link-propriedades-bloco">Propriedades</a>
+				<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				<iframe width="560" height="315" src="//www.youtube.com/embed/ElsErv0OukU" frameborder="0" allowfullscreen></iframe>
 			</div>
 		]]>
@@ -280,7 +277,7 @@
 		<nome>busca</nome>
 		<html><![CDATA[
 			<div class="poc-componente-busca">
-				<a data-prop="busca" href="#" class="btn btn-primary link-propriedades link-propriedades-busca">Propriedades</a>
+				<a data-prop="busca" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-busca"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="input-group">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -296,7 +293,7 @@
 		<nome>galeria-imagem</nome>
 		<html><![CDATA[
 			<div class="poc-componente-galeria-imagem">
-				<a data-prop="galeria-imagem" href="#" class="btn btn-primary link-propriedades link-propriedades-galeria-imagem">Propriedades</a>
+				<a data-prop="galeria-imagem" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagem"><span class="glyphicon glyphicon-cog"></span></a>
 				<div class="col-md-3">
 					<a href="images/slideshow/imagem1.jpg">
 						<div class="thumbnail">
@@ -327,7 +324,7 @@
 		<nome>slideshow</nome>
 		<html><![CDATA[
 			<div class="poc-componente-slideshow">
-				<a data-prop="slideshow" href="#" class="btn btn-primary link-propriedades link-propriedades-slideshow">Propriedades</a>
+				<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
 				<div id="componente-slideshow" class="carousel slide">
 					<!-- indicadores -->
 					<ol class="carousel-indicators">
@@ -370,7 +367,7 @@
 		<nome>redes-sociais</nome>
 		<html><![CDATA[
 			<div class="poc-componente-redes-sociais">
-				<a data-prop="slideshow" href="#" class="btn btn-primary link-propriedades link-propriedades-redes-sociais">Propriedades</a>
+				<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
 				<div>
 					facebook
 					youtube

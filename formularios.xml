@@ -108,7 +108,7 @@
 				    	<option value="1">Sim</option>
 				    </select>
 				</div>
-
+				
 				<div class="form-group">
 					<label for="header-tamanho-minimo">Tamanho Mínimo</label>
 					<div class="input-group input-group-sm">
@@ -119,6 +119,21 @@
 						</div>
 					</div><!-- /input-group -->
 				</div>
+
+				<div class="form-group">
+					<label for="style-content">Tamanho Mínimo</label>
+					<select class="form-control" name="style-content" id="style-content">
+						<option value="0">Estilo Livre</option>
+						<option value="1">Texto Livre</option>
+						<option value="2">Formulário de Contato</option>
+						<option value="3">Formulário de Login</option>
+						<option value="4">Categoria de Blog</option>
+						<option value="5">Galeria de Imagens</option>
+						<option value="6">Galeria de Vídeos</option>
+					</select>
+				</div>
+
+				
 			</form>
 		]]>
 		</html>

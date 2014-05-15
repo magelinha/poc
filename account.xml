@@ -2,7 +2,7 @@
     <tipo>
         <nome>logout</nome>
         <html><![CDATA[
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
+            <a href="#" id="poc-account-menu" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
                     <div class="navbar-content">
@@ -28,7 +28,7 @@
     <tipo>
         <nome>login</nome>
         <html><![CDATA[
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
+            <a href="#" id="poc-account-menu" class="dropdown-toggle" data-toggle="dropdown">Meus Dados <b class="caret"></b></a>
             <div class="dropdown-menu" style="padding: 15px; padding-bottom: 0px; height:320px; width:300px">
                 <form method="post" action="login" accept-charset="UTF-8">
                     <input style="margin-bottom: 15px;" type="text" placeholder="Usuário" id="username" name="username" class="form-control">

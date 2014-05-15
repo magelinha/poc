@@ -323,3 +323,8 @@ header, footer {
 }
 
 .poc-navbar-search {float: left}
+#content-formularios { display: none}
+
+.link-propriedades {
+	-webkit-user-drag: none;
+}

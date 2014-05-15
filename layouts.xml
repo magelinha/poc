@@ -51,7 +51,7 @@
 
 				                <!--<li><a href="https://github.com/fontenele/bootstrap-navbar-dropdowns" target="_blank">GitHub Project</a></li>-->
 				            </ul>
-				            <ul class="nav navbar-nav">
+				            <ul class="nav navbar-nav poc-nav-pages">
 				                <li><a href="#">Home</a></li>
 				                
 				                <!-- Exemplo dropdown

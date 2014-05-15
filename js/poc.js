@@ -75,6 +75,14 @@ function getHeaderStyle(nome){
 	return "";
 }
 
+function getPageStyle(nome){
+	for(i=0; i<pageStyle.length; i++){
+		if(pageStyle[i].nome === nome) return pageStyle[i].html;
+	}
+
+	return "";
+}
+
 /** Faz a leitura de todos os componentes contidos no arquivo xml **/
 function readXml(){
 	
@@ -157,11 +165,33 @@ function readXml(){
 		}
 
 	});
+
+	$.ajax({
+		type: "GET",
+		url: "content_styles.xml",
+		dataType: "xml",
+		success: function(xml){
+			$(xml).find("contentStyle").each(function(){
+				var obj = new Object();
+				obj.nome = $(this).find("nome").text();
+				obj.html = $(this).find("html").text();
+
+				pageStyle.push(obj);
+			});
+		}
+
+	});
 }
 /** FIM CARREGAMENTO DOS XMLS **/
 
 
 /** CONFIGURAÇÕES INICIAIS DA FERRAMENTA DE PROTOTIPAÇÃO **/
+
+//remove a função de arrastar dos links de propriedades
+$(document).on('dragstart', function(e){
+	if(e.target.tagName.toLowerCase() === "a") return false;
+})
+
 
 /** pega todos os itens do menu que são arrastáveis e insere o efeito de arraste (drag)**/
 function addDraggableToComponents(){
@@ -187,9 +217,17 @@ function addSortableToComponents(classe){
 		revert: true, 
 		helper: "clone",
 		cancel: ".conteudo-editavel",
+		items: ":not(.link-propriedades, .link-propriedades span)",
 
 		start: function(e, ui){
+			
+
 			var item = ui.item[0].classList;
+
+			for(var i=0; i<item.length; i++) {
+				if(item[i] === 'link-propriedades') return;
+			}
+
 			//pega o nome da penultima classe do objeto
 			var nome = item[item.length-2];
 			
@@ -269,21 +307,20 @@ function addColorPicker(){
 
 function addSidrToComponents(){
 	$(".link-propriedades").each(function(i, el){
-		//se não existe uma div com o id "propriedade-idDoLink" então cria-se a div com o sidr
-		var classes = $(this).prop('class').split(/\s/);
-		var lastclass = classes[classes.length-1];
+		
+		var prop = $(el).data('prop');
 
-		if($("#sidr-propriedade-" + lastclass).length == 0){
+		if($("#sidr-propriedade-" + prop).length == 0){
 			$(el).sidr({
-				name: "sidr-propriedade" + "-" + lastclass,
+				name: "sidr-propriedade" + "-" + prop,
 				side: 'right',
 				source: function(name){
-					return "<h1>Propriedades</h1>" + getFormulario($(el).data('prop'));
+					return "<h1>Propriedades</h1>" + getFormulario(prop);
 				},
+				renaming: false,
 
 			});		
 		}
-		
 	});
 
 	addColorPicker();
@@ -293,10 +330,12 @@ function addSidrToComponents(){
 
 
 function addBotaoPropriedade(content, id){
-	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#prop-'+id+'" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
+	//#prop-'+id+'
+	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
 	'<span class="glyphicon glyphicon-cog"></span></a>';
 
 	$(content).prepend(html);
+
 }
 
 //sempre que clicar em um botão 
@@ -1018,7 +1057,7 @@ function addPaiSelect(itens, nivel){
 
 //percorre todos as páginas para verificar se algum deles é o item selecionado como pai
 function getPai(itens, nome){
-
+	console.log('ta aqui');
 	for(var i=0; i<itens.length; i++){
 		if(itens[i].nome == nome){
 			for(var j=0; j<itens[i].children.length+1; j++){
@@ -1072,6 +1111,54 @@ function redefinirMenu(lista, nivel){
 	}
 }
 
+function redefinirMenuHtml(lista, nivel, pai){
+	var pai = $(pai);
+	var id = pai.data('id');
+
+	
+	switch(nivel){
+		case 0:
+			for(i in lista){
+				if(lista[i].children.length == 0) pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+				else{
+					pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+lista[i].nome+'<b class="caret"></b></a></li>');	
+					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+lista[i].id);
+					
+				}	
+			}
+			
+			break;
+
+		case 1:
+			pai.append('<ul class="dropdown-menu multi-level submenu-item-'+id+'" ><ul/>');
+			var filho =	$('.submenu-item-'+id);
+			for(i in lista){
+				console.log(lista[i].children.length);
+				if(lista[i].children.length == 0) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+				else{
+					filho.append('<li data-id="'+lista[i].id+'" class="dropdown-submenu item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+lista[i].nome+'</a></li>');	
+					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+id);
+				}
+			}
+
+			break;
+
+		case 2:
+			pai.append('<ul class="dropdown-menu submenu-item'+id+'"><ul/>');
+			var filho =	$('.submenu-item-'+id);
+			for(i in lista) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+
+			break;
+
+		default: return;
+			
+
+
+	}
+	
+}
+
+
 function openPage(pagina){
 	$("#poc-header").replaceWith(componentes_fixos.cabecalho);
 	$("#poc-menu").replaceWith(componentes_fixos.menuPrincipal);
@@ -1084,6 +1171,7 @@ function openPage(pagina){
 //adiciona as opções de posição de acordo com o pai selecionado.
 $(document).on('change', '#pai', function(){
 	var selecionado = $(this).val();
+	var nomePagina = $('#pai option:selected').text().replace('-', '').trim();
 
 	$('#posicao').empty(); //limpa o select
 
@@ -1094,7 +1182,7 @@ $(document).on('change', '#pai', function(){
 		}
 	}else{
 		//caso contrario, é necessário procurar 
-		getPai(paginas, selecionado);
+		getPai(paginas, nomePagina);
 	}
 
 });
@@ -1110,15 +1198,13 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	var pai = parseInt(dados[4].value);
 	var posicao = parseInt(dados[5].value);
 
-	console.log(dados[4]);
 	if(nome == '') alert('Dê um nome para a página!')
 	else {
 
-		$('#poc-content').find(':not(a)').each(function(){
-			$(this).remove;
-		});
-
-		$('#poc-content').html('<p>Teste</p>');
+		var conteudo = $('#poc-content');
+		conteudo.empty(); //esvazia o conteudo
+		addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
+		conteudo.append(getPageStyle(dados[2].value));
 
 		if(dados[1].value == '1'){
 			isHome = true;
@@ -1143,13 +1229,16 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 			else paginas.splice(posicao, 0, pagina);
 		}
 
-		console.log(paginas);
 
 		lastId = lastId + 1;
 
 		$('#lista-paginas').empty();
+		$('.poc-nav-pages').empty();
+
 		redefinirMenu(paginas,0);
 		openPage(pagina);
+		redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+		
 	}
 
 })

@@ -1,0 +1,184 @@
+<listaContentStyles>
+	<contentStyle>
+		<nome>texto-livre</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-texto-livre">
+				<div class="poc-componente-titulo-texto">
+					<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+					<h1> Título </h1>
+					<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+			</div>
+		]]>
+		</html>
+	</contentStyle>
+
+	<contentStyle>
+		<nome>blog</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-blog">
+				<div class="poc-componente-titulo-texto">
+					<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+					<h1> Título </h1>
+					<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+				<div class="poc-componente-titulo-texto">
+					<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+					<h1> Título </h1>
+					<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+
+				<div class="poc-componente-titulo-texto">
+					<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+					<h1> Título </h1>
+					<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+
+				<div class="poc-componente-titulo-texto">
+					<a data-prop="titulo-texto" href="#" class="btn btn-primary link-propriedades link-propriedades-titulo-texto">Propriedades</a>
+					<h1> Título </h1>
+					<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+
+				<div class="poc-componente-conteudo-paginacao">
+					<a data-prop="conteudo-paginacao" href="#" class="btn btn-primary link-propriedades link-propriedades-conteudo-paginacao">Propriedades</a>
+					<ul class="pagination">
+						<li><a class="link-paginacao" href="#">1</a></li>
+						<li><a class="link-paginacao" href="#">2</a></li>
+						<li><a class="link-paginacao" href="#">3</a></li>
+						<li><a class="link-paginacao" href="#">4</a></li>
+						<li><a class="link-paginacao" href="#">5</a></li>
+					</ul>
+				</div>
+
+			</div>
+		]]>
+		</html>
+	</contentStyle>
+	<contentStyle>
+		<nome>formulario-login</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-formulario-login">
+				<div class="poc-componente-formulario">
+					<a data-prop="formulario" href="#" class="btn btn-primary link-propriedades link-propriedades-formulario">Propriedades</a>
+					<form role="form">
+						<div class="form-group">
+							<label for="usuario">Usuário</label>
+							<input type="text" class="form-control" id="usuario" placeholder="Enter email">
+						</div>
+						<div class="form-group">
+							<label for="senha">Senha</label>
+							<input type="password" class="form-control" id="senha" placeholder="Password">
+						</div>
+						<button type="submit" class="btn btn-default">Entrar</button>
+					</form>
+				</div>
+			</div>
+		]]>
+		</html>
+	</contentStyle>
+
+	<contentStyle>
+		<nome>formulario-contato</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-formulario-contato">
+				<div class="poc-componente-formulario">
+					<a data-prop="formulario" href="#" class="btn btn-primary link-propriedades link-propriedades-formulario">Propriedades</a>
+					<form role="form">
+						<div class="form-group">
+							<label for="poc-form-nome">Nome</label>
+							<input type="text" class="form-control" id="poc-form-nome" placeholder="Digite seu nome">
+						</div>
+
+						<div class="form-group">
+							<label for="poc-form-email">E-mail</label>
+							<input type="email" class="form-control" id="poc-form-email" placeholder="Digite seu E-mail">
+						</div>
+
+						<div class="form-group">
+							<label for="poc-form-assunto">Assunto</label>
+							<input type="text" class="form-control" id="poc-form-assunto" placeholder="Digite o assunto">
+						</div>
+
+						<div class="form-group">
+							<label for="poc-form-mensagem">Mensagem</label>
+							<textarea class="form-control" id="poc-form-mensagem"></textarea
+						</div>
+						
+						<button type="submit" class="btn btn-default">Enviar</button>
+					</form>
+				</div>
+			</div>
+		]]>
+		</html>
+	</contentStyle>
+
+	<contentStyle>
+		<nome>galeria-imagem</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-galeria-imagem">
+				<div class="poc-componente-galeria-imagem">
+					<a data-prop="galeria-imagem" href="#" class="btn btn-primary link-propriedades link-propriedades-galeria-imagem">Propriedades</a>
+					<div class="col-md-3">
+						<a href="images/slideshow/imagem1.jpg">
+							<div class="thumbnail">
+								<img src="images/slideshow/imagem1.jpg" alt="imagem1">
+							</div>
+						</a>
+					</div>
+					<div class="col-md-3">
+						<a href="images/slideshow/imagem2.jpg">
+							<div class="thumbnail">
+								<img src="images/slideshow/imagem2.jpg" alt="imagem2">
+							</div>
+						</a>
+					</div>
+					<div class="col-md-3">
+						<a href="images/slideshow/imagem3.jpg">
+							<div class="thumbnail">
+								<img src="images/slideshow/imagem3.jpg" alt="imagem3">
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		]]>
+		</html>
+	</contentStyle>
+
+	<contentStyle>
+		<nome>galeria-video</nome>
+		<html><![CDATA[
+			<div class="row previa poc-content-galeria-video">
+				<h1>Galeria de Vídeos</h1>
+			</div>
+			]]>
+		</html>
+	</contentStyle>
+
+</listaContentStyles>
