@@ -83,11 +83,22 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Adicionar Página</h4>
+        <h4 class="modal-title" id="myModalLabel">Adicionar Item ao Menu</h4>
       </div>
       
       <div class="modal-body">
+        
         <form class="form-horizontal" role="form" id="poc-form-add-page">
+          <div class="form-group">
+            <label for="tipo-item" class="col-sm-2 control-label">Tipo de Item</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="tipo-item" id="tipo-item">
+                <option value="0">Página</option>
+                <option value="1">Link</option>
+              </select>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="nome" class="col-sm-2 control-label">Nome</label>
             <div class="col-sm-10">
@@ -95,7 +106,15 @@
     		    </div>
   		    </div>
 
-          <div class="form-group">
+          <div class="form-group grupo-link" style="display:none">
+            <label for="link" class="col-sm-2 control-label">Link</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="link" id="link" placeholder="Informe o link">
+              <span class="help-block">Caso não queira que este item leve à algum lugar, deixe-o em branco</span>
+            </div>
+          </div>
+
+          <div class="form-group grupo-is-home">
             <label for="isHome" class="col-sm-2 control-label">Página Inicial</label>
             <div class="col-sm-10">
               <select class="form-control" name="isHome" id="isHome">
@@ -105,7 +124,7 @@
             </div>
           </div>
 
-    		  <div class="form-group">
+    		  <div class="form-group grupo-tipo-pagina">
     		    <label for="tipo-style-content" class="col-sm-2 control-label">Tipo de Página</label>
     		    <div class="col-sm-10">
     		      <select class="form-control" name="tipo-style-content" id="tipo-style-content">

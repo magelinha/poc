@@ -27,17 +27,15 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapsePaginas">Páginas</a>
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapsePaginas">Itens do Menu</a>
 					</h4>
 				</div>
 				<div id="collapsePaginas" class="panel-collapse collapse in">
 					<div class="panel-body">
 						
-						<ul class="list-unstyled" id="lista-paginas">
-							<li class="item-page"><a href="#" class="link-page" data-id="1">-Home</a></li>
-						</ul>	
+						<ul class="list-unstyled" id="lista-paginas"></ul>	
 						
-						<button class="btn btn-primary" data-toggle="modal" data-target="#add-page">
+						<button class="btn btn-primary" id="btn-add-page" data-toggle="modal" data-target="#add-page">
 						  <span class="glyphicon glyphicon-plus"></span> Nova Página
 						</button>
 					</div>
@@ -93,7 +91,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-9 conteudo-gerado conteudo-ordenado" id="poc-page">
+	<div class="col-md-9 conteudo-gerado conteudo-ordenado" data-content="Página" id="poc-page">
 	
 	</div>
 	<div id="content-modal"></div>

@@ -13,6 +13,9 @@ var objetoAtual;
 var template = 0;
 var tipoPagina = 0;
 
+var paginaAtual = new Object();
+var opcaoAtual;
+
 var componentes_fixos = new Object();
 var background = {
 	/*
@@ -24,6 +27,8 @@ var background = {
 	tipo: 0,
 	valor: "#fff" //padrão é branco;
 }
+
+var alterarPagina = 0;
 
 //array com as fontes importadas do google, ou as mais usadas no windows
 var fonts = [
@@ -558,14 +563,23 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 		id: 			1,
 		nome: 			"Home",
 		isHome: 		true,
-		descricao: 		"",
+		isLink: 		false, 
+		descricao: 		"Página Inicial do Seu Projeto",
 		children: 		[],
 		pai: 			0,
+		url: 			"#", 
 		conteudo: 		$("#poc-content"),
 	};
 
 	paginas.push(home);
+	openPage(home);
 
+	$('#lista-paginas').empty();
+	$('.poc-nav-pages').empty();
+	paginaAtual = home;
+
+	redefinirMenu(paginas, 0);
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
 	
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
 	addDraggableToComponents();//capacidade de arrastar
@@ -1040,6 +1054,30 @@ $(document).on('click','.footer-btn-down', function(){
 
 /** ADICIONAR PÁGINA **/
 
+function limparFormlarioAddPage(){
+	$("#poc-form-add-page #tipo-item").val('0');
+	$("#poc-form-add-page #tipo-item").change();
+	$("#poc-form-add-page #link").val('');
+	$("#poc-form-add-page #nome").val('');
+	$("#poc-form-add-page #isHome").val('0');
+	$("#poc-form-add-page #tipo-style-content").val('0');
+	$("#poc-form-add-page #descricao").val('');
+
+	$('#poc-form-add-page #pai').empty();
+	$('#poc-form-add-page #pai').append('<option value="0">Nenhum</option>')
+
+	addPaiSelect(paginas, 0);
+	$('#pai').change();
+}
+
+
+
+$("#btn-add-page").click(function(){
+	limparFormlarioAddPage();
+});
+
+
+
 //adiciona possíveis pais para serem escolhidos
 function addPaiSelect(itens, nivel){
 	//nível máximo é 3
@@ -1057,16 +1095,17 @@ function addPaiSelect(itens, nivel){
 
 //percorre todos as páginas para verificar se algum deles é o item selecionado como pai
 function getPai(itens, nome){
-	console.log('ta aqui');
+	var add;
+
+	alterarPagina > 0 ? add = 0 : add = 1;
+
 	for(var i=0; i<itens.length; i++){
 		if(itens[i].nome == nome){
-			for(var j=0; j<itens[i].children.length+1; j++){
+			for(var j=0; j<itens[i].children.length+add; j++){
 				$("#posicao").append("<option value='" + (j+1) + "'>" + (j+1) + "</option>");
 			}
 
-			return false;
-
-		} else if(itens[i].children.length > 0 && !getPai(itens[i].children, nome)) return;
+		} else if(itens[i].children.length > 0) getPai(itens[i].children, nome);
 	}
 }
 
@@ -1104,8 +1143,25 @@ function setPai(itens, idPage, page, position){
 
 function redefinirMenu(lista, nivel){
 	var menu = $('#lista-paginas');
+	var classe = '';
 	for(posicao in lista){
-		menu.append('<li><a href="#" data-id="'+lista[posicao].id+'">' + addTabulacao(nivel) + ' ' + lista[posicao].nome + '</a></li>');
+		paginaAtual.id == lista[posicao].id ? classe = 'bg-primary' : classe = 'bg-info'; 
+		html = '<li class="'+classe+'" data-id="'+lista[posicao].id + '"><a href="#">' + addTabulacao(nivel) + ' ' + lista[posicao].nome + '</a>';
+		
+		if(lista[posicao].conteudo !== ""){
+			html += '<div class="pull-right">'+
+						'<button class="btn btn-warning btn-xs btn-opcoes-paginas btn-editar-pagina"><span class="glyphicon glyphicon-pencil"></span></button>' + 
+						'<button class="btn btn-success btn-xs btn-opcoes-paginas btn-visualizar-pagina"><span class="glyphicon glyphicon-eye-open"></span></button>' + 
+						'<button class="btn btn-danger btn-xs btn-opcoes-paginas btn-remover-pagina"><span class="glyphicon glyphicon-remove"></span></button>'+
+					'</div></li>';
+		}else {
+			html += '<div class="pull-right">'+
+						'<button class="btn btn-warning btn-xs btn-opcoes-paginas btn-editar-pagina"><span class="glyphicon glyphicon-pencil"></span></button>' + 
+						'<button class="btn btn-danger btn-xs btn-opcoes-paginas btn-remover-pagina"><span class="glyphicon glyphicon-remove"></span></button>'+
+					'</div></li>';
+		}
+
+		menu.append(html);
 
 		if(lista[posicao].children.length > 0) redefinirMenu(lista[posicao].children, nivel+1);
 	}
@@ -1133,7 +1189,6 @@ function redefinirMenuHtml(lista, nivel, pai){
 			pai.append('<ul class="dropdown-menu multi-level submenu-item-'+id+'" ><ul/>');
 			var filho =	$('.submenu-item-'+id);
 			for(i in lista){
-				console.log(lista[i].children.length);
 				if(lista[i].children.length == 0) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
 				else{
 					filho.append('<li data-id="'+lista[i].id+'" class="dropdown-submenu item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+lista[i].nome+'</a></li>');	
@@ -1151,8 +1206,6 @@ function redefinirMenuHtml(lista, nivel, pai){
 			break;
 
 		default: return;
-			
-
 
 	}
 	
@@ -1160,24 +1213,31 @@ function redefinirMenuHtml(lista, nivel, pai){
 
 
 function openPage(pagina){
+	paginaAtual = pagina;
+
+	$(".conteudo-gerado").attr('data-content', 'Página - ' + pagina.nome);
 	$("#poc-header").replaceWith(componentes_fixos.cabecalho);
 	$("#poc-menu").replaceWith(componentes_fixos.menuPrincipal);
 	$("#poc-menu-left").replaceWith(componentes_fixos.menuEsquerdo);
 	$("#poc-menu-right").replaceWith(componentes_fixos.menuDireito);
 	$("#poc-content").replaceWith(pagina.conteudo);
-	$("poc-footer").replaceWith(componentes_fixos.rodape);	
+	$("#poc-footer").replaceWith(componentes_fixos.rodape);	
 }
 
 //adiciona as opções de posição de acordo com o pai selecionado.
 $(document).on('change', '#pai', function(){
 	var selecionado = $(this).val();
 	var nomePagina = $('#pai option:selected').text().replace('-', '').trim();
+	var add;
+
+	alterarPagina > 0 ? add = 0 : add = 1;
+
 
 	$('#posicao').empty(); //limpa o select
 
 	if(selecionado == '0'){
 		//selecionado == 0 indica que foi selecionado a opção Nenhum
-		for(var i=0; i<paginas.length+1; i++){
+		for(var i=0; i<paginas.length+add; i++){
 			$("#posicao").append("<option value='" + (i+1) + "'>" + (i+1) + "</option>");
 		}
 	}else{
@@ -1187,46 +1247,107 @@ $(document).on('change', '#pai', function(){
 
 });
 
+
+$(document).on('change', '#tipo-item', function(){
+	var valor = parseInt($(this).val());
+
+	if(valor == 0) {
+		$('#poc-form-add-page .form-group').show();
+		$('.grupo-link').hide();
+	}else{
+		$('#poc-form-add-page .form-group').show();
+		$('.grupo-is-home, .grupo-tipo-pagina').hide();
+	}
+});
+
 $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	var dados = $('#poc-form-add-page').serializeArray(); //pega os dados do formulário
+	
 	var pagina = new Object();
 	//processo de validação
 
 	//nome
-	var nome = $.trim(dados[0].value);
+	var nome = $.trim(dados[1].value);
 	var isHome = false;
-	var pai = parseInt(dados[4].value);
-	var posicao = parseInt(dados[5].value);
+	var pai = parseInt(dados[6].value);
+	var posicao = parseInt(dados[7].value);
+	var url = "#"; dados[2].value.length == 0 ? url = "#" : url = dados[2].value;
 
-	if(nome == '') alert('Dê um nome para a página!')
+	if(nome == '') alert('Dê um nome para o item!')
 	else {
 
-		var conteudo = $('#poc-content');
-		conteudo.empty(); //esvazia o conteudo
-		addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
-		conteudo.append(getPageStyle(dados[2].value));
+		if(dados[0].value == '0'){
+			var conteudo = $('#poc-content');
+			conteudo.empty(); //esvazia o conteudo
+			addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
+			conteudo.append(getPageStyle(dados[4].value));
 
-		if(dados[1].value == '1'){
-			isHome = true;
-			setIsHomeFalse(paginas);
+			if(dados[3].value == '1'){
+				isHome = true;
+				setIsHomeFalse(paginas);
+			}
 
+			pagina = {
+				id: 			(lastId + 1),
+				nome: 			nome,
+				isLink: 		false, 
+				isHome: 		isHome,
+				descricao: 		dados[5].value,
+				children: 		[],
+				pai: 			pai,
+				url: 			"#", 
+				conteudo: 		$("#poc-content")
+			};
+
+		}else{
+			pagina = {
+				id: 			(lastId + 1),
+				nome: 			nome,
+				isHome: 		false,
+				isLink: 		true,
+				descricao: 		dados[5].value,
+				children: 		[],
+				pai: 			pai,
+				url: 			url, 
+				conteudo: 		""
+			};
 		}
 
-		pagina = {
-			id: 			(lastId + 1),
-			nome: 			nome,
-			isHome: 		isHome,
-			descricao: 		dados[3].value,
-			children: 		[],
-			pai: 			pai,
-			conteudo: 		$("#poc-content")
+		if(alterarPagina > 0){
+			var paginaTemp = getPagina(paginas, alterarPagina);
+			paginaTemp.nome = pagina.nome;
+			paginaTemp.isLink = pagina.isLink;
+			paginaTemp.isHome = pagina.isHome;
+			paginaTemp.descricao = pagina.descricao;
+			paginaTemp.pai = pagina.pai;
+
+			removePageChild(paginas, paginaTemp);
+
+			//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
+			if(pai != 0)setPai(paginas, pai, paginaTemp, posicao);
+			else{
+				if(paginas.length <= posicao) paginas.push(paginaTemp);
+				else paginas.splice(posicao-1, 0, paginaTemp);
+			}
+
+			$('#lista-paginas').empty();
+			$('.poc-nav-pages').empty();
+
+
+			if(!paginaTemp.isLink) openPage(paginaTemp);
+			redefinirMenu(paginas,0);
+			redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+
+			alterarPagina = 0;
+			return;
 		}
+		
 
 		//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
 		if(pai != 0)setPai(paginas, pai, pagina, posicao);
 		else{
 			if(paginas.length <= posicao) paginas.push(pagina);
-			else paginas.splice(posicao, 0, pagina);
+			else paginas.splice(posicao-1, 0, pagina);
 		}
 
 
@@ -1235,13 +1356,230 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 		$('#lista-paginas').empty();
 		$('.poc-nav-pages').empty();
 
+
+		if(dados[0].value == '0') openPage(pagina);
 		redefinirMenu(paginas,0);
-		openPage(pagina);
 		redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
 		
 	}
-
 })
+
+function removePageChild(lista, pagina){
+	if(pagina.pai != 0){
+		for(i in lista){
+			if(lista[i].id == pagina.pai){
+				for(j in lista[i].children){
+					if(lista[i].children[j].id == pagina.id) {
+						lista[i].children.splice(j, 1);
+						break;
+					}
+
+				}
+			}
+			else if(lista[i].children.length > 0) {
+				removePageChild(lista[i].children, pagina);
+			}
+		}
+	}else{
+		for(i in lista){
+			if(lista[i].id == pagina.id) {
+				lista.splice(parseInt(i), 1);
+				break;
+			}
+		}
+	}
+
+	
+}
+
+function getPagina(lista, idPage){
+	var retorno = "";
+	for(i in lista){
+		if(lista[i].id == idPage) return lista[i];
+		else if(lista[i].children.length > 0) {
+			retorno = getPagina(lista[i].children, idPage);
+
+			if(retorno.length > 0) return retorno; 
+		}
+	}
+
+	return retorno;
+}
+
+
+//faz com que a pagina atual sobreponha a página na lista
+function salvarAlteracoes(lista, pagina){
+	for(i in lista){
+		if(lista[i].id == pagina.id) lista[i] = pagina
+		else if(lista[i].children.length > 0) salvarAlteracoes(lista[i].children, pagina);
+	}
+}
+
+
+function preencherModal(pagina){
+	var isHome = '0'; pagina.isHome ? isHome = '1' : isHome = '0';
+	$("#poc-form-add-page .grupo-tipo-pagina").hide();
+
+	if(pagina.isLink){
+		$("#poc-form-add-page #tipo-item").val('1');
+		$("#poc-form-add-page #link").val(pagina.url);
+
+	}else{
+		$("#poc-form-add-page #tipo-item").val('0');
+	}
+
+	$("#poc-form-add-page #nome").val(pagina.nome);
+	$("#poc-form-add-page #isHome").val(isHome);
+	$("#poc-form-add-page #tipo-style-content").val('0');
+	$("#poc-form-add-page #descricao").val(pagina.descricao);
+	
+	var pai = getPagina(paginas, pagina.pai);
+
+	$("#poc-form-add-page #pai").find(':contains('+pai.nome+')').prop('selected', true);
+	$("#poc-form-add-page #pai").change();
+
+	var posicao = getPosicao(paginas, pagina);
+	$("#poc-form-add-page #posicao").val(posicao.toString());
+}
+
+function getPosicao(lista, pagina){
+	var retorno;
+
+	if(pagina.pai == 0){
+		for(i in lista) if(lista[i].id = pagina.id) return (i+1);
+	}
+
+
+	for(i in lista){
+		if(lista[i].id = pagina.pai){
+			for(j in lista[i].children){
+				if(lista[i].children[j] == pagina.id) return (j+1);
+			}
+		}else if(lista[i].children.length > 0){
+			retorno = getPosicao(lista[i].children, pagina);
+		}
+	}
+
+	return retorno;
+
+}
+
+
+//verifica na lista, quantos itens são de fato páginas
+function getNumberPages(lista){
+	var retorno = 0;
+
+	for(i in lista){
+		if(!lista[i].isLink) retorno = retorno + 1;
+		else if(lista[i].children.length > 0){
+			retorno = retorno + getNumberPages(lista[i].children);
+		}
+	}
+
+	return retorno;
+}
+
+function redirecionarFilhos(lista, pagina){
+	if(pagina.pai == 0 && pagina.children.length > 0){
+		paginas.push(pagina.children);
+		return;
+	}
+
+	for(i in lista){
+		if(lista[i].id == pagina.pai){
+			lista[i].children.push(pagina.children);
+			break;
+		}else if(lista[i].children.length > 0){
+			redirecionarFilhos(lista[i].children, pagina);
+		}
+	}
+}
+
+function removerPagina(lista, pagina){
+	for(i in lista){
+		if(lista[i].id == pagina.id){
+			lista.splice(parseInt(i), 1);
+			break;
+		}else if(lista[i].children.length > 0){
+			removerPagina(lista[i].children, pagina);
+		}
+	}
+}
+
+
+$(document).on('click', '.btn-editar-pagina', function(){
+	alterarPagina = true;
+	var id = parseInt($(this).parent().parent().data('id'));
+	var pagina = getPagina(paginas, id);
+
+	preencherModal(pagina);
+	$('#add-page').modal('show');
+})
+
+$(document).on('click', '.btn-visualizar-pagina', function(){
+	//salva as alterações da página atual e faz com que a página atual seja a do item clicado no menu
+	salvarAlteracoes(paginas, paginaAtual);
+
+	var id = parseInt($(this).parent().parent().data('id'));
+	var pagina = getPagina(paginas, id);
+
+	openPage(pagina);
+
+	$('#lista-paginas').empty();
+	$('.poc-nav-pages').empty();
+	redefinirMenu(paginas,0);
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+})
+
+$(document).on('click', '.btn-remover-pagina', function(){
+	var qtdPages = getNumberPages(paginas);
+
+	if(qtdPages < 2) {
+		alert('Não é possível excluir essa página! Motivo: Existe apenas este item como página e o número mínimo de páginas no projeto é 1.');
+		return;
+	}
+	
+
+	var confirma = window.confirm('Deseja realmente excluir esse item?');
+	if(confirma == false) return;
+
+	
+
+	var id = parseInt($(this).parent().parent().data('id'));
+	var pagina = getPagina(paginas, id);
+
+	//passa o filhos do item a ser removido para o pai do mesmo
+	if(pagina.children > 0) redirecionarFilhos(paginas, pagina);
+	removerPagina(paginas, pagina); //remove a página 
+
+
+	//abre a primeira página na lista
+	for(i in paginas){
+
+		if(!paginas[i].isLink) {
+			if(pagina.isHome){
+				setIsHomeFalse(paginas);
+				paginas[i].isHome = true;
+			}
+
+			openPage(paginas[i]);
+
+			break;
+		}
+	}
+
+
+	//redefine os menus
+	$('#lista-paginas').empty();
+	$('.poc-nav-pages').empty();
+	redefinirMenu(paginas,0);
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+})
+
+
+
+
+
 
 
 //define a ação de acordo com o item selecionado no select para tipo de site

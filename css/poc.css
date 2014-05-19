@@ -1,7 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro|Droid+Sans|Lato|PT+Sans|Ubuntu|Droid+Serif|Open+Sans|Roboto|Oswald|Open+Sans+Condensed:300|Roboto+Condensed|Montserrat);
 
 .conteudo-gerado:after {
-	content: "Página";
+	content: attr(data-content);
 	border:1px solid #dddddd;
 	color: #9da0a4;
 	left: -1px;
@@ -327,4 +327,29 @@ header, footer {
 
 .link-propriedades {
 	-webkit-user-drag: none;
+}
+
+#lista-paginas li.bg-info { background-color: #D9EDF7}
+#lista-paginas li.bg-primary { background-color: #428BCA}
+#lista-paginas li.bg-primary a {color: #fff}
+
+#lista-paginas li a{
+	color: #000;
+	font-weight: bold;
+	font-size: 15px;
+	text-decoration: none;
+}
+
+#lista-paginas li a:hover {
+	cursor: default;
+}
+
+#lista-paginas li {
+	height: 40px;
+	line-height: 40px;
+	padding: 0 10px 0 10px;
+}
+
+.btn-opcoes-paginas {
+	margin-right: 5px;
 }
