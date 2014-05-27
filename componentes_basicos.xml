@@ -1,11 +1,12 @@
 <listaComponentes>
-
 	<!-- 1 coluna -->
 	<componente>
 		<nome>1coluna</nome>
 		<html><![CDATA[
-			<div class="row previa" data-id="0">
-				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+			<div class="row previa">
+				<div class="col-md-12">
+					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
 				<div class="col-md-12 coluna"></div>
 			</div>
 		]]>
@@ -16,8 +17,10 @@
 	<componente>
 		<nome>2colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-id="1">
-				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+			<div class="row previa">
+				<div class="col-md-12">
+					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
 				<div class="col-md-6 coluna"></div>
 				<div class="col-md-6 coluna"></div>
 			</div>
@@ -29,8 +32,10 @@
 	<componente>
 		<nome>3colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-id="2">
-				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+			<div class="row previa">
+				<div class="col-md-12">
+					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
 				<div class="col-md-4 coluna"></div>
 				<div class="col-md-4 coluna"></div>
 				<div class="col-md-4 coluna"></div>
@@ -43,8 +48,10 @@
 	<componente>
 		<nome>4colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-id="3">
-				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+			<div class="row previa">
+				<div class="col-md-12">
+					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
 				<div class="col-md-3 coluna"></div>
 				<div class="col-md-3 coluna"></div>
 				<div class="col-md-3 coluna"></div>
@@ -54,327 +61,390 @@
 		</html>
 	</componente>
 
-	
-	<componente>
-		<nome>titulo-texto</nome>
-		<html><![CDATA[
-			<div class="poc-componente-titulo-texto">
-				<a data-prop="titulo-texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-titulo-texto"><span class="glyphicon glyphicon-cog"></span></a>
-				<h1> Título </h1>
-				<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	
+	<!-- Texto -->
 	<componente>
 		<nome>texto</nome>
 		<html><![CDATA[
-			<div class="poc-componente-texto">
-				<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur...</p>
+			<div class="componente-texto">
+				<div class="col-md-12">
+					<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="poc-texto">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
 			</div>
-		]]>
-		</html>
-	</componente>
-	<componente>
-		<nome>conteudo-paginacao</nome>
-		<html><![CDATA[
-			<div class="poc-componente-conteudo-paginacao">
-				<a data-prop="conteudo-paginacao" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-conteudo-paginacao"><span class="glyphicon glyphicon-cog"></span></a>
-				<ul class="pagination">
-					<li><a class="link-paginacao" href="#">1</a></li>
-					<li><a class="link-paginacao" href="#">2</a></li>
-					<li><a class="link-paginacao" href="#">3</a></li>
-					<li><a class="link-paginacao" href="#">4</a></li>
-					<li><a class="link-paginacao" href="#">5</a></li>
-				</ul>
-			</div>
-		]]>
-		</html>
-	</componente>
-	<componente>
-		<nome>Tabela</nome>
-		<html><![CDATA[
-			<div class="poc-componente-tabela">
-				<a data-prop="tabela" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-tabela"><span class="glyphicon glyphicon-cog"></span></a>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Colua 1</th>
-							<th>Colua 2</th>
-							<th>Colua 3</th>
-							<th>Colua 4</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>valor 1</td>
-							<td>valor 2</td>
-							<td>valor 3</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>valor 1</td>
-							<td>valor 2</td>
-							<td>valor 3</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>valor 1</td>
-							<td>valor 2</td>
-							<td>valor 3</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		
 		]]>
 		</html>
 	</componente>
 
-	
+	<!-- miniatura -->
+	<componente>
+		<nome>miniaturas</nome>
+		<html><![CDATA[
+			<div class="componente-miniaturas">
+				<div class="col-md-12">
+					<a data-prop="miniaturas" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-miniaturas"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="group-thumbnails">
+					<div class="col-md-3">
+						<a href="#" class="thumbnail poc-miniaturas">
+							<img src="img/logolinked.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+
+					<div class="col-md-3">
+						<a href="#" class="thumbnail poc-miniaturas">
+							<img src="img/logolinked.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+
+					<div class="col-md-3">
+						<a href="#" class="thumbnail poc-miniaturas">
+							<img src="img/logolinked.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+
+					<div class="col-md-3">
+						<a href="#" class="thumbnail poc-miniaturas">
+							<img src="img/logolinked.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Formulário -->
 	<componente>
 		<nome>formulario</nome>
 		<html><![CDATA[
-				<div class="poc-componente-formulario">
+			<div class="componente-formulario">
+				<div class="col-md-12">
 					<a data-prop="formulario" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-formulario"><span class="glyphicon glyphicon-cog"></span></a>
-					<form role="form">
-						<div class="form-group">
-							<label for="usuario">Usuário</label>
-							<input type="text" class="form-control" id="usuario" placeholder="Enter email">
-						</div>
-						<div class="form-group">
-							<label for="senha">Senha</label>
-							<input type="password" class="form-control" id="senha" placeholder="Password">
-						</div>
-						<button type="submit" class="btn btn-default">Entrar</button>
-					</form>
 				</div>
-		]]>
-		</html>
-	</componente>
 
-	<componente>
-		<nome>painel</nome>
-		<html><![CDATA[
-			<div class="poc-componente-painel">
-				<a data-prop="painel" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel"><span class="glyphicon glyphicon-cog"></span></a>
-				<div class="panel panel-default">
-					<div class="panel-heading">Cabeçalho do Painel</div>
-					<div class="panel-body">
-						Corpo do Painel
-					</div>
-					<div class="panel-footer">Rodapé do Painel</div>
-				</div>
-		]]>
-		</html>
-	</componente>
+				<form role="form">
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">E-mail</label>
+				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Senha</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				  </div>
 
-	<componente>
-
-		<nome>conteudo-destaque</nome>
-		<html><![CDATA[
-			
-			<div class="poc-componente-conteudo-destaque">
-				<a data-prop="conteudo-destaque" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-conteudo-destaque"><span class="glyphicon glyphicon-cog"></span></a>
-				<div class="jumbotron">
-					<h1>Título do Destaque</h1>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p><a class="btn btn-primary btn-lg" role="button">Leia Mais</a></p>
-				</div>
+				  <button type="submit" class="btn btn-default">Entrar</button>
+				</form>
 			</div>
 		]]>
 		</html>
 	</componente>
-	<componente>
-		<nome>alerta</nome>
-		<html><![CDATA[
-			<div class="poc-componente-alerta">
-				<a data-prop="alerta" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-alerta"><span class="glyphicon glyphicon-cog"></span></a>
-				<div class="alert alert-success">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</div>
-			</div>
-		]]>
-		</html>
-	</componente>
-	<componente>
-		<nome>menu-tabulado</nome>
-		<html><![CDATA[
-			<div class="poc-componente-menu-tabulado">
-				<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-menu-tabulado"><span class="glyphicon glyphicon-cog"></span></a>
-				<ul id="myTab" menu-tabulado="nav nav-tabs">
-					<li class="active"><a href="#menu1" data-toggle="tab">Menu 1</a></li>
-					<li class=""><a href="#menu2" data-toggle="tab">Menu 2</a></li>
-					<li class=""><a href="#menu3" data-toggle="tab">Menu 3</a></li>	
-				</ul>
-				<div id="conteudo-menu" class="tab-content">
-      				<div class="tab-pane fade active in" id="menu1">
-      					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      				</div>
-      				<div class="tab-pane fade" id="menu2">
-      					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      				</div>
-      				<div class="tab-pane fade" id="menu3">
-      					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      				</div>
-				</div>
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	<componente>
-		<nome>video</nome>
-		<html><![CDATA[
-			<div class="poc-componente-video">
-				<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
-				<iframe width="560" height="315" src="//www.youtube.com/embed/ElsErv0OukU" frameborder="0" allowfullscreen></iframe>
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	<!-- componentes dinâmicos -->
-	<componente>
-		<nome>busca</nome>
-		<html><![CDATA[
-			<div class="poc-componente-busca">
-				<a data-prop="busca" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-busca"><span class="glyphicon glyphicon-cog"></span></a>
-				<div class="input-group">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-					</span>
-					<input type="text" class="form-control">
-				</div><!-- /input-group -->
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	<componente>
-		<nome>galeria-imagem</nome>
-		<html><![CDATA[
-			<div class="poc-componente-galeria-imagem">
-				<a data-prop="galeria-imagem" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagem"><span class="glyphicon glyphicon-cog"></span></a>
-				<div class="col-md-3">
-					<a href="images/slideshow/imagem1.jpg">
-						<div class="thumbnail">
-							<img src="images/slideshow/imagem1.jpg" alt="imagem1">
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3">
-					<a href="images/slideshow/imagem2.jpg">
-						<div class="thumbnail">
-							<img src="images/slideshow/imagem2.jpg" alt="imagem2">
-						</div>
-					</a>
-				</div>
-				<div class="col-md-3">
-					<a href="images/slideshow/imagem3.jpg">
-						<div class="thumbnail">
-							<img src="images/slideshow/imagem3.jpg" alt="imagem3">
-						</div>
-					</a>
-				</div>
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	<componente>
-		<nome>slideshow</nome>
-		<html><![CDATA[
-			<div class="poc-componente-slideshow">
-				<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
-				<div id="componente-slideshow" class="carousel slide">
-					<!-- indicadores -->
-					<ol class="carousel-indicators">
-						<li data-target="#componente-slideshow" data-slide-to="0" class="active"></li>
-				        <li data-target="#componente-slideshow" data-slide-to="1"></li>
-				        <li data-target="#componente-slideshow" data-slide-to="2"></li>
-				        <li data-target="#componente-slideshow" data-slide-to="3"></li>
-				        <li data-target="#componente-slideshow" data-slide-to="4"></li>
-				    </ol>
-				    <!-- itens do carousel -->
-				    <div class="carousel-inner">
-				    	<div class="item active">
-				    		<img class="img-features" src="images/slideshow/imagem1.jpg" alt="fundo" />
-				    	</div>
-
-				    	<div class="item">
-				    		<img class="img-features" src="images/slideshow/imagem2.jpg" alt="fundo" />
-				    	</div>
-
-				    	<div class="item">
-				    		<img class="img-features" src="images/slideshow/imagem3.jpg" alt="fundo" />
-				    	</div>
-
-				    	<div class="item">
-			    			<img class="img-features" src="images/slideshow/imagem4.jpg" alt="fundo" />
-				    	</div>
-
-				    	<div class="item">
-				    		<img class="img-features" src="images/slideshow/imagem5.jpg" alt="fundo" />
-				    	</div>
-				    </div>
-				    <a class="left carousel-control" href="#componente-slideshow" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-			    	<a class="right carousel-control" href="#componente-slideshow" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-				</div>
-			</div>
-		]]>
-		</html>
-	</componente>
+	
+	<!-- Redes Sociais -->
 	<componente>
 		<nome>redes-sociais</nome>
 		<html><![CDATA[
-			<div class="poc-componente-redes-sociais">
-				<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
-				<div>
-					facebook
-					youtube
-					etc
+			<div class="componente-redes-sociais">
+				<div class="col-md-12">
+					<a data-prop="redes-sociais" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="group-thumbnails">
+					<div class="col-md-2">
+						<a class="thumbnail" href="#">
+							<img src="img/rouded/facebook_32.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+
+					<div class="col-md-2">
+						<a class="thumbnail" href="#">
+							<img src="img/rouded/twitter_32.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
+
+					<div class="col-md-2">
+						<a class="thumbnail" href="#">
+							<img src="img/rouded/youtube_32.png" alt="miniatura de exemplo" />
+						</a>
+					</div>
 				</div>
 			</div>
 		]]>
 		</html>
 	</componente>
+
+	<!-- Painel -->
+	<componente>
+		<nome>painel</nome>
+		<html><![CDATA[
+			<div class="componente-painel-estatico">
+				<div class="col-md-12">
+					<a data-prop="painel-estatico" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel-estatico"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Título</h3>
+					</div>
+					<div class="panel-body">
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					</div>
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Mapa - Google Maps -->
+	<componente>
+		<nome>mapa-google</nome>
+		<html><![CDATA[
+			<div class="componente-mapa-google">
+				<div class="col-md-12">
+					<a data-prop="mapa-google" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-google"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="poc-mapa-google"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Mapa do site -->
+	<componente>
+		<nome>mapa-site</nome>
+		<html><![CDATA[
+			<div class="componente-mapa-site">
+				<div class="col-md-12">
+					<a data-prop="mapa-site" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-site"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="poc-mapa-site">
+					<ul class="mapa-site-item-principal"> 
+						<li>
+							<a href="#">Nível 1</a>
+							<ul class="mapa-site-subitem">
+								<li><a href="#">Nível 2</a></li>
+								<li><a href="#">Nível 2</a></li>
+								<li>
+									<a href="#">Nível 2</a>
+									<ul class="mapa-site-subsubitem">
+										<li><a href="#">Nível 3</a></li>
+										<li><a href="#">Nível 3</a></li>
+										<li><a href="#">Nível 3</a></li>
+										<li><a href="#">Nível 3</a></li>
+									</ul>
+								</li>
+							</ul> 
+						</li>
+
+					</ul>
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Vídeo -->
+	<componente>
+		<nome>video</nome>
+		<html><![CDATA[
+			<div class="componente-video">
+				<div class="col-md-12">
+					<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-video"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<iframe width="480" height="360" src="//www.youtube.com/embed/Th4DkA-AJT0" frameborder="0" allowfullscreen></iframe>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+
+	<!-- Categoria de Blog -->
+	<componente>
+		<nome>categoria-blog</nome>
+		<html><![CDATA[
+			<div class="componente-categoria-blog">
+				<div class="col-md-12">
+					<a data-prop="categoria-blog" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-categoria-blog"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<h1 class="text-center">Nome da Categoria<
+				<ul class="media-list">
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+
+					<li class="media">
+						<a class="pull-left" href="#">
+							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Título do Item</h4>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+						</div>
+					</li>
+				</ul>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Slideshow -->
+	<componente>
+		<nome>slideshow</nome>
+		<html><![CDATA[
+			<div class="componente-slideshow">
+				<div class="col-md-12">
+					<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="sl-slider-wrapper poc-slideshow">
+
+					<div class="sl-slider">
+
+						<div class="sl-slide bg-1" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+							<div class="sl-slide-inner">
+								<h2>Título 1</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+							</div>
+						</div>
+
+						<div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
+							<div class="sl-slide-inner">
+								<h2>Título 2</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+							</div>
+						</div>
+
+						<div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+							<div class="sl-slide-inner">
+								<h2>Título 3</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+							</div>
+						</div>
+
+						<div class="sl-slide bg-4" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
+							<div class="sl-slide-inner">
+								<h2>Título 4</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+							</div>
+						</div>
+
+						<div class="sl-slide bg-5" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
+							<div class="sl-slide-inner">
+								<h2>Título 5</h2>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+							</div>
+						</div>
+					</div><!-- /sl-slider -->
+
+					<nav id="nav-arrows" class="nav-arrows">
+						<span class="nav-arrow-prev">Anterior</span>
+						<span class="nav-arrow-next">Próximo</span>
+					</nav>
+
+					<nav id="nav-dots" class="nav-dots">
+						<span class="nav-dot-current"></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</nav>
+
+				</div><!-- /slider-wrapper -->
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<!-- Galeria de Imagens -->
+	<componente>
+		<nome>galeria-imagens</nome>
+		<html><![CDATA[
+			<div class="componente-galeria-imagens">
+				<div class="col-md-12">
+					<a data-prop="galeria-imagens" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagens"><span class="glyphicon glyphicon-cog"></span></a>
+				</div>
+
+				<div class="poc-galeria-imagens blueimp-gallery-controls" data-fullScreen="true" data-useBootstrapModal="false">
+
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
 </listaComponentes>

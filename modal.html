@@ -233,3 +233,56 @@
     </div>
   </div>
 </div>
+
+
+<!-- para alterar o fundo da página -->
+<div class="modal fade" id="modalEditarTexto" role="dialog" aria-labelledby="alterarTexto" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="alterarTexto">Alterar Texto</h4>
+      </div>
+      <div class="modal-body">
+        <div id="poc-alterar-texto"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-editar-texto-cancelar">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-editar-texto-confirmar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- para fazer o upload de imagens -->
+<div class="modal fade" id="modalUploadImagens" role="dialog" aria-labelledby="carregarImagens" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="carregarImagens">Carregar Imagens</h4>
+      </div>
+      <div class="modal-body">
+        <span class="btn btn-success fileinput-button">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Selecionar Imagens</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload" type="file" name="files[]" multiple>
+        </span>
+        <br>
+        <br>
+        <!-- The global progress bar -->
+        <div id="progress" class="progress">
+          <div class="progress-bar progress-bar-success"></div>
+        </div>
+        <!-- The container for the uploaded files -->
+        <div id="files" class="files"></div>
+        <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

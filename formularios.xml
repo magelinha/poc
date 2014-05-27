@@ -267,4 +267,114 @@
 		</html>
 	</formulario>
 
+	<formulario>
+		<nome>texto</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do texto -->
+			<form id="poc-form-propriedades-texto" role="form">
+				<div class="form-group">
+				  	
+				  	<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditarTexto"><span class="glyphicon glyphicon-pencil"></span> Editar Texto</button>
+				  	<span class="help-block">Clique no botão acima para alterar o texto do componente. Nesse tela que aparecer será possível formatar o texto da maneira que desejar.</span>
+			    </div>
+
+
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>miniaturas</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades das miniaturas -->
+			<form id="poc-form-propriedades-miniaturas" role="form">
+				<div class="form-group">
+				  	<label for="poc-upload-miniaturas">Carregar Miniaturas</label>
+				  	<input type="file" id="poc-upload-miniaturas" size="5000" name="poc-upload-miniaturas" multiple>
+			    </div>
+
+				<div class="form-group">
+				  	<label for="poc-miniaturas-escala-cinza">Escala de cinza</label>
+				  	<select class="form-control" id="poc-miniaturas-escala-cinza">
+				  		<option value="0">Não</option>
+				  		<option value="1">Sim</option>
+				  	</select>
+					<span class="help-block">Marcando este item como "Sim", as miniaturas ficarão cinza e ao passar o mouse sobre, elas ficarão com sua cor original.</span>				  	
+			    </div>
+
+			    <div class="form-group">
+				  	<label for="poc-miniaturas-largura">Mínimo de Miniaturas por linha</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-miniaturas-largura" id="poc-miniaturas-largura" value="4" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary miniaturas-largura-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary miniaturas-largura-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>formulario</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-formularios" role="form">
+				<div class="form-group">
+				  	<label for="poc-formato-formulario">Formato do Formulário</label>
+				  	<select class="form-control" id="poc-formato-formulario">
+				  		<option value="0">Normal</option>
+				  		<option value="1">Inline</option>
+				  		<option value="1">Horizontal</option>
+				  	</select>
+			    </div>
+
+			    <div class="form-group">
+				  	<label for="poc-table-campos">campos</label>
+				  	<div id="poc-table-campos">
+				    	<table class="table table-condensed">
+				    		<thead>
+				    			<tr>
+				    				<th>Nome</th>
+				    				<th>Tipo</th>
+				    				<th>Alterar</th>
+				    				<th>Excluir</th>
+				    			</tr>
+				    		</thead>
+				    		<tbody id="poc-corpo-tabela">
+				    			<tr>
+				    				<td>E-mail</td>
+				    				<td>Texto</td>
+				    				<td><a class="btn btn-primary btn-xs" data-line="0"><span class="glyphicon glyphicon-pencil"></span></td>
+				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="0"><span class="glyphicon glyphicon-remove"></span></td>
+				    			</tr>
+
+				    			<tr>
+				    				<td>Senha</td>
+				    				<td>Senha</td>
+				    				<td><a class="btn btn-primary btn-xs" data-line="1"><span class="glyphicon glyphicon-pencil"></span></td>
+				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="1"><span class="glyphicon glyphicon-remove"></span></td>
+				    			</tr>
+
+				    			<tr>
+				    				<td>Entrar</td>
+				    				<td>Botão</td>
+				    				<td><a class="btn btn-primary btn-xs" data-line="2"><span class="glyphicon glyphicon-pencil"></span></td>
+				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="2"><span class="glyphicon glyphicon-remove"></span></td>
+				    			</tr>
+
+				    		</tbody>
+
+				    	</table>
+			        </div><!-- /input-group -->
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+
 </listaFormularios>

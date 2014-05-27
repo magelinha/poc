@@ -1,3 +1,4 @@
+********************************************************* Componentes detectados pelos alunos de IHC *******************************************
 Alan Teles e Rafael Resende:
 	Busca
 	Formulário
@@ -65,3 +66,99 @@ Vinicius:
 	Busca
 	Aumentar/Diminuir fonte
 	Aumentar/Diminuir Contraste
+
+********************************************************* Componentes detectados em projetos da Linked *******************************************
+IX Premio Fejemg
+	Slideshow (Accordeon)
+	Thumbnails com escala em cinza (muito usado)
+	Thumbnails comuns
+	Mapa do Site
+	Redes Sociais
+	Vídeo
+	Formulário de contato
+
+Dinâmica Empresa Júnior
+	Slideshow
+	Thumbnails comuns
+	Breadcrumbs (usabilidade)
+	Paginação
+
+
+Rede Mineira de Bioterismo
+	Slideshow
+	Multilinguagem
+
+Inverno Cultural 2014
+	SlideShow
+	Thumbnails comuns
+
+Cenje
+	Redes Sociais
+	Formulário
+	Mapa (muito interessante)
+	Paginação
+	Painel
+
+
+
+
+Resultado - Lista de Componentes a serem implementados:
+
+1 - Busca
+2 - Formulário
+3 - Galeria de fotos
+4 - Slideshow
+5 - Redes Sociais
+6 - Mapa do Site
+7 - Aumentar/Diminuir Fonte
+8 - Thumbnails com escala em cinza
+9 - Multilinguagem
+10 - Mapa
+11 - Painel
+12 - Paginação
+13 - Texto
+14 - Vídeo
+
+Divisão dos componentes:
+	Caixas
+		Bloco
+		Coluna
+
+	Propriedades do site:
+		Busca - incorporado ao menu
+		Aumentar/diminuir fonte - Incorporar ao canto superior direito da página
+		Multilinguagem - - Incorporar ao canto superior direito da página
+
+	Estáticos:
+		Formulário
+		Texto
+		Redes Sociais
+		Mapa do Site
+		Thumbnails
+		Painel
+		Mapa
+		Vídeo
+
+	Dinâmicos
+		Categoria de Blog
+		SlideShow
+		Galeria de Imagens
+
+
+
+
+
+
+
+Observações:
+Busca: Será inserido no menu
+Formulário: Incorporar o FormBuilder nas opções
+Galeria de Fotos: Ter a opção de capa ou expandido, onde na opção capa, apenas uam foto será exibida e na versão expandida, todas serão exibidas.
+Slideshow: Usar o Fancybox.
+Redes Sociais: Miniaturas como ícones. Twitter, Facebook, Tumblr, Youtube estarão disponíveis.
+Mapa do site: estilos de mapa do site apenas.
+Aumentar e Diminuir fonte: Sem opções
+Multilinguagem: Escolher as linguagens. Default (Português e Inglês)
+
+
+

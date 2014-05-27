@@ -10,11 +10,12 @@
 	<link rel="stylesheet" type="text/css" href="css/jqueryui.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.sidr.dark.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.minicolors.css">
-	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-thumbs.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.fancybox-buttons.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/summernote.css">
+
 	<link rel="stylesheet" type="text/css" href="css/poc.css">
 
 
@@ -61,33 +62,47 @@
 				</div>
 			</div>
 
-			<!-- Componentes Estáticos -->
+			<!-- Componentes Conteúdo Estático -->
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes</a>
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes - Conteúdo Estático</a>
 					</h4>
 				</div>
 				<div id="collapseEstaticos" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul class="list-unstyled">
-							<li class="componente-arrastavel titulo-texto">Título e Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
 							<li class="componente-arrastavel texto">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel texto-paginacao">Contéudo com paginação <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel tabela">Tabela <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel miniaturas">Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
 							<li class="componente-arrastavel formulario">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel painel">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel conteudo-em-destaque">Conteúdo em Destaque <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel alertas">Alertas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel menu-tabulado">Menu Tabulado <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel redes-sociais">Redes Sociais - Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel painel-estatico">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel mapa-google">Mapa - Localização <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel mapa-site">Mapa do Site <span class="pull-right glyphicon glyphicon-move"></span></li>
 							<li class="componente-arrastavel video">Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel busca">Busca <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel galeria-imagens">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel slideshow">SlideShow <span class="pull-right glyphicon glyphicon-move"></span></li>
 						</ul>
 					</div>
 				</div>
 			</div>
+
+			<!-- Componentes Conteúdo Estático -->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseDinamicos">Componentes - Conteúdo Dinâmico</a>
+					</h4>
+				</div>
+				<div id="collapseDinamicos" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<li class="componente-arrastavel categoria-blog">Categoria de Blog <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel slideshow">Slideshow <span class="pull-right glyphicon glyphicon-move"></span></li>
+							<li class="componente-arrastavel galeria-imagens">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -99,14 +114,14 @@
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jqueryui.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAA0IgOvanjCXhgkbDOfYDfrJXi1OfrpT4&sensor=false"></script>
 	<script type="text/javascript" src="js/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
-	<script type="text/javascript" src="js/jquery.mousewheel-3.0.6.pack.js"></script>
-	<script type="text/javascript" src="js/jquery.fancybox.js"></script>
-	<script type="text/javascript" src="js/jquery.fancybox-buttons.js"></script>
-	<script type="text/javascript" src="js/jquery.fancybox-media.js"></script>
-	<script type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
+	<script type="text/javascript" src="js/jquery.slitslider.js"></script>
+	<script type="text/javascript" src="js/summernote.min.js"></script>
+	<script type="text/javascript" src="js/summernote-pt-BR.js"></script>
+	<script type="text/javascript" src="js/summernote-pt-BR.js"></script>
 	<script type="text/javascript" src="js/poc.js"></script>
 </body>
 </html>

@@ -29,6 +29,7 @@ var background = {
 }
 
 var alterarPagina = 0;
+var summernote;
 
 //array com as fontes importadas do google, ou as mais usadas no windows
 var fonts = [
@@ -207,6 +208,7 @@ function addDraggableToComponents(){
 		$(this).draggable({
 			revert:"invalid",
 			cursor: "move",
+			iframeFix: true,
 			connectToSortable: classe,
 			cursorAt: {left: 40, top: 25},
 			helper: function(event){
@@ -221,7 +223,7 @@ function addSortableToComponents(classe){
 	$(classe).sortable({
 		revert: true, 
 		helper: "clone",
-		cancel: ".conteudo-editavel",
+		cancel: ".link-propriedades, .link-propriedades span",
 		items: ":not(.link-propriedades, .link-propriedades span)",
 
 		start: function(e, ui){
@@ -248,9 +250,7 @@ function addSortableToComponents(classe){
 
 			addDraggableToComponents();
 			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //informa quais elementos podem receber outros elementos
-			startImageGallery(); //inicia o fancybox para galerias
 			addSidrToComponents(); //adciona os formularios de propriedades
-			
 		}
 
 	}).disableSelection();
@@ -260,18 +260,11 @@ function removeStyle(){
 	$("*[style]").removeAttr('style');
 }
 
-
-
 function startCarousel(){
 	$(".carousel").carousel({
 		interval: 3000,
 		wrap: true
 	});
-}
-
-
-function startImageGallery(){
-	if($(".poc-componente-galeria-imagem a")) $(".poc-componente-galeria-imagem a").fancybox();
 }
 
 function addColorPicker(){
@@ -307,6 +300,20 @@ function addColorPicker(){
 		},
 
 		theme: 'bootstrap'
+	});
+}
+
+function startwysiwyg(){
+	$("#poc-alterar-texto").summernote({
+		Height: 600,
+		minHeight: 600,
+		maxheight: 600,  
+		lang: 'pt-BR',
+		focus: true, 
+	});
+
+	objetoAtual.find('.poc-texto').each(function(){
+		summernote = $(this).html();
 	});
 }
 
@@ -346,7 +353,14 @@ function addBotaoPropriedade(content, id){
 //sempre que clicar em um botão 
 $(document).on('click', '.link-propriedades', function(el){
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
-	objetoAtual = $(this).parent(); //o objeto atual vai ser o pai do link clicado
+	objetoAtual = $(this).parent().parent(); //o objeto atual vai ser o pai do link clicado
+
+	objetoAtual.find('.poc-texto').each(function(){
+		$('#poc-form-propriedades-texto #propriedade-texto').val($(this).text().trim());
+		summernote = $(this).html();
+	});
+
+
 });
 
 $(document).on('click', '.clear-input', function(){
@@ -1324,7 +1338,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 			removePageChild(paginas, paginaTemp);
 
 			//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
-			if(pai != 0)setPai(paginas, pai, paginaTemp, posicao);
+			if(pai != 0)setPai(paginas, pai, paginaTemp, (posicao + 1));
 			else{
 				if(paginas.length <= posicao) paginas.push(paginaTemp);
 				else paginas.splice(posicao-1, 0, paginaTemp);
@@ -1344,7 +1358,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 		
 
 		//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
-		if(pai != 0)setPai(paginas, pai, pagina, posicao);
+		if(pai != 0)setPai(paginas, pai, pagina, (posicao + 1));
 		else{
 			if(paginas.length <= posicao) paginas.push(pagina);
 			else paginas.splice(posicao-1, 0, pagina);
@@ -1538,7 +1552,6 @@ $(document).on('click', '.btn-remover-pagina', function(){
 		alert('Não é possível excluir essa página! Motivo: Existe apenas este item como página e o número mínimo de páginas no projeto é 1.');
 		return;
 	}
-	
 
 	var confirma = window.confirm('Deseja realmente excluir esse item?');
 	if(confirma == false) return;
@@ -1577,17 +1590,171 @@ $(document).on('click', '.btn-remover-pagina', function(){
 })
 
 
-
-
-
-
-
 //define a ação de acordo com o item selecionado no select para tipo de site
 function definarAcaoTipoSite(selecionado){
 
 }
 
+/* PROPRIEDADE COMPONENTES */
 
+/* propriedades gerais  - texto */
+$(document).on('shown.bs.modal', '#modalEditarTexto', function(){
+	//insere o texto no formulário. Isso será executado em componentes que utilizam texto
+	startwysiwyg();
+
+	$('#poc-alterar-texto').code(summernote);	
+})
+
+$(document).on('click', '#btn-editar-texto-confirmar', function(){
+	objetoAtual.find('.poc-texto').each(function(){
+		$(this).html($('#poc-alterar-texto').code());
+	});
+
+	$('#poc-alterar-texto').destroy();
+})
+
+$(document).on('click', '#btn-editar-texto-cancelar', function(){
+	$('#poc-alterar-texto').destroy();
+})
+
+/* fim das propriedades gerais  - texto */
+
+/* PROPRIEDADES DAS MINIATURAS */
+$(document).on('change', '#poc-form-propriedades-miniaturas #poc-upload-miniaturas', function(e){
+	console.log('mudou');
+	uploadMiniaturas(e);
+})
+
+
+//upload de imagens
+function uploadMiniaturas(e){
+	var arquivo = e.target.files; 
+	var url = 'upload.php?arquivo';
+
+	objetoAtual.css('background-image', 'none'); //remove a imagem atual
+
+	var valor = new FormData();
+	$.each(arquivo, function(chave, item){
+		valor.append(chave, item);
+	});
+	
+	
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: 'JSON',
+		data: valor,
+		processData: false,
+		contentType: false,
+		cache: false,
+
+		success: function(data){
+
+			if(data.success){
+				var largura = $("#poc-form-propriedades-miniaturas #poc-miniaturas-largura");
+				var valor = parseInt(largura.val());
+				var divisao  = Math.round(12/valor);;
+				
+				var grupo;
+				objetoAtual.find('.group-thumbnails').each(function(){
+					grupo = $(this);
+				});
+				
+				grupo.empty();
+
+				for(i in data.imagem){
+					//insere a pr
+
+					var html = '<div class="col-md-'+divisao+'">' + 
+									'<a href="#" class="thumbnail poc-single-miniatura">' + 
+										'<img src="'+data.imagem[i]+'" alt="preview miniaturas" class="poc-previa-miniaturas" />' +
+									'</a>' + 
+								'</div>';
+
+					grupo.append(html);
+
+				}
+			}else{
+				alert('ERRO: ' + data.mensagem);
+			}
+		}
+	});
+}
+
+$(document).on('change', '#poc-form-propriedades-miniaturas #poc-miniaturas-escala-cinza', function(){
+	var valor = parseInt($(this).val());
+	var add = false; valor == 0 ? add = false : add = true;
+
+	objetoAtual.find('.group-thumbnails .poc-single-miniatura img').each(function(){
+		$(this).toggleClass('item-gray', add);
+	})
+
+});
+
+$(document).on('click','#poc-form-propriedades-miniaturas .miniaturas-largura-btn-up', function(){
+	console.log('clicou');
+	var miniaturas = $("#poc-form-propriedades-miniaturas #poc-miniaturas-largura");
+	var valor = parseInt(miniaturas.val());
+
+	if(valor === NaN || valor > 6) valor = 6;
+	else valor = valor+1;
+
+	console.log(valor);
+	miniaturas.val(valor);
+	miniaturas.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','#poc-form-propriedades-miniaturas .miniaturas-largura-btn-down', function(){
+	var miniaturas = $("#poc-form-propriedades-miniaturas #poc-miniaturas-largura");
+	var atual = parseInt(miniaturas.val());
+
+	if(atual === NaN || ((atual-1) < 1)) atual = 1;
+	else atual = atual-1;
+
+	miniaturas.val(atual);
+	miniaturas.change();
+})
+
+$(document).on('change paste keyup', '#poc-miniaturas-largura', function(){
+	var valor = parseInt($(this).val());
+	var grupo;
+	var imagens = [];
+
+	objetoAtual.find('.group-thumbnails').each(function(){
+		grupo = $(this);
+	});
+
+	objetoAtual.find('.group-thumbnails .poc-single-miniatura img').each(function(){
+		imagens.push($(this).prop('src'));
+	})
+
+	if(valor === NaN || valor < 1){
+		$(this).val('1');
+		$(this).change();
+	} else if(valor > 6){
+		$(this).val('6');
+		$(this).change();
+	}else {
+		grupo.empty();
+		var divisao = Math.round(12/valor);
+
+		for(i in imagens){
+			var html = '<div class="col-md-'+divisao+'">' + 
+							'<a href="#" class="thumbnail poc-single-miniatura">' + 
+								'<img src="'+imagens[i]+'" alt="preview miniaturas" class="poc-previa-miniaturas" />' +
+							'</a>' + 
+						'</div>';
+
+			grupo.append(html);
+		}
+
+
+	}
+})
+/* FIM DAS PROPRIEDADES DAS MINIATURAS */
+
+/* PROPRIEDADES DOS FORMULÁRIOS */
 
 
 $(document).ready(function(){

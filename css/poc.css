@@ -82,6 +82,26 @@
 	top: -1px;
 }
 
+.componente-texto:before {
+	content: "Texto";
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
+.componente-miniaturas:before {
+	content: "Miniaturas";
+	border:1px solid #dddddd;
+	color: #9da0a4;
+	left: -1px;
+	padding: 3px 7px;
+	position: absolute;
+	top: -1px;
+}
+
 .conteudo-gerado {
 	min-height: 600px;
 	border: 1px dotted;
@@ -89,19 +109,23 @@
 	margin-top: 40px;
 }
 
-.row, .coluna, #poc-content, #poc-header, #poc-footer, .poc-menu {
+.row, .coluna, #poc-content, #poc-header, #poc-footer, .poc-menu, .componente-texto, .componente-miniaturas {
 	position: relative;
 	padding: 33px 14px 0;
 	margin: 15px 0;
 }
 
-.previa {
+.previa, .componente-texto, .componente-miniaturas {
 	border: 1px solid;
 	min-height: 200px;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	padding-bottom: 25px;
 	padding-top: 40px;
+}
+
+.coluna, .componente-miniaturas {
+	float: left;
 }
 
 .previa .coluna {
@@ -329,6 +353,10 @@ header, footer {
 	-webkit-user-drag: none;
 }
 
+.link-propriedades-texto {
+	margin-bottom: 20px;
+}
+
 #lista-paginas li.bg-info { background-color: #D9EDF7}
 #lista-paginas li.bg-primary { background-color: #428BCA}
 #lista-paginas li.bg-primary a {color: #fff}
@@ -353,3 +381,35 @@ header, footer {
 .btn-opcoes-paginas {
 	margin-right: 5px;
 }
+
+
+#modalEditarTexto .modal-dialog {
+	width: 861px;
+}
+
+#modalEditarTexto .modal-dialog .modal-content .modal-body {
+	height: 300px;
+}
+
+
+.poc-single-miniatura {
+	box-shadow: none;
+	background-color: transparent;
+	border-radius: 0px;
+	border: none;
+}
+
+
+/*Gray scale*/
+img.item-gray  {
+	filter: url(../img/filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome & Safari 6+ */
+}
+
+img.item-gray:hover {
+	filter: none;
+    -webkit-filter: grayscale(0);
+    display: block;
+}
+
