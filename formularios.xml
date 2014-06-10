@@ -326,50 +326,126 @@
 				<div class="form-group">
 				  	<label for="poc-formato-formulario">Formato do Formulário</label>
 				  	<select class="form-control" id="poc-formato-formulario">
-				  		<option value="0">Normal</option>
-				  		<option value="1">Inline</option>
-				  		<option value="1">Horizontal</option>
+				  		<option value="horizontal">Horizontal</option>
+				  		<option value="normal">Normal</option>
+				  		<option value="inline">Inline</option>
+				  	</select>
+			    </div>			    
+			    <div class="form-group">
+				  	<button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalAddItemFormulario">Construir Formulário</button>
+			    </div>
+		   </form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>redes-sociais</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades das miniaturas referentes às redes sociais -->
+			<form id="poc-form-propriedades-redes-sociais" role="form">
+				<div class="form-group">
+				  	<label for="poc-social-medias-escala-cinza">Escala de cinza</label>
+				  	<select class="form-control" id="poc-social-medias-escala-cinza">
+				  		<option value="0">Não</option>
+				  		<option value="1">Sim</option>
+				  	</select>
+					<span class="help-block">Marcando este item como "Sim", as miniaturas ficarão cinza e ao passar o mouse sobre, elas ficarão com sua cor original.</span>				  	
+			    </div>
+
+
+			    <div class="form-group group-redes-sociais">
+			    	
+				  	<label for="poc-miniaturas-redes-sociais">Redes Sociais</label>
+				  	<span class="help-block">Ao marcar a caixa de alguma rede social, insira o link da mesma. Caso o campo fique em branco, o link será preenchido automaticamente com "#".
+
+				  	<div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="facebook" checked>
+	  					</span>
+	  					<input type="text" id="poc-link-facebook" name="poc-link-facebook" data-social="facebook" class="form-control">
+	  					<span class="input-group-addon">Facebook</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="flickr">
+	  					</span>
+	  					<input type="text" id="poc-link-flickr" name="poc-link-flickr" data-social="flickr" class="form-control" disabled>
+	  					<span class="input-group-addon">Flickr</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="google-plus">
+	  					</span>
+	  					<input type="text" id="poc-link-google-plus" name="poc-link-google-plus" data-social="google-plus" class="form-control" disabled>
+	  					<span class="input-group-addon">Google Plus</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="instagram">
+	  					</span>
+	  					<input type="text" id="poc-link-instagram" name="poc-link-instagram" data-social="instagram" class="form-control" disabled>
+	  					<span class="input-group-addon">Instagram</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="linkedin">
+	  					</span>
+	  					<input type="text" id="poc-link-linkedin" name="poc-link-linkedin" data-social="linkedin" class="form-control" disabled>
+	  					<span class="input-group-addon">Linkedin</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="tumblr">
+	  					</span>
+	  					<input type="text" id="poc-link-tumblr" name="poc-link-tumblr" data-social="tumblr" class="form-control" disabled>
+	  					<span class="input-group-addon">Tumblr</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="twitter" checked>
+	  					</span>
+	  					<input type="text" id="poc-link-twitter" name="poc-link-twitter" data-social="twitter" class="form-control">
+	  					<span class="input-group-addon">Twitter</span>
+				    </div><!-- /input-group -->
+
+				    <div class="input-group">
+		  				<span class="input-group-addon">
+		  					<input type="checkbox" value="youtube" checked>
+	  					</span>
+	  					<input type="text" id="poc-link-youtube" name="poc-link-youtube" data-social="youtube" class="form-control">
+	  					<span class="input-group-addon">Youtube</span>
+				    </div><!-- /input-group -->
+			    </div>
+
+
+			    <div class="form-group">
+				  	<label for="poc-social-medias-pacote">Pacote</label>
+				  	<select class="form-control" id="poc-social-medias-pacote">
+				  		<option value="pacote_1">Pacote 1</option>
+				  		<option value="pacote_2">Pacote 2</option>
+				  		<option value="pacote_3">Pacote 3</option>
+				  		<option value="pacote_4">Pacote 4</option>
+				  		<option value="pacote_5">Pacote 5</option>
+				  		<option value="pacote_6">Pacote 6</option>
 				  	</select>
 			    </div>
 
 			    <div class="form-group">
-				  	<label for="poc-table-campos">campos</label>
-				  	<div id="poc-table-campos">
-				    	<table class="table table-condensed">
-				    		<thead>
-				    			<tr>
-				    				<th>Nome</th>
-				    				<th>Tipo</th>
-				    				<th>Alterar</th>
-				    				<th>Excluir</th>
-				    			</tr>
-				    		</thead>
-				    		<tbody id="poc-corpo-tabela">
-				    			<tr>
-				    				<td>E-mail</td>
-				    				<td>Texto</td>
-				    				<td><a class="btn btn-primary btn-xs" data-line="0"><span class="glyphicon glyphicon-pencil"></span></td>
-				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="0"><span class="glyphicon glyphicon-remove"></span></td>
-				    			</tr>
-
-				    			<tr>
-				    				<td>Senha</td>
-				    				<td>Senha</td>
-				    				<td><a class="btn btn-primary btn-xs" data-line="1"><span class="glyphicon glyphicon-pencil"></span></td>
-				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="1"><span class="glyphicon glyphicon-remove"></span></td>
-				    			</tr>
-
-				    			<tr>
-				    				<td>Entrar</td>
-				    				<td>Botão</td>
-				    				<td><a class="btn btn-primary btn-xs" data-line="2"><span class="glyphicon glyphicon-pencil"></span></td>
-				    				<td><a class="btn btn-primary btn-xs poc-btn-remover-campo" data-line="2"><span class="glyphicon glyphicon-remove"></span></td>
-				    			</tr>
-
-				    		</tbody>
-
-				    	</table>
-			        </div><!-- /input-group -->
+				  	<label for="poc-social-medias-tamanho">Tamanho</label>
+				  	<select class="form-control" id="poc-social-medias-tamanho">
+				  		<option value="56">56x56</option>
+				  		<option value="72">72x72</option>
+				  		<option value="96">96x96</option>
+				  		<option value="128">128x128</option>
+				  		<option value="256">256x256</option>
+				  	</select>
 			    </div>
 			</form>
 		]]>

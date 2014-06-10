@@ -1,0 +1,169 @@
+<listaFormularioPopover>
+	<formulario>
+		<nome>text</nome>
+		<html><![CDATA[
+			<form id="poc-form-popover-text" role="form">
+				<div class="form-group">
+					<label for="poc-form-popover-id">Identificador</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-id" id="poc-form-popover-id">
+			    </div>			    
+			    <div class="form-group">
+					<label for="poc-form-popover-label">Rótulo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-label" id="poc-form-popover-label">
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-placeholder">Pré-Texto</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-placeholder" id="poc-form-popover-placeholder">
+			    </div>
+
+			    <div class="form-group">
+				  	<button class="btn btn-default" type="button" id="poc-form-popover-cancelar">Cancelar</button>
+				  	<button class="btn btn-primary" type="button" id="poc-form-popover-confirmar">Confirmar</button>
+				  	<button class="btn btn-danger" type="button" id="poc-form-popover-remover">Remover</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>radio</nome>
+		<html><![CDATA[
+			<form id="poc-form-popover-text" role="form">
+				<div class="form-group">
+					<label for="poc-form-popover-grupo">Nome do Grupo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-grupo" id="poc-form-popover-grupo">
+			    </div>			    
+			    <div class="form-group">
+					<label for="poc-form-popover-label">Rótulo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-label" id="poc-form-popover-label">
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-options">Opções</label>
+				  	<textarea class="form-control" name="poc-form-popover-options" id="poc-form-popover-options" rows="3"></textarea>
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-values">Valores das Opções</label>
+				  	<textarea class="form-control" name="poc-form-popover-values" id="poc-form-popover-values" rows="3"></textarea>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="poc-form-popover-format">Formato</label>
+			    	<select class="form-control" name="poc-form-popover-format" id="poc-form-popover-format">
+			    		<option value="0">Normal</option>
+			    		<option value="1">Inline</option>
+			    	</select>
+			    </div>
+
+			    <div class="form-group">
+				  	<button class="btn btn-default" type="button" id="poc-form-popover-cancelar">Cancelar</button>
+				  	<button class="btn btn-primary" type="button" id="poc-form-popover-confirmar">Confirmar</button>
+				  	<button class="btn btn-danger" type="button" id="poc-form-popover-remover">Remover</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>select</nome>
+		<html><![CDATA[
+			<form id="poc-form-popover-text" role="form">
+				<div class="form-group">
+					<label for="poc-form-popover-id">Identificador</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-id" id="poc-form-popover-id">
+			    </div>			    
+			    <div class="form-group">
+					<label for="poc-form-popover-label">Rótulo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-label" id="poc-form-popover-label">
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-options">Opções</label>
+				  	<textarea class="form-control" name="poc-form-popover-options" id="poc-form-popover-options" rows="3"></textarea>
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-values">Valores das Opções</label>
+				  	<textarea class="form-control" name="poc-form-popover-values" id="poc-form-popover-values" rows="3"></textarea>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="poc-form-popover-format">Formato</label>
+			    	<select class="form-control" name="poc-form-popover-format" id="poc-form-popover-format">
+			    		<option value="0">Simples</option>
+			    		<option value="1">Múltiplo</option>
+			    	</select>
+			    </div>
+			    <div class="form-group">
+				  	<button class="btn btn-default" type="button" id="poc-form-popover-cancelar">Cancelar</button>
+				  	<button class="btn btn-primary" type="button" id="poc-form-popover-confirmar">Confirmar</button>
+				  	<button class="btn btn-danger" type="button" id="poc-form-popover-remover">Remover</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>file</nome>
+		<html><![CDATA[
+			<form id="poc-form-popover-text" role="form">
+				<div class="form-group">
+					<label for="poc-form-popover-id">Identificador</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-id" id="poc-form-popover-id">
+			    </div>			    
+			    <div class="form-group">
+					<label for="poc-form-popover-label">Rótulo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-label" id="poc-form-popover-label">
+			    </div>
+			    <div class="form-group">
+				  	<button class="btn btn-default" type="button" id="poc-form-popover-cancelar">Cancelar</button>
+				  	<button class="btn btn-primary" type="button" id="poc-form-popover-confirmar">Confirmar</button>
+				  	<button class="btn btn-danger" type="button" id="poc-form-popover-remover">Remover</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>button</nome>
+		<html><![CDATA[
+			<form id="poc-form-popover-text" role="form">
+				<div class="form-group">
+					<label for="poc-form-popover-id">Identificador</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-id" id="poc-form-popover-id">
+			    </div>
+
+			    <div class="form-group">
+					<label for="poc-form-popover-label">Rótulo</label>
+				  	<input type="text" class="form-control" name="poc-form-popover-label" id="poc-form-popover-label">
+			    </div>			    
+			    
+			    <div class="form-group">
+			    	<label for="poc-form-popover-class">Tipo</label>
+			    	<select class="form-control" name="poc-form-popover-class" id="poc-form-popover-class">
+			    		<option value="btn btn-default">Normal</option>
+			    		<option value="btn btn-primary">Primário</option>
+			    		<option value="btn btn-info">Informativo</option>
+			    		<option value="btn btn-warning">Alerta</option>
+			    		<option value="btn btn-danger">Perigo</option>
+			    		<option value="btn btn-inverse">Inverso</option>
+			    		<option value="btn btn-default">Normal</option>
+			    	</select>
+			    </div>
+
+			    <div class="form-group">
+				  	<button class="btn btn-default" type="button" id="poc-form-popover-cancelar">Cancelar</button>
+				  	<button class="btn btn-primary" type="button" id="poc-form-popover-confirmar">Confirmar</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+</listaFormularioPopover>

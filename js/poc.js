@@ -1,11 +1,13 @@
 /** VARIAVEIS GLOBAIS **/ 
 var componentes_basicos = []; //componentes da ferramenta
+var componentes = []; //todos os componentes que forem adicionados ficarão nesse local
 var layouts = []; //layout disponíveis, caso a escolha seja estilo livre
 var paginas = []; //paginas criadas pelo usuário, incluindo a Home
 var formularios = [];
 var headerStyle = [];
 var pageStyle = [];
 var tipoAccount = [];
+var formPopover = [];
 
 var lastId = 1;
 var elementoAtual;
@@ -84,6 +86,14 @@ function getHeaderStyle(nome){
 function getPageStyle(nome){
 	for(i=0; i<pageStyle.length; i++){
 		if(pageStyle[i].nome === nome) return pageStyle[i].html;
+	}
+
+	return "";
+}
+
+function getFormPopover(nome){
+	for(i=0; i<formPopover.length; i++){
+		if(formPopover[i].nome === nome) return formPopover[i].html;
 	}
 
 	return "";
@@ -187,6 +197,22 @@ function readXml(){
 		}
 
 	});
+
+	$.ajax({
+		type: "GET",
+		url: "formulario-popover.xml",
+		dataType: "xml",
+		success: function(xml){
+			$(xml).find("formulario").each(function(){
+				var obj = new Object();
+				obj.nome = $(this).find("nome").text();
+				obj.html = $(this).find("html").text();
+
+				formPopover.push(obj);
+			});
+		}
+
+	});
 }
 /** FIM CARREGAMENTO DOS XMLS **/
 
@@ -246,18 +272,23 @@ function addSortableToComponents(classe){
 
 		stop: function(event, ui){
 			ui.item.replaceWith(elementoAtual).removeAttr('style');
-			removeStyle();
+
+
 
 			addDraggableToComponents();
 			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //informa quais elementos podem receber outros elementos
 			addSidrToComponents(); //adciona os formularios de propriedades
+		},
+
+		update: function(event, ui){
+			removeStyle($(ui.item));
 		}
 
 	}).disableSelection();
 }
 
-function removeStyle(){
-	$("*[style]").removeAttr('style');
+function removeStyle(el){	
+	el.removeAttr('style');
 }
 
 function startCarousel(){
@@ -667,6 +698,8 @@ function abrirModalSelecionarLayout(){
 function carregarModalInicial(){
 	//carrega os modais
 	$("#content-modal").load("modal.html", function(){
+		initDraggableForm();
+
 		//insere os tooltips
 		var infoEstiloLivre = "<p>Um site com estilo livre gera um protótipo em branco para que o usuário possa moldar o site a sua maneira, "+
 		"começando do 0</p><p><a href='#'>Exemplo</a></p>";
@@ -1621,7 +1654,6 @@ $(document).on('click', '#btn-editar-texto-cancelar', function(){
 
 /* PROPRIEDADES DAS MINIATURAS */
 $(document).on('change', '#poc-form-propriedades-miniaturas #poc-upload-miniaturas', function(e){
-	console.log('mudou');
 	uploadMiniaturas(e);
 })
 
@@ -1692,14 +1724,12 @@ $(document).on('change', '#poc-form-propriedades-miniaturas #poc-miniaturas-esca
 });
 
 $(document).on('click','#poc-form-propriedades-miniaturas .miniaturas-largura-btn-up', function(){
-	console.log('clicou');
 	var miniaturas = $("#poc-form-propriedades-miniaturas #poc-miniaturas-largura");
 	var valor = parseInt(miniaturas.val());
 
 	if(valor === NaN || valor > 6) valor = 6;
 	else valor = valor+1;
 
-	console.log(valor);
 	miniaturas.val(valor);
 	miniaturas.change();
 })
@@ -1755,12 +1785,692 @@ $(document).on('change paste keyup', '#poc-miniaturas-largura', function(){
 /* FIM DAS PROPRIEDADES DAS MINIATURAS */
 
 /* PROPRIEDADES DOS FORMULÁRIOS */
+function setHelper(prop,form){
+	var html="";
+	switch(prop){
+		case 'text':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-text">'+
+	  						'<label class="col-sm-2 control-label" for="textinput">Rótulo</label> '+ 
+	  						'<div class="col-sm-10"> '+
+	  							'<input id="textinput" name="textinput" placeholder="placeholder" class="form-control" type="text"> '+
+	  						'</div>'+
+						'</div>';
+			}else {
+				html = '<div class="form-group group-text">'+
+	  						'<label for="textinput">Text Input</label>'+
+	  						'<input id="textinput" name="textinput" placeholder="placeholder" class="form-control" type="text"> '+
+						'</div>';
+			}
+
+			return html;
+
+		case 'password':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-password">'+
+	  						'<label class="col-sm-2 control-label" for="passwordinput">Senha</label> '+ 
+	  						'<div class="col-sm-10">'+
+	  							'<input id="passwordinput" name="passwordinput" placeholder="placeholder" class="form-control" type="text">'+
+	  						'</div>'+
+						'</div>';
+			}else {
+				html = '<div class="form-group group-password">'+
+	  						'<label for="passwordinput">Text Input</label>'+
+	  						'<input id="passwordinput" name="passwordinput" placeholder="placeholder" class="form-control" type="text">'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'textarea':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-textarea">'+
+							'<label class="col-sm-2 control-label" for="textarea">Text Area</label>'+
+							'<div class="col-sm-10">'+                     
+								'<textarea class="form-control" id="textarea" name="textarea"></textarea>'+
+							'</div>'+
+						'</div>';
+
+			}else {
+				html = '<div class="form-group group-textarea">'+
+							'<label for="textarea">Text Area</label>'+
+							'<textarea class="form-control" id="textarea" name="textarea"></textarea>'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'select':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-select">'+
+							'<label class="col-sm-2 control-label" for="selectbasic">Select Basic</label>'+
+							'<div class="col-sm-10">'+
+								'<select id="selectbasic" name="selectbasic" class="form-control">'+
+									'<option value="1">Option one</option>'+
+									'<option value="2">Option two</option>'+
+								'</select>'+
+							'</div>'+
+						'</div>';	
+			}else{
+				html = '<div class="form-group group-select">'+
+							'<labelfor="selectbasic">Select Basic</label>'+
+							'<select id="selectbasic" name="selectbasic" class="form-control">'+
+								'<option value="1">Option one</option>'+
+								'<option value="2">Option two</option>'+
+							'</select>'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'radio':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-radio">'+
+							'<label class="col-sm-2 control-label" for="radios">Multiple Radios</label>'+
+							'<div class="col-sm-10">'+
+								'<div class="radio">'+
+									'<label for="radios-0">'+
+										'<input name="radios" id="radios-0" value="1" checked="checked" type="radio">Option one'+
+									'</label>'+
+								'</div>'+
+								
+								'<div class="radio">'+
+									'<label for="radios-1">'+
+										'<input name="radios" id="radios-1" value="2" type="radio">Option two'+
+									'</label>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			} else{
+				html = '<div class="form-group group-radio">'+
+							'<labelfor="radios">Multiple Radios</label>'+
+							'<div class="radio">'+
+								'<label for="radios-0">'+
+									'<input name="radios" id="radios-0" value="1" checked="checked" type="radio">Option one'+
+								'</label>'+
+							'</div>'+
+								
+							'<div class="radio">'+
+								'<label for="radios-1">'+
+									'<input name="radios" id="radios-1" value="2" type="radio">Option two'+
+								'</label>'+
+							'</div>'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'checkbox':
+			if(form == 'horizontal'){
+				html = '<div class="form-group group-checkbox">'+
+							'<label class="col-sm-2 control-label" for="checkboxes">Multiple Checkboxes</label>'+
+							'<div class="col-sm-10">'+
+								'<div class="checkbox">'+
+									'<label for="checkboxes-0">'+
+										'<input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">Option one'+
+									'</label>'+
+								'</div>'+
+								'<div class="checkbox">'+
+									'<label for="checkboxes-1">'+
+										'<input name="checkboxes" id="checkboxes-1" value="2" type="checkbox">Option two'+
+									'</label>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			} else{
+				html = '<div class="form-group group-checkbox">'+
+							'<label for="checkboxes">Multiple Checkboxes</label>'+
+							'<div class="checkbox">'+
+								'<label for="checkboxes-0">'+
+									'<input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">Option one'+
+								'</label>'+
+							'</div>'+
+							'<div class="checkbox">'+
+								'<label for="checkboxes-1">'+
+									'<input name="checkboxes" id="checkboxes-1" value="2" type="checkbox">Option two'+
+								'</label>'+
+							'</div>'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'file':
+			if(form=='horizontal'){
+				html = '<div class="form-group group-file">'+
+							'<label class="col-sm-2 control-label" for="filebutton">File Button</label>'+
+							'<div class="col-sm-2">'+
+								'<input id="filebutton" name="filebutton" class="input-file" type="file">'+
+							'</div>'+
+						'</div>';
+			}else{
+				html = '<div class="form-group group-file">'+
+							'<label for="filebutton">File Button</label>'+
+							'<input id="filebutton" name="filebutton" class="input-file" type="file">'+
+						'</div>';
+			}
+
+			return html;
+
+		case 'button':
+			if(form=='horizontal'){
+				html = '<div class="form-group group-button">'+
+							'<label class="col-sm-2 control-label" for="singlebutton">Single Button</label>'+
+							'<div class="col-sm-10">'+
+								'<button id="singlebutton" name="singlebutton" class="btn btn-primary">Button</button>'+
+							'</div>'+
+						'</div>';
+			}else {
+				html = '<div class="form-group">'+
+							'<button id="singlebutton" name="singlebutton" class="btn btn-primary">Button</button>'+
+						'</div>';
+			}
+
+			return html;
+	}
+
+	return html;
+}
+
+function initDraggableForm(){
+	
+	var elemento = "";
+	$('#modalAddItemFormulario #lista-input li').draggable({
+		connectToSortable: '#poc-form-add-item-formulario',
+		cancel: null,
+
+		helper: function(){
+			var data = $(this).data('prop');
+			var objeto = setHelper(data, 'horizontal');
+
+			return $(objeto);
+		},
+
+		revert: 'invalid',
+
+	}).disableSelection();
+	
+	$('#modalAddItemFormulario #poc-form-add-item-formulario').sortable({
+		revert: true,
+		items: '.form-group',
+		helper: 'clone',
+
+		start: function(el, ui){
+			elemento = setHelper($(ui.item).data('prop'), 'horizontal');
+		},
+
+		stop: function(el, ui){
+			if(elemento.length > 0) $(ui.item).replaceWith(elemento);
+			createPopoverForm();
+		}
+	});
+}
+
+//define o conteúdo do popover
+function contentPopover(grupo){
+	
+	switch(grupo){
+		case 'group-text': return getFormPopover('text');
+		case 'group-password': return getFormPopover('text');
+		case 'group-textarea': return getFormPopover('text');
+
+		case 'group-radio': return getFormPopover('radio');
+		case 'group-checkbox': return getFormPopover('radio');
+
+		case 'group-select': return getFormPopover('select');
+		case 'group-file': return getFormPopover('file');
+		case 'group-button': return getFormPopover('button');
+
+	}
+	
+	return "";
+}
+
+//define o conteúdo do popover
+function getTypeForm(grupo){
+	
+	switch(grupo){
+		case 'group-text': return 'text';
+		case 'group-password': return 'text';
+		case 'group-textarea': return 'text';
+
+		case 'group-radio': return 'radio';
+		case 'group-checkbox': return 'radio';
+
+		case 'group-select': return 'select';
+		case 'group-file': return 'file';
+		case 'group-button': return 'button';
+
+	}
+	
+	return "";
+}
+
+//inicializa o popover
+function createPopoverForm(){
+	var popover = $('#poc-form-add-item-formulario .form-group').popover({
+		html: true,
+		placement: 'right',
+		content: 'body',
+		content: function(){
+			var classes = $(this).attr("class").split(/\s/);
+			var last = classes[classes.length-1];
+			return contentPopover(last);
+		}
+	}).on('shown.bs.popover', function(){
+		var classes = $(this).attr("class").split(/\s/);
+		var last = classes[classes.length-1];
+		var el = $(this);
+		var form = $(this).data('bs.popover').tip().find('.popover-content form');
+
+		preencherForm(el, form, getTypeForm(last));
+
+		form.find('#poc-form-popover-remover').click(function(){
+			popover.popover('destroy');
+			el.remove();
+		});
+
+		form.find('#poc-form-popover-confirmar').click(function(){
+			refreshForm(el, form, getTypeForm(last));
+
+			popover.popover('hide');	
+		});
+
+		form.find('#poc-form-popover-cancelar').click(function(){
+			popover.popover('hide');
+		});
+
+	});
+}
+
+function removerAcentosEspacos( newStringComAcento ) {
+	
+
+	var string = newStringComAcento;
+
+	string = string.replace(" ", '_'); //remove espaçoes em branco da string
+	var mapaAcentosHex = {
+		a : /[\xE0-\xE6]/g,
+		e : /[\xE8-\xEB]/g,
+		i : /[\xEC-\xEF]/g,
+		o : /[\xF2-\xF6]/g,
+		u : /[\xF9-\xFC]/g,
+		c : /\xE7/g,
+		n : /\xF1/g
+	};
+	 
+	for ( var letra in mapaAcentosHex ) {
+		var expressaoRegular = mapaAcentosHex[letra];
+		string = string.replace( expressaoRegular, letra );
+	}
+ 
+	return string;
+}
+
+
+function preencherForm(el, form, tipo){
+	switch(tipo){
+		case 'text':
+			form.find('#poc-form-popover-id').val(el.find('label').prop('for')); //identificador
+			form.find('#poc-form-popover-label').val(el.find('label').text()); //rótulo
+			form.find('#poc-form-popover-placeholder').val(el.find('input, textarea').prop('placeholder')); //pré-texto
+
+			break;
+
+		case 'radio':
+			var opcoes = "";
+			var valores = "";
+			el.find('input').each(function(){
+				opcoes = opcoes + $(this).parent().text() + '\n';
+				valores = valores + $(this).val() + '\n';
+			});
+
+			form.find('#poc-form-popover-grupo').val(el.find('input').prop('name'));
+			form.find('#poc-form-popover-label').val(el.find('label:first').text());
+			form.find('#poc-form-popover-options').val(opcoes);
+			form.find('#poc-form-popover-values').val(valores);
+
+			el.find('.inline').length > 0 ? form.find('#poc-form-popover-format').val('1') : form.find('#poc-form-popover-format').val('0');
+
+			break;
+
+		case 'select':
+			form.find('#poc-form-popover-id').val(el.find('label').prop('for')); //identificador
+			form.find('#poc-form-popover-label').val(el.find('label').text()); //rótulo
+			
+			var opcoes = "";
+			var valores = "";
+			el.find('option').each(function(){
+				opcoes = opcoes + $(this).text() + '\n';
+				valores = valores + $(this).val() + '\n';
+			});
+
+			form.find('#poc-form-popover-options').val(opcoes);
+			form.find('#poc-form-popover-values').val(valores);
+
+			el.find('select:not([multiple])').length == 0 ? form.find('#poc-form-popover-format').val('1') : form.find('#poc-form-popover-format').val('0');
+
+			break;
+
+		case 'file':
+			form.find('#poc-form-popover-id').val(el.find('label').prop('for')); //identificador
+			form.find('#poc-form-popover-label').val(el.find('button').text()); //rótulo
+			
+			break;
+
+		case 'button':
+			form.find('#poc-form-popover-id').val(el.find('label').prop('for')); //identificador
+			form.find('#poc-form-popover-label').val(el.find('button').text()); //rótulo
+			form.find('#poc-form-popover-class').val(el.find('button').classList.toString());
+
+			break;
+	}
+}
+
+
+function refreshForm(el, form, tipo){
+	switch(tipo){
+		case 'text':
+
+			var id = removerAcentosEspacos(form.find('#poc-form-popover-id').val());
+			el.find('label').prop('for', id);
+			el.find('input, textarea').prop('id', id).prop('name', id);
+
+			el.find('label').html(form.find('#poc-form-popover-label').val());
+			el.find('input, textarea').prop('placeholder', form.find('#poc-form-popover-placeholder').val());
+
+			break;
+
+
+		case 'radio':
+			var html = ""; //conteudo com as opções
+			
+			//define se é radiobutton ou checkbox
+			var tipo = 'radio'; 
+			if(el.find('input[type="checkbox"]').length > 0) tipo = 'checkbox';
+
+			//name do grupo
+			var nome = removerAcentosEspacos(form.find('#poc-form-popover-grupo').val());
+			
+			//split com as opções e seus valores
+			var opcoes = "";
+			var valores = "";
+
+			opcoes = form.find('#poc-form-popover-options').val().trim().split('\n');
+			valores = form.find('#poc-form-popover-values').val().trim().split('\n');
+
+			if(opcoes.length == 0) break;
+
+			
+			el.find('label:first').html(form.find('#poc-form-popover-label').val()); //altera a label
+			var label = el.find('label:first');
+
+			
+			for(var i in opcoes){
+
+				var valor = "";
+
+				try{
+					valor = valores[i];
+				}catch(erro){
+					valor ="";
+				}
+
+				if(form.find('#poc-form-popover-format').val() == '1'){
+					html = html + '<label class="'+tipo+'-inline"><input type="'+tipo+'" value="'+valor+'" name="'+nome+'">'+opcoes[i]+'</label>';
+				}else{
+					html = html + '<div class="'+tipo+'"><label><input type="'+tipo+'" name="'+nome+'" value="'+valor+'">'+opcoes[i]+'</label></div>';
+				}
+			}
+
+			el.empty();
+			el.append(label);
+
+			if($("#poc-form-propriedades-formularios #poc-formato-formulario").val() == 'horizontal')$('<div/>').addClass('col-md-9').append(html).appendTo(el);
+			else el.append(html);
+			
+			break;
+			
+
+		case 'select':
+			el.find('label').prop('for', form.find('#poc-form-popover-id').val());
+			el.find('select').prop('id', form.find('#poc-form-popover-id').val()).prop('name', form.find('#poc-form-popover-id').val());
+			
+			el.find('label').html(form.find('#poc-form-popover-label').val());
+
+			var opcoes = "";
+			var valores = "";
+			opcoes = form.find('#poc-form-popover-options').val().trim().split('\n');
+			valores = form.find('#poc-form-popover-values').val().trim().split('\n');
+
+			for(var i in opcoes){
+
+				var valor = "";
+
+				try{
+					valor = valores[i];
+				}catch(erro){
+					valor ="";
+				}
+
+				html = html + '<option value="'+valor+'">'+opcoes[i]+'</option>';
+			}
+
+			el.find('select').html(html);
+			form.find('#poc-form-popover-format').val() == '1' ? el.find('select').prop('multiple', 'multiple') : el.find('select').prop('multiple', '');
+
+			break;
+
+		case 'file':
+
+			el.find('label').prop('for', form.find('#poc-form-popover-id').val());
+			el.find('input').prop('id', form.find('#poc-form-popover-id').val()).prop('name', form.find('#poc-form-popover-id').val());
+			el.find('label').html(form.find('#poc-form-popover-label').val());
+			
+			break;
+
+		case 'button':
+			el.find('button').prop('id', form.find('#poc-form-popover-id')
+				.val()).html(form.find('#poc-form-popover-label').val());
+			el.find('button').classList = form.find('#poc-form-popover-class').val();
+			break;
+	}
+}
+
+$(document).on('click', '#poc-form-add-item-formulario select, #poc-form-add-item-formulario input, #poc-form-add-item-formulario textarea, #poc-form-add-item-formulario button', function(e){
+	e.preventDefault();
+});
+
+$(document).on('click', '#btn-confirmar-add-item-formulario', function(){
+	objetoAtual.find('form').html($('#poc-form-add-item-formulario').html());
+});
+
+
+function addElementForm(form, lista, valor){
+	form.empty();
+
+	var grupo = $('<div/>').addClass('form-group');
+	if(valor == 'normal') {
+		lista.each(function(i,el){
+			
+			var elemento = $(this);
+			if(elemento.is('label')) elemento.removeClass('control-label col-sm-2');
+
+			grupo.append(elemento);
+
+			
+			if(i%2 != 0){
+				form.append(grupo);
+				grupo = $('<div/>').addClass('form-group');
+				
+			}
+		})
+	}
+	else if(valor == 'inline'){
+		lista.each(function(i, el){
+			var elemento = $(this);
+			if(elemento.is('label')) elemento.addClass('sr-only').removeClass('col-sm-2 control-label');
+			
+			grupo.append(elemento);
+
+			if(i%2 != 0){
+				form.append(grupo);
+				grupo = $('<div/>').addClass('form-group');
+				cont = 0;
+			}
+		});
+	}else if(valor == 'horizontal'){
+		lista.each(function(i,el){
+			var elemento = $(this);
+			if(elemento.is('label')) {
+				elemento.classList = 'col-sm-2 control-label';
+				grupo.append(elemento);
+			}else $('<div/>').addClass('col-sm-10').append(elemento).appendTo(grupo); //cria uma div e adiciona no formulario
+			
+
+			if(i%2 != 0){
+				form.append(grupo);
+				grupo = $('<div/>').addClass('form-group');
+				cont = 0;
+			}
+		});
+	}
+}
+
+$(document).on('change', '#poc-form-propriedades-formularios #poc-formato-formulario', function(){
+	var form = objetoAtual.find('form');
+	var valor = $(this).val();
+
+	//define a classe do formulario
+	if(valor == 'normal')form.removeClass('form-horizontal form-inline');
+	else if(valor == 'inline') form.removeClass('form-horizontal').addClass('form-inline');
+	else if(valor == 'horizontal') form.removeClass('form-inline').addClass('form-horizontal');
+
+	//lista com todos os itens do formulário
+	var lista = objetoAtual.find('form')
+	.find('label[for],input,textarea,select,button,div.checkbox,div.radio')
+	.not(':input[type=checkbox], :input[type=radio]');
+
+	addElementForm(form, lista, valor);
+
+	//se o modal estiver aberto, então ele é refeito de acordo com o item selecionado
+	if($('#modalAddItemFormulario').is(':visible')){
+		var modalForm = $('#modalAddItemFormulario form');
+		var listaModal = $('#modalAddItemFormulario form')
+		.find('label[for],input,textarea,select,button,div.checkbox,div.radio')
+		.not(':input[type=checkbox], :input[type=radio]');
+
+		addElementForm(modalForm, listaModal, valor); 
+	}
+});
+
+$(document).on('shown.bs.modal', '#modalAddItemFormulario', function(){
+	$(this).find('form').html(objetoAtual.find('form').html());
+	createPopoverForm();
+})
+
+/* FIM DAS PROPRIEDADES DOS FORMULÁRIOS */
+
+/*PROPRIEDADES DAS REDES SOCIAIS - MINIATURAS */
+
+$(document).on('click', '.componente-redes-sociais .group-thumbnails a', function(e){
+	e.preventDefault();
+})
+
+//escala de cinza
+$(document).on('change', '#poc-form-propriedades-redes-sociais #poc-social-medias-escala-cinza', function(){
+	var valor = parseInt($(this).val());
+	var add = false; valor == 0 ? add = false : add = true;
+
+	objetoAtual.find('.group-thumbnails img').each(function(){
+		$(this).toggleClass('item-gray', add);
+	})
+
+});
+
+
+//toda vez que selecionar
+$(document).on('change', '#poc-form-propriedades-redes-sociais input[type=checkbox]', function(){
+	var selecionados = $('#poc-form-propriedades-redes-sociais input[type=checkbox]:checked'); //seleciona todos os inputs marcados
+	
+	if(selecionados.length == 0) {
+		alert("Selecione pelo menos uma rede social");
+		return false;
+	}
+
+	var grupo = objetoAtual.find('.group-thumbnails');
+	grupo.empty(); //zera o box
+
+	var pacote = $('#poc-form-propriedades-redes-sociais #poc-social-medias-pacote').val();
+	var tamanho = $('#poc-form-propriedades-redes-sociais #poc-social-medias-tamanho').val();
+
+	selecionados.each(function(i,e){
+		var social = $(this).val();
+		var link = $(this).parent().parent().find('input[type=text]').val().trim();
+
+		if(link.length == 0) link = "#"; //se o link estiver vazio, coloca "#" no lugar
+		var html = '<a href="'+link+'" data-prop="'+social+'">' +
+						'<img src="img/social/'+pacote+'/'+tamanho+'/'+social+'.png" alt="'+social+'"'+
+					'</a>';
+
+		grupo.append(html);
+
+	});
+
+	$(this).parent().parent().find('input[type=text]').prop('disabled', !$(this).is(':checked')); //ativa ou não o campo de texto
+	$('#poc-form-propriedades-redes-sociais #poc-social-medias-escala-cinza').change(); //insere ou não a escala em cinza
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-redes-sociais input[type=text]', function(){
+	var social = $(this).data('social');
+	var link = $(this).val();
+
+	if(link.length == 0) link = '#';
+
+	objetoAtual.find('a[data-social="'+social+'"]').attr('href', link);
+})
+
+$(document).on('change','#poc-form-propriedades-redes-sociais #poc-social-medias-pacote', function(){
+	var pasta = $(this).val();
+	var select = $('#poc-form-propriedades-redes-sociais #poc-social-medias-tamanho');
+	tamanhos = [];
+
+	var url = 'img/social/' + pasta;
+	$.ajax({
+		url: url,
+
+		success: function(data){
+			select.empty();
+			//pega todas as pastas, excluindo o link Parent Folder
+			$(data).find('a').each(function(indice, valor){
+				if(indice > 0){
+					var tamanho = this.href.replace(window.location.host, "").replace("http:///", "").trim().split('/');
+					tamanhos.push(tamanho[1]);
+				}
+			});
+
+			tamanhos.sort(function(a,b){
+				return (a.length - b.length);
+			});
+
+			for(var i=0; i< tamanhos.length; i++){
+				select.append('<option value="'+tamanhos[i]+'">'+tamanhos[i] + 'x' + tamanhos[i] +'</option>');	
+			}
+
+			$('#poc-form-propriedades-redes-sociais input[type=checkbox]').change();
+
+		}
+	});
+})
+
+$(document).on('change', '#poc-form-propriedades-redes-sociais #poc-social-medias-tamanho', function(){
+	$('#poc-form-propriedades-redes-sociais input[type=checkbox]').change();
+});
 
 
 $(document).ready(function(){
 	
 	carregarModalInicial();
-
 	//faz a leitura dos componentes
 	readXml();
 });

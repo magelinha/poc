@@ -3,11 +3,11 @@
 	<componente>
 		<nome>1coluna</nome>
 		<html><![CDATA[
-			<div class="row previa">
+			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
-				<div class="col-md-12 coluna"></div>
+				<div class="col-md-12 coluna" data-content="Coluna"></div>
 			</div>
 		]]>
 		</html>
@@ -17,12 +17,12 @@
 	<componente>
 		<nome>2colunas</nome>
 		<html><![CDATA[
-			<div class="row previa">
+			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
-				<div class="col-md-6 coluna"></div>
-				<div class="col-md-6 coluna"></div>
+				<div class="col-md-6 coluna" data-content="Coluna"></div>
+				<div class="col-md-6 coluna" data-content="Coluna"></div>
 			</div>
 		]]>
 		</html>
@@ -32,13 +32,13 @@
 	<componente>
 		<nome>3colunas</nome>
 		<html><![CDATA[
-			<div class="row previa">
+			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
-				<div class="col-md-4 coluna"></div>
-				<div class="col-md-4 coluna"></div>
-				<div class="col-md-4 coluna"></div>
+				<div class="col-md-4 coluna" data-content="Coluna"></div>
+				<div class="col-md-4 coluna" data-content="Coluna"></div>
+				<div class="col-md-4 coluna" data-content="Coluna"></div>
 			</div>
 		]]>
 		</html>
@@ -48,14 +48,14 @@
 	<componente>
 		<nome>4colunas</nome>
 		<html><![CDATA[
-			<div class="row previa">
+			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
-				<div class="col-md-3 coluna"></div>
-				<div class="col-md-3 coluna"></div>
-				<div class="col-md-3 coluna"></div>
-				<div class="col-md-3 coluna"></div>
+				<div class="col-md-3 coluna" data-content="Coluna"></div>
+				<div class="col-md-3 coluna" data-content="Coluna"></div>
+				<div class="col-md-3 coluna" data-content="Coluna"></div>
+				<div class="col-md-3 coluna" data-content="Coluna"></div>
 			</div>
 		]]>
 		</html>
@@ -65,7 +65,7 @@
 	<componente>
 		<nome>texto</nome>
 		<html><![CDATA[
-			<div class="componente-texto">
+			<div class="componente-texto" data-content="Texto">
 				<div class="col-md-12">
 					<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -82,7 +82,7 @@
 	<componente>
 		<nome>miniaturas</nome>
 		<html><![CDATA[
-			<div class="componente-miniaturas">
+			<div class="componente-miniaturas" data-content="Miniaturas">
 				<div class="col-md-12">
 					<a data-prop="miniaturas" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-miniaturas"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -121,23 +121,38 @@
 	<componente>
 		<nome>formulario</nome>
 		<html><![CDATA[
-			<div class="componente-formulario">
+			<div class="componente-formulario" data-content="Formulário">
 				<div class="col-md-12">
 					<a data-prop="formulario" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-formulario"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
 
-				<form role="form">
-				  <div class="form-group">
-				    <label for="exampleInputEmail1">E-mail</label>
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-				  </div>
-				  
-				  <div class="form-group">
-				    <label for="exampleInputPassword1">Senha</label>
-				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-				  </div>
-
-				  <button type="submit" class="btn btn-default">Entrar</button>
+				<form class="form-horizontal" role="form">
+					<div class="form-group group-text">
+						<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+						</div>
+					</div>
+					<div class="form-group group-password">
+						<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-group group-checkbox">
+						<label for="inputcr" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+							<div class="checkbox">
+								<label><input type="checkbox"> Remember me </label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group group-button">
+						<label for="inputbtn" class="col-sm-2 control-label"></label>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-default">Sign in</button>
+						</div>
+					</div>
 				</form>
 			</div>
 		]]>
@@ -148,29 +163,25 @@
 	<componente>
 		<nome>redes-sociais</nome>
 		<html><![CDATA[
-			<div class="componente-redes-sociais">
+			<div class="componente-redes-sociais" data-content="Redes Sociais - Miniaturas">
 				<div class="col-md-12">
 					<a data-prop="redes-sociais" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
 
-				<div class="group-thumbnails">
-					<div class="col-md-2">
-						<a class="thumbnail" href="#">
-							<img src="img/rouded/facebook_32.png" alt="miniatura de exemplo" />
-						</a>
-					</div>
-
-					<div class="col-md-2">
-						<a class="thumbnail" href="#">
-							<img src="img/rouded/twitter_32.png" alt="miniatura de exemplo" />
-						</a>
-					</div>
-
-					<div class="col-md-2">
-						<a class="thumbnail" href="#">
-							<img src="img/rouded/youtube_32.png" alt="miniatura de exemplo" />
-						</a>
-					</div>
+				<div class="group-thumbnails text-center">
+					
+					<a href="#" data-social="facebook" data-social="facebook">
+						<img src="img/social/pacote_1/56/facebook.png" alt="miniatura de exemplo" />
+					</a>
+					
+					<a href="#" data-social="twitter" data-social="twitter">
+						<img src="img/social/pacote_1/56/twitter.png" alt="miniatura de exemplo" />
+					</a>
+					
+					<a href="#" data-social="youtube" data-social="youtube">
+						<img src="img/social/pacote_1/56/youtube.png" alt="miniatura de exemplo" />
+					</a>
+					
 				</div>
 			</div>
 		]]>
@@ -179,17 +190,15 @@
 
 	<!-- Painel -->
 	<componente>
-		<nome>painel</nome>
+		<nome>painel-estatico</nome>
 		<html><![CDATA[
-			<div class="componente-painel-estatico">
+			<div class="componente-painel-estatico" data-content="Painel - Estático">
 				<div class="col-md-12">
 					<a data-prop="painel-estatico" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel-estatico"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
 
 				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Título</h3>
-					</div>
+					<div class="panel-heading"><h3 class="panel-title">Título</h3></div>
 					<div class="panel-body">
 						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -208,7 +217,7 @@
 	<componente>
 		<nome>mapa-google</nome>
 		<html><![CDATA[
-			<div class="componente-mapa-google">
+			<div class="componente-mapa-google" data-content="Mapa">
 				<div class="col-md-12">
 					<a data-prop="mapa-google" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-google"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -223,7 +232,7 @@
 	<componente>
 		<nome>mapa-site</nome>
 		<html><![CDATA[
-			<div class="componente-mapa-site">
+			<div class="componente-mapa-site" data-content="Mapa do Site">
 				<div class="col-md-12">
 					<a data-prop="mapa-site" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-site"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -258,7 +267,7 @@
 	<componente>
 		<nome>video</nome>
 		<html><![CDATA[
-			<div class="componente-video">
+			<div class="componente-video" data-content="Vídeo">
 				<div class="col-md-12">
 					<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-video"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -274,7 +283,7 @@
 	<componente>
 		<nome>categoria-blog</nome>
 		<html><![CDATA[
-			<div class="componente-categoria-blog">
+			<div class="componente-categoria-blog" data-content="Categoria de Blog">
 				<div class="col-md-12">
 					<a data-prop="categoria-blog" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-categoria-blog"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -356,7 +365,7 @@
 	<componente>
 		<nome>slideshow</nome>
 		<html><![CDATA[
-			<div class="componente-slideshow">
+			<div class="componente-slideshow" data-content="Slideshow">
 				<div class="col-md-12">
 					<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
@@ -434,7 +443,7 @@
 	<componente>
 		<nome>galeria-imagens</nome>
 		<html><![CDATA[
-			<div class="componente-galeria-imagens">
+			<div class="componente-galeria-imagens" data-content="Galeria de Imagens">
 				<div class="col-md-12">
 					<a data-prop="galeria-imagens" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagens"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>

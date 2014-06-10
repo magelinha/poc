@@ -3,13 +3,13 @@
 		<nome>Layout 1</nome>
 		<html><![CDATA[
 			<!-- Cabeçalho -->
-			<header id="poc-header">
+			<header id="poc-header" data-content="Cabeçalho">
 
 			</header>
 			<!-- Fim Cabeçalho -->
 
 			<!-- Menu -->
-			<div id="poc-menu" class="poc-menu">
+			<div id="poc-menu" class="poc-menu" data-content="Menu">
 				<div class="navbar navbar-default poc-navbar" role="navigation">
 				    <div class="container">
 				        <div class="collapse navbar-collapse">
@@ -99,10 +99,10 @@
 		    <!-- Fim Menu -->
 
 		    <!-- Conteúdo -->
-		    <div id="poc-content">
+		    <div id="poc-content" data-content="Contéudo">
 
 		    </div>
-		    <footer id="poc-footer">
+		    <footer id="poc-footer" data-content="Rodapé">
 		    
 		    </footer>
 
@@ -113,7 +113,7 @@
 		<nome>Layout 2</nome>
 		<html><![CDATA[
 			<div class="container content-center">
-				<header class="coluna" id="poc-header">
+				<header class="coluna" id="poc-header" data-content="Cabeçalho">
 					<div class="row previa">
 						<div class="col-md-4 coluna">
 							<!-- logomarca -->

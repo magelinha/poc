@@ -286,3 +286,56 @@
     </div>
   </div>
 </div>
+
+<!-- para fazer o upload de imagens -->
+<div class="modal fade" id="modalAddItemFormulario" role="dialog" aria-labelledby="addItemFormulario" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addItemFormulario">Adicionar Item ao Formulário</h4>
+      </div>
+      <div class="modal-body">
+        
+        <ul id="lista-input">
+          <li data-prop="text">Texto - <input type="text" class="form-control"></li>
+          <li data-prop="password">Senha - <input type="password" class="form-control" value="senha"></li>
+          <li data-prop="textarea">Área de Texto - <textarea class="form-control"></textarea></li>
+          <li data-prop="select">Lista - <select class="form-control"></select></li>
+          <li data-prop="radio">
+            <label> Botão de Rádio</label>
+            <div class="radio">
+              <label>
+                <input type="radio"> Radio Button
+              </label>
+            </div>
+          </li>
+
+          <li data-prop="checkbox">
+            <label> Marcador</label>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Checkbox
+              </label>
+            </div>
+          </li>
+
+          <li data-prop="file">Upload de Arquivos <input type="file"></li>
+          <li data-prop="button">Botão - <button class="btn btn-primary">Botão</button></li>
+        </ul>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Seu Formulário</div>
+          <div class="panel-body">
+            <form role="form" id="poc-form-add-item-formulario" class="poc-build-form"></form>  
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-confirmar-add-item-formulario">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
