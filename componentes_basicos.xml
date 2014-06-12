@@ -196,16 +196,13 @@
 				<div class="col-md-12">
 					<a data-prop="painel-estatico" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel-estatico"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
-
+				<div class="row"></div>
 				<div class="panel panel-default">
-					<div class="panel-heading"><h3 class="panel-title">Título</h3></div>
+					<div class="panel-heading"><h3>Título</h3></div>
 					<div class="panel-body">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<div class="poc-texto">
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</div>
 					</div>
 				</div>
 			</div>
@@ -217,47 +214,12 @@
 	<componente>
 		<nome>mapa-google</nome>
 		<html><![CDATA[
-			<div class="componente-mapa-google" data-content="Mapa">
+			<div class="componente-mapa-google" data-content="Mapa - Google">
 				<div class="col-md-12">
 					<a data-prop="mapa-google" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-google"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
 
-				<div class="poc-mapa-google"></div>
-			</div>
-		]]>
-		</html>
-	</componente>
-
-	<!-- Mapa do site -->
-	<componente>
-		<nome>mapa-site</nome>
-		<html><![CDATA[
-			<div class="componente-mapa-site" data-content="Mapa do Site">
-				<div class="col-md-12">
-					<a data-prop="mapa-site" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-site"><span class="glyphicon glyphicon-cog"></span></a>
-				</div>
-
-				<div class="poc-mapa-site">
-					<ul class="mapa-site-item-principal"> 
-						<li>
-							<a href="#">Nível 1</a>
-							<ul class="mapa-site-subitem">
-								<li><a href="#">Nível 2</a></li>
-								<li><a href="#">Nível 2</a></li>
-								<li>
-									<a href="#">Nível 2</a>
-									<ul class="mapa-site-subsubitem">
-										<li><a href="#">Nível 3</a></li>
-										<li><a href="#">Nível 3</a></li>
-										<li><a href="#">Nível 3</a></li>
-										<li><a href="#">Nível 3</a></li>
-									</ul>
-								</li>
-							</ul> 
-						</li>
-
-					</ul>
-				</div>
+				<div id="poc-mapa-google" data-mapa-id=""></div>
 			</div>
 		]]>
 		</html>
@@ -287,75 +249,88 @@
 				<div class="col-md-12">
 					<a data-prop="categoria-blog" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-categoria-blog"><span class="glyphicon glyphicon-cog"></span></a>
 				</div>
+				<div class="col-md-12">
+					<ul class="media-list">
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
 
-				<h1 class="text-center">Nome da Categoria<
-				<ul class="media-list">
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
 
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
 
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
 
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
 
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
+						<li class="media">
+							<a class="pull-left" href="#">
+								<img class="media-object" src="img/logolinked.png" alt="miniatura">
+							</a>
+							<div class="media-body">
+								<h4 class="media-heading">Título do Item</h4>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+							</div>
+						</li>
+					</ul>
+				</div>
 
-					<li class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="img/blog-icon.png" alt="miniatura">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Título do Item</h4>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
-						</div>
-					</li>
-				</ul>
+				<!-- Paginação -->
+				<div class="text-center poc-content-pagination col-md-12">
+					<ul class="pagination">
+						<li class="disabled"><a href="#">&laquo;</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li><a href="#">&raquo;</a></li>
+					</ul>
+				</div>
 			</div>
 		]]>
 		</html>

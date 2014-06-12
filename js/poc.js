@@ -32,6 +32,7 @@ var background = {
 
 var alterarPagina = 0;
 var summernote;
+var listaMapas = [];
 
 //array com as fontes importadas do google, ou as mais usadas no windows
 var fonts = [
@@ -231,6 +232,8 @@ function addDraggableToComponents(){
 		var data = componentes_basicos[index].html;
 
 		index < 4 ? classe = "#poc-header,#poc-content, #poc-footer" : classe = ".coluna";
+		
+		if($(data).find('iframe').length > 0) data = '<img src="http://img.youtube.com/vi/g8PLcfyjaZw/0.jpg" alt="Linked EJ">';
 		$(this).draggable({
 			revert:"invalid",
 			cursor: "move",
@@ -238,7 +241,7 @@ function addDraggableToComponents(){
 			connectToSortable: classe,
 			cursorAt: {left: 40, top: 25},
 			helper: function(event){
-				return $(data).css('width', '800px');
+				return $(data).css('width', '800px').css('min-height', '300px');
 			},			
 
 		}).disableSelection();
@@ -272,16 +275,12 @@ function addSortableToComponents(classe){
 
 		stop: function(event, ui){
 			ui.item.replaceWith(elementoAtual).removeAttr('style');
-
-
-
+			
 			addDraggableToComponents();
 			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //informa quais elementos podem receber outros elementos
 			addSidrToComponents(); //adciona os formularios de propriedades
-		},
+			criarMapa();
 
-		update: function(event, ui){
-			removeStyle($(ui.item));
 		}
 
 	}).disableSelection();
@@ -328,6 +327,16 @@ function addColorPicker(){
 		change: function(hex, opacity){
 			$('.poc-navbar a').css('color', hex);
 			background.valor = hex;
+		},
+
+		theme: 'bootstrap'
+	});
+
+	$('#poc-form-propriedades-categoria-blog #poc-categoria-blog-cor-titulos').minicolors({
+		defaultValue: $(".poc-navbar").css('color'),
+		position: 'bottom right',
+		change: function(hex, opacity){
+			objetoAtual.find('h4').css('color', hex);
 		},
 
 		theme: 'bootstrap'
@@ -383,6 +392,7 @@ function addBotaoPropriedade(content, id){
 
 //sempre que clicar em um botão 
 $(document).on('click', '.link-propriedades', function(el){
+	$(this).toggleClass('btn-primary btn-success');
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
 	objetoAtual = $(this).parent().parent(); //o objeto atual vai ser o pai do link clicado
 
@@ -2410,7 +2420,7 @@ $(document).on('change', '#poc-form-propriedades-redes-sociais input[type=checkb
 
 		if(link.length == 0) link = "#"; //se o link estiver vazio, coloca "#" no lugar
 		var html = '<a href="'+link+'" data-prop="'+social+'">' +
-						'<img src="img/social/'+pacote+'/'+tamanho+'/'+social+'.png" alt="'+social+'"'+
+						'<img src="img/social/'+pacote+'/'+tamanho+'/'+social+'.png" alt="'+social+'">'+
 					'</a>';
 
 		grupo.append(html);
@@ -2433,7 +2443,7 @@ $(document).on('change paste keyup', '#poc-form-propriedades-redes-sociais input
 $(document).on('change','#poc-form-propriedades-redes-sociais #poc-social-medias-pacote', function(){
 	var pasta = $(this).val();
 	var select = $('#poc-form-propriedades-redes-sociais #poc-social-medias-tamanho');
-	tamanhos = [];
+	var tamanhos = [];
 
 	var url = 'img/social/' + pasta;
 	$.ajax({
@@ -2445,7 +2455,7 @@ $(document).on('change','#poc-form-propriedades-redes-sociais #poc-social-medias
 			$(data).find('a').each(function(indice, valor){
 				if(indice > 0){
 					var tamanho = this.href.replace(window.location.host, "").replace("http:///", "").trim().split('/');
-					tamanhos.push(tamanho[1]);
+					tamanhos.push(tamanho[tamanho.length-2]);
 				}
 			});
 
@@ -2466,6 +2476,225 @@ $(document).on('change','#poc-form-propriedades-redes-sociais #poc-social-medias
 $(document).on('change', '#poc-form-propriedades-redes-sociais #poc-social-medias-tamanho', function(){
 	$('#poc-form-propriedades-redes-sociais input[type=checkbox]').change();
 });
+/* FIM DAS PROPRIEDADES DAS REDES SOCIAIS - MINIATURAS */
+
+/* PROPRIEDADE DO PAINEL - ESTÁTICO */
+
+$(document).on('keyup change paste', '#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-titulo', function(){
+	if($(this).val().length > 0){
+		var tamanho = $('#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-tamanho');
+		var titulo = $(tamanho.val()); //pega o <h$>
+		titulo.html($(this).val());
+		objetoAtual.find('.panel-heading').html(titulo);
+		$('#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-centralizado').change();
+	}
+})
+
+$(document).on('change', '#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-tamanho', function(){
+	var tituloAtual = objetoAtual.find('.panel-heading').children().text();
+	
+	var titulo = $($(this).val()); //pega o <h$>
+	titulo.html(tituloAtual);
+	objetoAtual.find('.panel-heading').html(titulo);
+	$('#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-centralizado').change();
+})
+
+$(document).on('change', '#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-centralizado', function(){
+	var add = false;
+
+	if($(this).val() == '1') add = true;
+
+	objetoAtual.find('.panel-heading').children().toggleClass('text-center', add);
+})
+
+$(document).on('change', '#poc-form-propriedades-painel-estatico #poc-prop-painel-estatico-estilo', function(){
+	objetoAtual.find('.panel').removeClass().addClass($(this).val());
+})
+/* FIM DAS PROPRIEDADES DO PAINEL */
+
+/* PROPRIEDADE DO MAPA - LOCALIZAÇÃO */
+
+function criarMapa(){
+	var divMapa = $('.componente-mapa-google');
+	//google maps
+	if(divMapa.length > 0 && divMapa.find('#poc-mapa-google').data('mapa-id') == ""){
+		var dados = new Object();
+		dados.mapa = '';
+		dados.localizacao = '';
+		
+		listaMapas.push(dados);
+		
+		inicializarMapa(listaMapas.length-1, divMapa.find('#poc-mapa-google'));
+		divMapa.find('#poc-mapa-google').attr('data-mapa-id', listaMapas.length-1);
+	}
+}
+//el é um objeto jQuery. Para inicializar o mapa é necessário um DOM. 
+function inicializarMapa(posicao, el){
+	listaMapas[posicao].localizacao = new google.maps.Geocoder();
+	var latlng = new google.maps.LatLng(-21.2384544, -44.2790787);
+ 	
+    var options = {
+        zoom: 10,
+        center: latlng
+    };
+ 
+    listaMapas[posicao].mapa = new google.maps.Map(el[0], options);
+}
+
+
+function codeAddress(posicao, endereco) {
+
+	listaMapas[posicao].localizacao.geocode({'address': endereco}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			listaMapas[posicao].mapa.setCenter(results[0].geometry.location);
+			var marker = new google.maps.Marker({
+				map: listaMapas[posicao].mapa,
+				position: results[0].geometry.location
+			});
+		} else {
+			alert('Erro ao localizar o endereço desejado.');
+		}
+	});
+}
+
+$(document).on('click', '#poc-form-propriedades-mapa-google #btn-confirmar-endereco', function(){
+	var posicao = parseInt(objetoAtual.find('#poc-mapa-google').attr('data-mapa-id'));
+	var endereco = $(this).parent().parent().find('input[type=text]').val();
+
+	codeAddress(posicao, endereco);
+});
+
+/*FIM DAS PROPRIEDADES DO MAPA - GOOGLE */
+
+/*PROPRIEDADES DOS VÍDEOS */
+function getIdVideo(linkVideo){
+	var id = linkVideo.split('v=');
+
+	if(id.length < 2) return false;
+
+	id = id[1];
+
+	var sublink = id.indexOf('&');
+	if(sublink != -1){
+		id = id.substring(0, sublink);
+	}
+
+	return id;
+}
+
+$(document).on('click', '#poc-form-propriedades-video #btn-confirmar-link', function(){
+	var link = $('#poc-form-propriedades-video #poc-video-link').val().trim();
+
+	var idVideo = getIdVideo(link);
+
+	if(!idVideo) alert('Link informado é inválido!');
+	else{
+		objetoAtual.find('iframe').prop('src', '//www.youtube.com/embed/' + idVideo)
+		$('#poc-form-propriedades-video #poc-video-tamanho').change();
+	}
+});
+
+$(document).on('change', '#poc-form-propriedades-video #poc-video-tamanho', function(){
+	var dados = $(this).val().trim().split(' ');
+	var largura = dados[0], altura = dados[1];
+
+	objetoAtual.find('iframe').prop('width', largura).prop('heigth', altura);
+});
+/*FIM DAS PROPRIEDADES DOS VÍDEOS*/
+
+/* PROPRIEDADES DA CATEGORIA DE BLOG */
+$('#poc-form-propriedades-categoria-blog #btn-limpar-campo').click(function(){
+	$('#poc-form-propriedades-categoria-blog #poc-categoria-blog-cor-titulos').val('#000000');
+})
+
+$(document).on('click', '.pagination a', function(e){
+	e.preventDefault();
+});
+
+$(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-blog-alinhamento', function(){
+	var valor = $(this).val().split(' ');
+
+	var html = '';
+	for(var i=0; i<6; i++){
+		html = html + 
+			'<li class="media">'+
+				'<a class="'+valor[i%valor.length]+'" href="#">'+
+					'<img class="media-object" src="img/logolinked.png" alt="miniatura">'+
+				'</a>'+
+				'<div class="media-body">'+
+					'<h4 class="media-heading">Título do Item</h4>'+
+					'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam'+
+				'</div>'+
+			'</li>';
+	}
+
+	objetoAtual.find('.media-list').html(html);
+
+	/*
+	if(valor.length == 1){
+		var html = '';
+		for(var i=0; i<6; i++){
+			html = html + 
+					'<li class="media">\
+						<a class="'+valor[0]+'" href="#">\
+							<img class="media-object" src="img/logolinked.png" alt="miniatura">\
+						</a>\
+						<div class="media-body">\
+							<h4 class="media-heading">Título do Item</h4>\
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam\
+						</div>
+					</li>';
+		}
+	}else{
+		for(var i=0; i<6; i++){
+			html = html + 
+					'<li class="media">\
+						<a class="'+valor[i%2]+'" href="#">\
+							<img class="media-object" src="img/logolinked.png" alt="miniatura">\
+						</a>\
+						<div class="media-body">\
+							<h4 class="media-heading">Título do Item</h4>\
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam\
+						</div>
+					</li>';
+		}
+	}*/
+})
+
+$(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-blog-tipo-paginacao', function(){
+	var valor = parseInt($(this).val());
+
+	var pager = '<ul class="pager">'+
+					'<li class="previous"><a href="#">&larr; Anterior</a></li>'+
+					'<li class="next"><a href="#">Próximo &rarr;</a></li>'+
+				'</ul>';
+
+	var padrao =  '<ul class="pagination">' +
+					'<li class="disabled"><a href="#">&laquo;</a></li>'+
+					'<li class="active"><a href="#">1</a></li>'+
+					'<li><a href="#">2</a></li>'+
+					'<li><a href="#">3</a></li>'+
+					'<li><a href="#">4</a></li>'+
+					'<li><a href="#">5</a></li>'+
+					'<li><a href="#">&raquo;</a></li>'+
+				'</ul>';
+
+	switch(valor){
+		case 0:
+			objetoAtual.find('.poc-content-pagination').html(padrao);
+			break;
+		case 1:
+			objetoAtual.find('.poc-content-pagination').html(pager);
+			break;
+	}
+})
+
+$(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-blog-tamanho-paginacao', function(){
+	var valor = $(this).val();
+
+	objetoAtual.find('.pagination').removeClass().addClass(valor);
+})
+/* FIM DAS PROPRIEDADES DA CATEGORIA DE BLOG */
 
 
 $(document).ready(function(){

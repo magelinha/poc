@@ -452,5 +452,157 @@
 		</html>
 	</formulario>
 
+	<formulario>
+		<nome>painel-estatico</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do texto -->
+			<form id="poc-form-propriedades-painel-estatico" role="form">
+				<div class="form-group">
+					<label for="poc-prop-painel-estatico-titulo">Título do Painel</label>
+					<input type="text" class="form-control" id="poc-prop-painel-estatico-titulo" value="Título" name="poc-prop-painel-estatico-titulo">
+				</div>
 
+				<div class="form-group">
+				  	<label for="poc-prop-painel-estatico-tamanho">Tamanho do Título</label>
+				  	<select id="poc-prop-painel-estatico-tamanho" name="poc-prop-painel-estatico-tamanho" class="form-control">
+				  		<option value="<h1/>">6</option>
+				  		<option value="<h2/>">5</option>
+				  		<option value="<h3/>" selected>4</option>
+				  		<option value="<h4/>">3</option>
+				  		<option value="<h5/>">2</option>
+				  		<option value="<h6/>">1</option>
+				  	</select>
+			    </div>
+
+			    <div class="form-group">
+				  	<label for="poc-prop-painel-estatico-centralizado">Título Centralizado</label>
+				  	<select id="poc-prop-painel-estatico-centralizado" name="poc-prop-painel-estatico-centralizado" class="form-control">
+				  		<option value="0">Não</option>
+				  		<option value="1">Sim</option>
+				  	</select>
+			    </div>
+			    
+
+		    	<div class="form-group">
+			    	<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditarTexto">
+			    		<span class="glyphicon glyphicon-pencil"></span> Editar Texto
+			    	</button>
+				  	<span class="help-block">Clique no botão acima para alterar o texto do componente. Nesse tela que aparecer será possível formatar o texto da maneira que desejar.</span>
+				</div>
+
+				<div class="form-group">
+					<label for="poc-prop-painel-estatico-estilo">Estilo</label> 
+					<select id="poc-prop-painel-estatico-estilo" name="poc-prop-painel-estatico-estilo" class="form-control">
+						<option value="panel panel-default">Padrão</option>
+						<option value="panel panel-primary">Primário</option>
+						<option value="panel panel-success">Sucesso</option>
+						<option value="panel panel-info">Informativo</option>
+						<option value="panel panel-warning">Alerta</option>
+						<option value="panel panel-danger">Perigo</option>
+					</select>
+				</div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>mapa-google</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-mapa-google" role="form">
+				<div class="form-group">
+				  	<label for="poc-mapa-google-endereco">Endereço</label>
+				  	<div class="input-group">
+				  		<input type="text" id="poc-mapa-google-endereco" name="poc-mapa-google-endereco" class="form-control" value="São João Del Rei">
+				  		<span class="input-group-btn">
+				  			<button class="btn btn-success" id="btn-confirmar-endereco" type="button">
+				  				<span class="glyphicon glyphicon-ok"></span>
+				  			</button>
+				  		</span>
+				    </div><!-- /input-group -->
+				    <span class="help-block">Caso necessite de um endereço completo, insira da seguinte maneira: "Rua/Av Número, Cidade". Exemplo: Av. 7 de Setembro 10, São João Del Rei</span>
+			    </div>			    
+		   </form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>video</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-video" role="form">
+				<div class="form-group">
+				  	<label for="poc-video-link">Link do Vídeo</label>
+				  	<div class="input-group">
+				  		<input type="text" id="poc-video-link" name="poc-video-link" class="form-control" value="https://www.youtube.com/watch?v=Th4DkA-AJT0">
+				  		<span class="input-group-btn">
+				  			<button class="btn btn-success" id="btn-confirmar-link" type="button">
+				  				<span class="glyphicon glyphicon-ok"></span>
+				  			</button>
+				  		</span>
+				    </div><!-- /input-group -->
+				    <span class="help-block">Copie o link do youtube e cole no campo acima</span>
+			    </div>
+			    <div class="form-group">
+			    	<label for="poc-video-tamanho">Tamanho</label>
+			    	<select id="poc-video-tamanho" name="poc-video-tamanho" class="form-control">
+			    		<option value="420 315">420x315</option>
+			    		<option value="480 360" selected>480x360</option>
+			    		<option value="640 480">640x480</option>
+			    		<option value="960 720">960x720</option>
+			    	</select>
+			    </div>
+		   </form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>categoria-blog</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-categoria-blog" role="form">
+				<div class="form-group">
+				  	<label for="poc-categoria-blog-cor-titulos">Cor dos título</label>
+				  	<div class="input-group">
+				  		<span class="input-group-btn">
+				  			<button class="btn btn-default" id="btn-limpar-campo" type="button">
+				  				<span class="glyphicon glyphicon-trash"></span>
+				  			</button>
+				  		</span>
+				  		<input type="text" id="poc-categoria-blog-cor-titulos" name="poc-categoria-blog-cor-titulos" class="form-control" value="#000000">
+				    </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="poc-categoria-blog-alinhamento">Alinhamento dos Posts</label>
+			    	<select id="poc-categoria-blog-alinhamento" name="poc-categoria-blog-alinhamento" class="form-control">
+			    		<option value="pull-left">Esquerda</option>
+			    		<option value="pull-left pull-right">Intercalado</option>
+			    		<option value="pull-right">Direita</option>
+			    	</select>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="poc-categoria-blog-tipo-paginacao">Formato da Paginação</label>
+			    	<select id="poc-categoria-blog-tipo-paginacao" name="poc-categoria-blog-tipo-paginacao" class="form-control">
+			    		<option value="0">Padrão (Números)</option>
+			    		<option value="1">Pager (Anterior/Próximo)</option>
+			    	</select>
+			    </div>
+
+			    <div class="form-group">
+			    	<label for="poc-categoria-blog-tamanho-paginacao">Tamanho da Paginação</label>
+			    	<select id="poc-categoria-blog-tamanho-paginacao" name="poc-categoria-blog-tamanho-paginacao" class="form-control">
+			    		<option value="pagination">Padrão</option>
+			    		<option value="pagination pagination-lg">Grande</option>
+			    		<option value="pagination pagination-sm">Pequeno</option>
+			    	</select>
+			    </div>
+		   </form>
+		]]>
+		</html>
+	</formulario>
 </listaFormularios>

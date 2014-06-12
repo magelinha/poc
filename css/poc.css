@@ -1,7 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro|Droid+Sans|Lato|PT+Sans|Ubuntu|Droid+Serif|Open+Sans|Roboto|Oswald|Open+Sans+Condensed:300|Roboto+Condensed|Montserrat);
 
 .conteudo-gerado:before, #poc-header:before, .poc-menu:before, #poc-features:before, #poc-content:before, #poc-footer:before,
-.row:before, .coluna:before, .componente-texto:before, .componente-miniaturas:before, .componente-formulario:before, .componente-redes-sociais:before {
+.previa:before, .coluna:before, .componente-texto:before, .componente-miniaturas:before, .componente-formulario:before, .componente-redes-sociais:before,
+.componente-painel-estatico:before, .componente-mapa-google:before, .componente-video:before, .componente-categoria-blog:before{
 	content: attr(data-content);
 	border:1px solid #dddddd;
 	color: #9da0a4;
@@ -18,14 +19,16 @@
 	margin-top: 40px;
 }
 
-.row, .coluna, #poc-content, #poc-header, #poc-footer, 
-.poc-menu, .componente-texto, .componente-miniaturas, .componente-formulario, .componente-redes-sociais{
+.previa, .coluna, #poc-content, #poc-header, #poc-footer, 
+.poc-menu, .componente-texto, .componente-miniaturas, .componente-formulario, .componente-redes-sociais, .componente-painel-estatico,
+.componente-mapa-google, .componente-video, .componente-categoria-blog {
 	position: relative;
 	padding: 33px 14px 0;
 	margin: 15px 0;
 }
 
-.previa, .componente-texto, .componente-miniaturas, .componente-formulario, .componente-redes-sociais {
+.previa, .componente-texto, .componente-miniaturas, .componente-formulario, .componente-redes-sociais, .componente-painel-estatico, 
+.componente-mapa-google, .componente-video, .componente-categoria-blog{
 	border: 1px solid;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -50,6 +53,8 @@
 header, footer {
 	min-height: 200px;
 }
+
+.componente-arrastavel { cursor: move}
 
 #poc-content{
 	min-height: 600px;	
@@ -360,3 +365,11 @@ form.form-inline .form-group {
 #poc-form-propriedades-redes-sociais .group-redes-sociais .input-group {
 	margin-bottom: 10px;
 }
+
+#poc-mapa-google {
+	width: 100%;
+	min-height: 400px;
+}
+
+.componente-categoria-blog img.media-object {width: 210px}
+.componente-categoria-blog {float: left}
