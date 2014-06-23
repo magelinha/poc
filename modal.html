@@ -14,7 +14,6 @@
         			<select class="form-control" id="select-tipo-site">
         				<option value="1">Estilo Livre</option>
         				<option value="2">Página Única</option>
-        				<option value="3">Administrativo</option>
         			</select>
     			</div>
     			<a href="#" class="btn btn-success tooltip-tipo-site"><span class="glyphicon glyphicon-question-sign"></span></a>
@@ -89,7 +88,7 @@
       <div class="modal-body">
         
         <form class="form-horizontal" role="form" id="poc-form-add-page">
-          <div class="form-group">
+          <div class="form-group group-normal">
             <label for="tipo-item" class="col-sm-2 control-label">Tipo de Item</label>
             <div class="col-sm-10">
               <select class="form-control" name="tipo-item" id="tipo-item">
@@ -114,7 +113,7 @@
             </div>
           </div>
 
-          <div class="form-group grupo-is-home">
+          <div class="form-group grupo-is-home group-normal">
             <label for="isHome" class="col-sm-2 control-label">Página Inicial</label>
             <div class="col-sm-10">
               <select class="form-control" name="isHome" id="isHome">
@@ -124,7 +123,7 @@
             </div>
           </div>
 
-    		  <div class="form-group grupo-tipo-pagina">
+    		  <div class="form-group grupo-tipo-pagina group-normal">
     		    <label for="tipo-style-content" class="col-sm-2 control-label">Tipo de Página</label>
     		    <div class="col-sm-10">
     		      <select class="form-control" name="tipo-style-content" id="tipo-style-content">
@@ -146,7 +145,7 @@
     		    </div>
     		  </div>
 
-    		  <div class="form-group">
+    		  <div class="form-group group-normal">
     		    <label for="pai" class="col-sm-2 control-label">Pai</label>
     		    <div class="col-sm-10">
     		      <select class="form-control" name="pai" id="pai">
@@ -335,6 +334,68 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-confirmar-add-item-formulario">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalTitulosSlideshow" role="dialog" aria-labelledby="alterarTitulo" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="alterarTitulo">Alterar Título e Subtítulos</h4>
+      </div>
+
+      <div class="modal-body">
+        <form id="poc-form-slideshow" role="form">
+              
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-confirmar-add-item-formulario">Confirmar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalCriarGaleria" role="dialog" aria-labelledby="criarGaleria" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="criarGaleria">Criar/Alterar Galeria</h4>
+      </div>
+      <div class="modal-body">
+        <form id="poc-form-galeria" role="form">
+          <div class="form-group">
+            <label for="poc-galeria-titulo">Título da Galeria</label>
+            <input type="text" id="poc-galeria-titulo" name="poc-galeria-titulo" value="Sua Galeria" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="poc-lista-imagens-biblioteca"> Selecione as imagens da galeria</label>
+            <select id="poc-lista-imagens-biblioteca" name="poc-lista-imagens-biblioteca" multiple="multiple" class="image-picker"></select>
+          </div>
+
+          <div class="form-group">
+            <input type="file" name="poc-upload-image-library" id="poc-upload-image-library" title="Carregar mais Imagens" data-bfi-disabled>
+            <button class="btn btn-success">Confirmar upload</button>
+          </div>
+
+          <div class="form-group">
+            <label for="poc-capa-galeria">Capa da Galeria</label>
+            <select id="poc-capa-galeria" name="poc-capa-galeria"></select>
+          </div>
+        </form>
+      </div>  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-confirmar-add-galeria">Confirmar</button>
       </div>
     </div>
   </div>

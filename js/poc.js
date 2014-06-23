@@ -12,6 +12,7 @@ var formPopover = [];
 var lastId = 1;
 var elementoAtual;
 var objetoAtual;
+var botaoAtual;
 var template = 0;
 var tipoPagina = 0;
 
@@ -33,7 +34,11 @@ var background = {
 var alterarPagina = 0;
 var summernote;
 var listaMapas = [];
+var listaSlideshow = [];
 
+var alterarGaleria = false;
+var idGaleria = -1;
+var onePage = false; //verifica se a página é do estilo página única 
 //array com as fontes importadas do google, ou as mais usadas no windows
 var fonts = [
 	{nome: 'Source Sans Pro',		familia: "'Source Sans Pro', sans-serif"},
@@ -231,18 +236,25 @@ function addDraggableToComponents(){
 	$(".componente-arrastavel").each(function(index, value){
 		var data = componentes_basicos[index].html;
 
-		index < 4 ? classe = "#poc-header,#poc-content, #poc-footer" : classe = ".coluna";
+		index < 4 ? classe = "#poc-header,#poc-content, #poc-footer, .poc-content" : classe = ".coluna";
 		
 		if($(data).find('iframe').length > 0) data = '<img src="http://img.youtube.com/vi/g8PLcfyjaZw/0.jpg" alt="Linked EJ">';
 		$(this).draggable({
-			revert:"invalid",
+			revert:function(receive){
+				if(receive === false){
+					alert('Os compoenentes estáticos e dinâmicos só podem ser arrastados para blocos.');
+					return true;
+				}
+
+				return false;
+			},
 			cursor: "move",
 			iframeFix: true,
 			connectToSortable: classe,
 			cursorAt: {left: 40, top: 25},
 			helper: function(event){
 				return $(data).css('width', '800px').css('min-height', '300px');
-			},			
+			}
 
 		}).disableSelection();
 	});
@@ -252,7 +264,7 @@ function addSortableToComponents(classe){
 	$(classe).sortable({
 		revert: true, 
 		helper: "clone",
-		cancel: ".link-propriedades, .link-propriedades span",
+		cancel: ".link-propriedades, .link-propriedades span, .remover-componente, .remover-componente span",
 		items: ":not(.link-propriedades, .link-propriedades span)",
 
 		start: function(e, ui){
@@ -277,9 +289,10 @@ function addSortableToComponents(classe){
 			ui.item.replaceWith(elementoAtual).removeAttr('style');
 			
 			addDraggableToComponents();
-			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //informa quais elementos podem receber outros elementos
+			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer, .poc-content"); //informa quais elementos podem receber outros elementos
 			addSidrToComponents(); //adciona os formularios de propriedades
 			criarMapa();
+			salvarAlteracoesSite();
 
 		}
 
@@ -383,8 +396,8 @@ function addSidrToComponents(){
 
 function addBotaoPropriedade(content, id){
 	//#prop-'+id+'
-	html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
-	'<span class="glyphicon glyphicon-cog"></span></a>';
+	html = '<div class="row btn-propriedades"><a id="prop-'+id+'" data-prop="'+id+'" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
+	'<span class="glyphicon glyphicon-cog"></span></a></div>';
 
 	$(content).prepend(html);
 
@@ -395,6 +408,7 @@ $(document).on('click', '.link-propriedades', function(el){
 	$(this).toggleClass('btn-primary btn-success');
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
 	objetoAtual = $(this).parent().parent(); //o objeto atual vai ser o pai do link clicado
+	botaoAtual = $(this);
 
 	objetoAtual.find('.poc-texto').each(function(){
 		$('#poc-form-propriedades-texto #propriedade-texto').val($(this).text().trim());
@@ -467,7 +481,7 @@ $(document).on('change', '#background-image', function(e){
 		valor.append(chave, item);
 	});
 
-	valor.append("nome", objetoAtual[0].id);
+	valor.append("nome", objetoAtual.attr('id'));
 	
 	
 	$.ajax({
@@ -518,7 +532,7 @@ $(document).on('change', "#repeticao", function(){
 		url: 'img/background-image/',
 		cache: false,
 		success: function(data){
-			var contem = objetoAtual[0].id.split("-")[1];
+			var contem = objetoAtual.attr('id').split("-")[1];
 			
 			var arquivo="";
 			$(data).find("a:contains("+contem+")").each(function(indice, valor){
@@ -634,7 +648,7 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	paginaAtual = home;
 
 	redefinirMenu(paginas, 0);
-	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
 	
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
 	addDraggableToComponents();//capacidade de arrastar
@@ -676,6 +690,7 @@ $(document).on('hide.bs.modal', '#selecionarTipoSite', function(e){
 
 	switch(parseInt(selecionado)){
 		case 1: abrirModalSelecionarLayout(); break;
+		case 2: onePage = true; tipoOnePage(); break;
 	}
 
 });
@@ -1131,6 +1146,10 @@ function limparFormlarioAddPage(){
 
 $("#btn-add-page").click(function(){
 	limparFormlarioAddPage();
+
+	if(onePage) $('#poc-form-add-page .group-normal').hide();
+	else $('#poc-form-add-page .group-normal').show();
+
 });
 
 
@@ -1224,19 +1243,20 @@ function redefinirMenu(lista, nivel){
 	}
 }
 
-function redefinirMenuHtml(lista, nivel, pai){
+function redefinirMenuHtml(lista, nivel, pai, isOnePage){
 	var pai = $(pai);
 	var id = pai.data('id');
+	var classe = '';
 
+	if(typeof(isOnePage) !== 'undefined') classe = 'page-scroll';
 	
 	switch(nivel){
 		case 0:
 			for(i in lista){
-				if(lista[i].children.length == 0) pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+				if(lista[i].children.length == 0) pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+' '+classe+'"><a href="'+lista[i].url+'">'+lista[i].nome+'</a></li>');
 				else{
-					pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+lista[i].nome+'<b class="caret"></b></a></li>');	
-					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+lista[i].id);
-					
+					pai.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="'+lista[i].url+'">'+lista[i].nome+'<b class="caret"></b></a></li>');	
+					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+lista[i].id, isOnePage);
 				}	
 			}
 			
@@ -1246,10 +1266,10 @@ function redefinirMenuHtml(lista, nivel, pai){
 			pai.append('<ul class="dropdown-menu multi-level submenu-item-'+id+'" ><ul/>');
 			var filho =	$('.submenu-item-'+id);
 			for(i in lista){
-				if(lista[i].children.length == 0) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+				if(lista[i].children.length == 0) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="'+lista[i].url+'">'+lista[i].nome+'</a></li>');
 				else{
-					filho.append('<li data-id="'+lista[i].id+'" class="dropdown-submenu item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="#">'+lista[i].nome+'</a></li>');	
-					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+id);
+					filho.append('<li data-id="'+lista[i].id+'" class="dropdown-submenu item-'+lista[i].id+'"><a class="dropdown-toggle" data-toggle="dropdown" href="'+lista[i].url+'">'+lista[i].nome+'</a></li>');	
+					redefinirMenuHtml(lista[i].children, nivel+1, '.item-'+id, isOnePage);
 				}
 			}
 
@@ -1258,7 +1278,7 @@ function redefinirMenuHtml(lista, nivel, pai){
 		case 2:
 			pai.append('<ul class="dropdown-menu submenu-item'+id+'"><ul/>');
 			var filho =	$('.submenu-item-'+id);
-			for(i in lista) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="#">'+lista[i].nome+'</a></li>');
+			for(i in lista) filho.append('<li data-id="'+lista[i].id+'" class="item-'+lista[i].id+'"><a href="'+lista[i].url+'">'+lista[i].nome+'</a></li>');
 
 			break;
 
@@ -1269,7 +1289,7 @@ function redefinirMenuHtml(lista, nivel, pai){
 }
 
 
-function openPage(pagina){
+function openPage(pagina, isOnePage){
 	paginaAtual = pagina;
 
 	$(".conteudo-gerado").attr('data-content', 'Página - ' + pagina.nome);
@@ -1334,11 +1354,20 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	else {
 
 		if(dados[0].value == '0'){
-			var conteudo = $('#poc-content');
-			conteudo.empty(); //esvazia o conteudo
-			addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
-			conteudo.append(getPageStyle(dados[4].value));
 
+			var conteudo = "";
+			//se não for onePage limpa o conteúdo e insere o estilo desejado
+			if(!onePage){
+				conteudo = $('#poc-content');
+				conteudo.empty(); //esvazia o conteudo
+				addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
+				conteudo.append(getPageStyle(dados[4].value));
+				url = "#";
+			}else {
+				url = "#"+removerAcentosEspacos(nome);
+				conteudo = $('<section />').prop('id', removerAcentosEspacos(nome));
+			}
+			
 			if(dados[3].value == '1'){
 				isHome = true;
 				setIsHomeFalse(paginas);
@@ -1352,8 +1381,8 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 				descricao: 		dados[5].value,
 				children: 		[],
 				pai: 			pai,
-				url: 			"#", 
-				conteudo: 		$("#poc-content")
+				url: 			url, 
+				conteudo: 		conteudo
 			};
 
 		}else{
@@ -1378,6 +1407,10 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 			paginaTemp.descricao = pagina.descricao;
 			paginaTemp.pai = pagina.pai;
 
+			//se for onePage, o href é o id da section
+			//caso contrário é apenas "#"
+			if(onePage)paginaTemp.url = "#" + removerAcentosEspacos(paginaTemp.nome);
+
 			removePageChild(paginas, paginaTemp);
 
 			//Quando o pai for 0, indica que não há pai. Caso contrário, temos que inserir a nova página criada como filha do pai informado
@@ -1393,7 +1426,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 
 			if(!paginaTemp.isLink) openPage(paginaTemp);
 			redefinirMenu(paginas,0);
-			redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+			redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
 
 			alterarPagina = 0;
 			return;
@@ -1414,9 +1447,11 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 		$('.poc-nav-pages').empty();
 
 
-		if(dados[0].value == '0') openPage(pagina);
+		if(dados[0].value == '0' && !onePage) openPage(pagina);
 		redefinirMenu(paginas,0);
-		redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+		redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
+
+		if(onePage) abrirPaginasOnePage();
 		
 	}
 })
@@ -1585,7 +1620,7 @@ $(document).on('click', '.btn-visualizar-pagina', function(){
 	$('#lista-paginas').empty();
 	$('.poc-nav-pages').empty();
 	redefinirMenu(paginas,0);
-	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
 })
 
 $(document).on('click', '.btn-remover-pagina', function(){
@@ -1629,7 +1664,7 @@ $(document).on('click', '.btn-remover-pagina', function(){
 	$('#lista-paginas').empty();
 	$('.poc-nav-pages').empty();
 	redefinirMenu(paginas,0);
-	redefinirMenuHtml(paginas, 0, '.poc-nav-pages');
+	redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
 })
 
 
@@ -1671,9 +1706,7 @@ $(document).on('change', '#poc-form-propriedades-miniaturas #poc-upload-miniatur
 //upload de imagens
 function uploadMiniaturas(e){
 	var arquivo = e.target.files; 
-	var url = 'upload.php?arquivo';
-
-	objetoAtual.css('background-image', 'none'); //remove a imagem atual
+	var url = 'upload_miniaturas.php?arquivo';
 
 	var valor = new FormData();
 	$.each(arquivo, function(chave, item){
@@ -2114,7 +2147,7 @@ function removerAcentosEspacos( newStringComAcento ) {
 		string = string.replace( expressaoRegular, letra );
 	}
  
-	return string;
+	return string.toLowerCase();
 }
 
 
@@ -2513,7 +2546,6 @@ $(document).on('change', '#poc-form-propriedades-painel-estatico #poc-prop-paine
 /* FIM DAS PROPRIEDADES DO PAINEL */
 
 /* PROPRIEDADE DO MAPA - LOCALIZAÇÃO */
-
 function criarMapa(){
 	var divMapa = $('.componente-mapa-google');
 	//google maps
@@ -2528,6 +2560,8 @@ function criarMapa(){
 		divMapa.find('#poc-mapa-google').attr('data-mapa-id', listaMapas.length-1);
 	}
 }
+
+
 //el é um objeto jQuery. Para inicializar o mapa é necessário um DOM. 
 function inicializarMapa(posicao, el){
 	listaMapas[posicao].localizacao = new google.maps.Geocoder();
@@ -2629,36 +2663,6 @@ $(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-b
 	}
 
 	objetoAtual.find('.media-list').html(html);
-
-	/*
-	if(valor.length == 1){
-		var html = '';
-		for(var i=0; i<6; i++){
-			html = html + 
-					'<li class="media">\
-						<a class="'+valor[0]+'" href="#">\
-							<img class="media-object" src="img/logolinked.png" alt="miniatura">\
-						</a>\
-						<div class="media-body">\
-							<h4 class="media-heading">Título do Item</h4>\
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam\
-						</div>
-					</li>';
-		}
-	}else{
-		for(var i=0; i<6; i++){
-			html = html + 
-					'<li class="media">\
-						<a class="'+valor[i%2]+'" href="#">\
-							<img class="media-object" src="img/logolinked.png" alt="miniatura">\
-						</a>\
-						<div class="media-body">\
-							<h4 class="media-heading">Título do Item</h4>\
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam\
-						</div>
-					</li>';
-		}
-	}*/
 })
 
 $(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-blog-tipo-paginacao', function(){
@@ -2696,11 +2700,677 @@ $(document).on('change', '#poc-form-propriedades-categoria-blog #poc-categoria-b
 })
 /* FIM DAS PROPRIEDADES DA CATEGORIA DE BLOG */
 
+/* PROPRIEDADES DO SLIDESHOW */
+
+$(document).on('change', '#poc-form-propriedades-slideshow #poc-tipo-slideshow', function(){
+	var valor = $(this).val();
+
+	if(valor == '0') {
+		$('#poc-form-propriedades-slideshow .grupo-slideshow').show();
+		objetoAtual.find('#poc-carousel-example').show();
+		objetoAtual.find('#poc-accordion-example').hide();
+	} else {
+		$('#poc-form-propriedades-slideshow .grupo-slideshow').hide();
+		objetoAtual.find('#poc-carousel-example').hide();
+		objetoAtual.find('#poc-accordion-example').show();
+		startAccordion();
+	}
+});
+
+$(document).on('change', '#poc-form-propriedades-slideshow #poc-upload-slideshow', function(e){
+	uploadImagensSlides(e);
+});
+
+function criarSlideShow(data){
+	var lista = '', item = '', classe = '';
+	for(var i=0; i<data.imagem.length; i++){
+		(i == 0) ? classe = 'active' : classe = '';
+		lista = lista + '<li data-target="#poc-carousel-example" data-slide-to="0" class="'+classe+'"></li>';
+		item = item + 
+		'<div class="item '+classe+'">' + 
+			'<img src="'+data.imagem[i]+'" alt="slideshow">'+
+			'<div class="container">'
+				'<div class="carousel-caption">'
+					'<h1>Example headline.</h1>'+
+					'<p>Note: If you\'re viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>'+
+					'<p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>'+
+				'</div>'+
+			'</div>'+
+		'</div>';
+	}
+
+	objetoAtual.find('ol').html(lista);
+	objetoAtual.find('.carousel-inner').html(item);
+	
+}
+
+function startAccordion(){
+	var altura = parseInt($('#poc-form-propriedades-slideshow #poc-altura-slideshow').val());
+	var largura = parseInt(objetoAtual.css('width').replace('px',''))-33;
+	
+
+	objetoAtual.find('#poc-accordion').zAccordion({
+		tabWidth: 100,
+		speed: 650,
+		slideClass: 'slider',
+		animationStart: function () {
+			objetoAtual.find('#poc-accordion li.slider-open div').css('display', 'none');
+			objetoAtual.find('#poc-accordion li.slider-previous div').css('display', 'none');
+		},
+		animationComplete: function () {
+			objetoAtual.find('#poc-accordion li div').fadeIn(600);
+		},
+
+		width: largura,
+		height: altura
+	});
+}
+
+function criarAccordion(data){
+	var html = '';
+
+	for(var i=0; i<data.imagem.length; i++){
+		html = html +
+		'<li>'+
+			'<img src="'+data.imagem[i]+'" alt="slideshow">'+
+			'<div>'+
+				'<strong>Titulo '+(i+1)+'</strong>'+
+				'<p>Exemplo de conteúdo com um pouco mais de texto</p>'+
+			'</div>'+
+  		'</li>';
+	}
+
+	objetoAtual.find('#poc-accordion').html(html);
+}
+
+//upload de imagens
+function uploadImagensSlides(e){
+	var arquivo = e.target.files; 
+	console.log(arquivo);
+	var url = 'upload_slideshow.php?arquivo';
+
+	var valor = new FormData();
+	$.each(arquivo, function(chave, item){
+		valor.append(chave, item);
+	});
+	
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: 'JSON',
+		data: valor,
+		processData: false,
+		contentType: false,
+		cache: false,
+
+		success: function(data){
+
+			if(data.success){
+				//refaz o slideshow
+				criarSlideShow(data);
+				criarAccordion(data);
+				$('#poc-form-propriedades-slideshow #poc-tipo-slideshow').change();
+			}else{
+				alert('ERRO: ' + data.mensagem);
+			}
+		}
+	});
+}
+
+//alteração da altura do slideshow
+$(document).on('click','#poc-form-propriedades-slideshow .poc-altura-slideshow-btn-up', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-altura-slideshow");
+	var valor = parseInt(slideshow.val());
+
+	if(valor === NaN || valor > 1500) valor = 1500;
+	else valor = valor+1;
+
+	slideshow.val(valor);
+	slideshow.change();
+})
+
+
+$(document).on('click','#poc-form-propriedades-slideshow .poc-altura-slideshow-btn-down', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-altura-slideshow");
+	var atual = parseInt(slideshow.val());
+
+	if(atual === NaN || ((atual-1) < 500)) atual = 500;
+	else atual = atual-1;
+
+	slideshow.val(atual);
+	slideshow.change();
+})
+
+function alterarAlturaSlideshow(valor){
+	objetoAtual.find('.carousel-inner, .item, .item img, .carousel-control, .carousel').css('cssText','height: ' + valor + 'px !important');
+	objetoAtual.find('ol').css('bottom', 0);
+}
+
+$(document).on('change paste keyup', '#poc-form-propriedades-slideshow #poc-altura-slideshow', function(){
+	//aumentar a altura do slideshow, chamar novamente o zAccordion com a altura atual e chamar o change
+	alterarAlturaSlideshow($(this).val());
+	$('#poc-form-propriedades-slideshow #poc-tipo-slideshow').change();
+})
+//fim da alteração da altura do slideshow
+
+
+//alteração do left do caption
+$(document).on('click','#poc-form-propriedades-slideshow .poc-left-slideshow-btn-up', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-left-slideshow");
+	var valor = parseInt(slideshow.val());
+
+	if(valor === NaN || valor > 100) valor = 100;
+	else valor = valor+1;
+
+	slideshow.val(valor);
+	slideshow.change();
+})
+
+
+$(document).on('click','#poc-form-propriedades-slideshow .poc-left-slideshow-btn-down', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-left-slideshow");
+	var atual = parseInt(slideshow.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	slideshow.val(atual);
+	slideshow.change();
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-slideshow #poc-left-slideshow', function(){
+	objetoAtual.find('.carousel-caption').css('left', $(this).val()+'%');
+	$('#poc-form-propriedades-slideshow #poc-tipo-slideshow').change();
+})
+//fim da alteração do left
+
+//alteração do right do caption
+$(document).on('click','#poc-form-propriedades-slideshow .poc-right-slideshow-btn-up', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-right-slideshow");
+	var valor = parseInt(slideshow.val());
+
+	if(valor === NaN || valor > 100) valor = 100;
+	else valor = valor+1;
+
+	slideshow.val(valor);
+	slideshow.change();
+})
+
+$(document).on('click','#poc-form-propriedades-slideshow .poc-right-slideshow-btn-down', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-right-slideshow");
+	var atual = parseInt(slideshow.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	slideshow.val(atual);
+	slideshow.change();
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-slideshow #poc-right-slideshow', function(){
+	objetoAtual.find('.carousel-caption').css('right', $(this).val()+'%');
+	$('#poc-form-propriedades-slideshow #poc-tipo-slideshow').change();
+})
+//fim da alteração do right
+
+//alteração do top do caption
+$(document).on('click','#poc-form-propriedades-slideshow .poc-top-slideshow-btn-up', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-top-slideshow");
+	var valor = parseInt(slideshow.val());
+
+	if(valor === NaN || valor > 2048) valor = 2048;
+	else valor = valor+1;
+
+	slideshow.val(valor);
+	slideshow.change();
+})
+
+
+$(document).on('click','#poc-form-propriedades-slideshow .poc-top-slideshow-btn-down', function(){
+	var slideshow = $("#poc-form-propriedades-slideshow #poc-top-slideshow");
+	var atual = parseInt(slideshow.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	slideshow.val(atual);
+	slideshow.change();
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-slideshow #poc-top-slideshow', function(){
+	objetoAtual.find('.carousel-caption').css('top', $(this).val()+'px');
+	$('#poc-form-propriedades-slideshow #poc-tipo-slideshow').change();
+})
+//fim do top
+
+//alinhamento
+$(document).on('change', '#poc-form-propriedades-slideshow #poc-alinhamento-caption-slideshow', function(){
+	objetoAtual.find('.carousel-caption').css('text-align', $(this).val());
+})
+
+function preencherForm(form){
+	objetoAtual.find('.carousel-inner .item').each(function(i,e){
+		form.find('#title'+i).val($(this).find('h1').html());
+		form.find('#texto'+i).val($(this).find('.content').text().trim());
+	})
+}
+
+function criarForm(){
+	var qtd = objetoAtual.find('.carousel-inner img').length;
+	var form = $('#modalTitulosSlideshow #poc-form-slideshow');
+	var html = '';
+
+	for(var i=0; i<qtd; i++){
+		html = html+
+		'<div class="form-group">' +
+			'<label for="title'+i+'">Título '+(i+1)+'</label>'+
+			'<input type="text" id="title'+i+'" name="title'+i+'" class="form-control">'+
+		'</div>'+
+
+		'<div class="form-group">' +
+			'<label for="texto'+i+'">Conteúdo '+(i+1)+'</label>'+
+			'<textarea id="texto'+i+'" name="texto'+i+'" class="form-control"></textarea>'+
+		'</div>';
+	}
+
+	form.html(html);
+	preencherForm(form);
+}
+
+$(document).on('shown.bs.modal', '#modalTitulosSlideshow', function(){
+	criarForm();
+})
+
+$(document).on('hide.bs.modal', '#modalTitulosSlideshow', function(){
+	var valores = $('#modalTitulosSlideshow form').find('input, textarea');
+
+	preencherCaptionSlideshow(valores);
+	preencherCaptionAccordion(valores);
+});
+
+function preencherCaptionSlideshow(valores){
+	objetoAtual.find('.carousel-inner .item').each(function(i, e){
+		$(this).find('h1').html(valores[i*2].value);
+
+		$(this).find('.content').empty();
+		$('<p />').append(valores[(i*2) + 1].value).appendTo($(this).find('.content'));
+	});
+}
+
+function preencherCaptionAccordion(valores){
+	objetoAtual.find('#poc-accordion li').each(function(i, e){
+		var div = $(this).find('div');
+
+		//se existir a div, limpa e insere novamente o <strong>, representando o titulo e <p> representando o subtítulo
+		if(div.length > 0){
+			div.empty();
+
+			$('<strong />').append(valores[i*2].value).appendTo(div);
+			$('<p />').append(valores[(i*2) +1].value).appendTo(div);
+		}else{
+			//cria a div com o novo conteúdo e insere no li
+			div = $('<div />');
+			$('<strong />').append(valores[i*2].value).appendTo(div);
+			$('<p />').append(valores[(i*2) +1].value).appendTo(div);
+
+			div.appendTo($(this));
+		}
+	});
+}
+/* FIM DAS PROPRIEDADES DO SLIDESHOW */
+
+/* PROPRIEDADE DAS GALERIAS DE IMAGEM */
+
+//inicializa o lightbox
+$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) { event.preventDefault(); $(this).ekkoLightbox(); }); 
+
+//ao clicar no botão para criar uma nova galeria, preenche-se o select com todos as imagens da biblioteca do usuário.
+function preencherSelectBiblioteca(el, selecionadas, capa){
+	var html = '';
+	var caminho = 'img/biblioteca/';
+	var extensao = '.png';
+	var capa = $('#modalCriarGaleria #poc-capa-galeria');
+	$.ajax({
+		url: caminho,
+		success: function(data){
+			$(data).find("a:contains(.png), a:contains(.jpg)").each(function(indice, valor){
+				var link = $(this).attr('href');
+				html += '<option data-img-src="'+caminho+link+'" value="'+caminho+link+'">';
+			});
+
+			el.html(html);
+
+			if(typeof selecionados !== "undefined" && typeof capa !== 'undefined'){
+				el.val(selecionados); //seleciona as fotos desejadas
+
+				//preenche o select e seleciona a capa
+				capa.empty();
+				for(var i=0; i<selecionados.length; i++)capa.append('<option data-img-src="'+selecionados[i]+'" value="'+selecionados[i]+'">');
+				capa.val(capa);
+			}
+
+			el.imagepicker();
+			capa.imagepicker();
+			$('input[type=file]').bootstrapFileInput();
+		}
+	});	
+}
+
+$(document).on('change', '#modalCriarGaleria #poc-lista-imagens-biblioteca', function(){
+	var capa = $('#modalCriarGaleria #poc-capa-galeria');
+	var html = '';
+	var selecionados = $(this).val();
+
+	for(var i=0; i<selecionados.length; i++) html += '<option data-img-src="'+selecionados[i]+'" value="'+selecionados[i]+'">';
+
+	capa.html(html);
+	capa.imagepicker();
+})
+
+$(document).on('click', '#btnAddGaleria', function(){
+	var el = $("#modalCriarGaleria #poc-lista-imagens-biblioteca");
+	preencherSelectBiblioteca(el);
+})
+
+
+function criarGaleriaExpandida(titulo, fotos, capa, atualizar){
+	var html = '<div class="row">';
+
+	var galeria = removerAcentosEspacos(titulo);
+	var isCapa = 'false';
+
+	for(var i=0; i<fotos.length; i++){
+		fotos[i] == capa ? isCapa = 'true' : 'false';
+		html += '<a class="col-md-3 col-sm-4 col-xs-6" data-toggle="lightbox" data-gallery="'+galeria+'" href="'+fotos[i]+'" data-capa="'+isCapa+'">'+
+					'<img class="img-responsive" src="'+fotos[i]+'" alt="'+galeria+'">'+
+				'</a>';
+	}
+
+	html += '</div>';
+
+	if(atualizar){
+		objetoAtual.find('.poc-galeria-imagens-expandido .row').each(function(i,e){
+			if(i == idGaleria) {
+				$(this).parent().parent().find('h1').html(titulo);
+				$(this).replaceWith(html);
+				return false;
+			}
+		})
+
+		return;		
+	}
+
+	//string que representa um panel vazio
+	var temp = '<div class="panel panel-primary">'+
+					'<div class="panel-heading"><h1 class="panel-title">'+titulo+'</h1></div>'+
+						'<div class="panel-body"></div>'+
+					'</div>'+
+				'</div>';
+
+	var panel = $(temp);
+
+	panel.find('.panel-body').html(html); //insere a galeria no painel
+
+
+	//insere o painel no componente
+	if($('#poc-form-propriedades-galeria-imagens table tbody tr').length < 2) objetoAtual.find('.poc-galeria-imagens-expandido').html(panel);
+	else objetoAtual.find('.poc-galeria-imagens-expandido').append(panel);
+}
+
+function criarGaleriaReduzida(titulo, fotos, capa, atualizar){
+	var html = '<div class="col-xs-12 col-sm-6 col-md-3 item-reduzido">' + 
+					'<div class="panel panel-default">'+
+						'<div class="panel-body">';
+	var galeria = removerAcentosEspacos(titulo);
+	var classe = "";
+	var isCapa = 'false';
+	for(var i=0; i<fotos.length; i++){
+		if(fotos[i] == capa){
+			classe = ''; isCapa = 'true';
+		}else{
+			classe = 'oculta'; isCapa = 'false';
+		}
+
+		html += 			'<a href="'+fotos[i]+'" class="zoom '+classe+'" data-toggle="lightbox" data-gallery="'+galeria+'" >'+
+								'<img class="img-responsive" src="'+fotos[i]+'" alt="'+titulo+'" />'+
+								'<span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>'+
+							'</a>';
+	}
+
+	html += 			'</div>'+
+						'<div class="panel-footer">'+
+							'<h4>'+titulo+'</h4>'+
+						'</div>' + 
+					'</div>'+
+				'</div>';
+
+	if(atualizar){
+		objetoAtual.find('.poc-galeria-imagens-reduzido .item-reduzido').each(function(i,e){
+			if(i == idGaleria) {
+				$(this).replaceWith(html);
+				return false;
+			}
+		})
+
+		return;		
+	}
+
+	if($('#poc-form-propriedades-galeria-imagens table tbody tr').length < 2) objetoAtual.find('.poc-galeria-imagens-reduzido').html(html);
+	else objetoAtual.find('.poc-galeria-imagens-reduzido').append(html);
+
+}
+
+$(document).on('click', '#modalCriarGaleria #btn-confirmar-add-galeria', function(){
+	
+	var titulo = $("#modalCriarGaleria #poc-galeria-titulo").val();
+	var fotos = $("#modalCriarGaleria #poc-lista-imagens-biblioteca").val();
+	var capa = $("#modalCriarGaleria #poc-capa-galeria").val();
+
+
+	console.log(alterarGaleria);
+	if(alterarGaleria){
+		criarGaleriaExpandida(titulo, fotos, capa, true);
+		criarGaleriaReduzida(titulo, fotos, capa, true);
+		idGaleria = -1; alterarGaleria = false;
+		return false;
+	}
+
+	var qtd = $('#poc-form-propriedades-galeria-imagens table tbody').find('tr').length;
+
+	/* Titulo
+		1 - insere a galeria na tabela
+		2 - preenche o componente com a nova galeria nos dois formataos
+		3 - exibe o formato selecionado pelo usuário
+	*/
+
+	var linha = '<tr data-id="'+qtd+'">' +
+					'<td><a href="#" data-toggle="modal" data-target="#modalCriarGaleria" class="poc-alterar-galeria">' + titulo + '</a></td>' + 
+					'<td>'+
+					'<a href="#" class="poc-remover-galeria"><span class="glyphicon glyphicon-remove"></span></a>'+
+					'</td>'+
+				'</tr>';
+	$('#poc-form-propriedades-galeria-imagens table tbody').append(linha);
+
+	criarGaleriaExpandida(titulo, fotos, capa, false);
+	criarGaleriaReduzida(titulo, fotos, capa, false);
+
+	$('#poc-form-propriedades-galeria-imagens #poc-tipo-galeria-imagens').change();
+})
+
+$(document).on('change', '#poc-form-propriedades-galeria-imagens #poc-tipo-galeria-imagens', function(){
+	var valor = $(this).val();
+
+	if(valor == '0'){
+		objetoAtual.find('.poc-galeria-imagens-reduzido').hide();
+		objetoAtual.find('.poc-galeria-imagens-expandido').show();
+	}else{
+		objetoAtual.find('.poc-galeria-imagens-reduzido').show();
+		objetoAtual.find('.poc-galeria-imagens-expandido').hide();
+	}
+})
+
+$(document).on('click', '#poc-form-propriedades-galeria-imagens .poc-remover-galeria', function(){
+	var posicao = parseInt($(this).parent().parent().data('id')); //o data-id representa a posição da galeria, iniciando de 0
+	console.log(posicao);
+	if($('#poc-form-propriedades-galeria-imagens table tbody tr').length == 1){
+		alert('Não é possivel excluir está galeria, pois não existem outras cadastradas');
+		return false;
+	}
+
+	objetoAtual.find('.poc-galeria-imagens-expandido .panel').each(function(i,e){
+		if(i == posicao) {
+			$(e).remove();
+			return false;
+		}
+	});
+
+
+	objetoAtual.find('.poc-galeria-imagens-reduzido .item-reduzido').each(function(i,e){
+		if(i == posicao) {
+			$(e).remove();
+			return false;
+		}
+	});
+
+	$(this).parent().parent().remove();
+
+	$('#poc-form-propriedades-galeria-imagens table tbody tr').each(function(i,e){
+		$(e).attr('data-id', i.toString());
+	})
+})
+
+$(document).on('click', '#poc-form-propriedades-galeria-imagens .poc-alterar-galeria', function(){
+	idGaleria = parseInt($(this).parent().parent().data('id')); //o data-id representa a posição da galeria, iniciando de 0
+	alterarGaleria = true;
+})
+
+/* SITES ONE PAGE */
+
+//inicia o efeito do menu para sites onepage
+function initOnePage(){
+	$('.page-scroll a').bind('click', function(event) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+        }, 1500, 'easeInOutExpo');
+        event.preventDefault();
+    });
+}
+//caso o tipo de escolha do site seja o onepage, executa esta função
+//Esta função carrega o conteúdo inicial do template freelancer e abre dentro da div #poc-page
+function tipoOnePage(){
+	$('#poc-page').load('onepage.html', function(){
+		var home = {
+			id: 			1,
+			nome: 			"Home",
+			isHome: 		true,
+			isLink: 		false, 
+			descricao: 		"Página Inicial do Seu Projeto",
+			children: 		[],
+			pai: 			0,
+			url: 			"#home", 
+			conteudo: 		'',
+		};
+
+		paginas.push(home);
+		
+		$('#lista-paginas').empty();
+		$('.poc-nav-pages').empty();
+		paginaAtual = home;
+
+		redefinirMenu(paginas, 0);
+		redefinirMenuHtml(paginas, 0, '.poc-nav-pages', onePage);
+		abrirPaginasOnePage();
+		
+		//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
+		addDraggableToComponents();//capacidade de arrastar
+		addSortableToComponents(".coluna, .poc-content"); //elementos que vão receber os conteúdos arrastaveis
+		
+		addBotaoPropriedade("#poc-page", "pagina");
+		addBotaoPropriedade(".poc-content", "pagina");
+		addBotaoPropriedade("#poc-menu", "menu");
+
+		addSidrToComponents(); //exibição das propriedades ao clicar no componente
+
+		initOnePage(); 
+	});
+}
+
+//insere todas as páginas dentro do conteudo gerado
+function abrirPaginasOnePage(){
+	var site = $('#poc-page');
+	site.find('section').remove();
+
+	for(i in paginas){
+		var page = $('<section />')
+					.prop('id', removerAcentosEspacos(paginas[i].nome))
+					.attr('data-content', 'Página - ' + paginas[i].nome)
+					.addClass('poc-content')
+					.append(paginas[i].conteudo)
+					.appendTo(site);
+	}
+
+	addDraggableToComponents();//capacidade de arrastar
+	addSortableToComponents(".coluna, .poc-content"); //elementos que vão receber os conteúdos arrastaveis
+}
+
+/* FIM SITES ONE PAGE */
+
+//pega o html de todas as section e insere na lista de páginas
+function salvarAlteracoesOnePage(){
+	$('#poc-page').find('section').each(function(){
+		var id = $(this).prop('id');
+		var html = $(this).html();
+		for(i in paginas){
+			if(paginas[i].url == '#'+id) paginas[i].conteudo = html;
+		}
+	});
+}
+
+
+//insere a pagina1 no lugar da pagina2
+function trocarPagina(lista, pagina1, pagina2){
+	for(i in lista){
+		if(lista[i].id == pagina2.id) lista[i] = pagina1;
+		else if(lista[i].children.length > 0) trocarPagina(lista[i].children, pagina1, pagina2);
+	}
+}
+
+function salvarAlteracoesEstiloLivre(){
+	paginaAtual.conteudo.replaceWith($('#poc-content'));
+	salvarAlteracoes(paginas, paginaAtual);
+}
+
+//salva as alterações que são feitas no #poc-content, para sites estilo livre, e .poc-content para sites One Page
+function salvarAlteracoesSite(){
+	if(onePage) salvarAlteracoesOnePage;
+	else salvarAlteracoesEstiloLivre();
+}
+
+$(document).on('click', '.remover-componente', function(e){
+	e.preventDefault();
+
+	if(confirm("Deseja realmente excluir esse componente?")){
+		$(this).parent().parent().remove();
+		salvarAlteracoesSite();
+		
+	}
+})
+
+
+$(document).on('click', '.btn-close-form', function(e){
+	e.preventDefault();
+	botaoAtual.click();
+})
 
 $(document).ready(function(){
 	
 	carregarModalInicial();
+	
 	//faz a leitura dos componentes
 	readXml();
+
+	$('input[type=file]').bootstrapFileInput();
+	//console.log($('input[type=file]')
 });
 

@@ -6,6 +6,7 @@
 			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="col-md-12 coluna" data-content="Coluna"></div>
 			</div>
@@ -20,6 +21,7 @@
 			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="col-md-6 coluna" data-content="Coluna"></div>
 				<div class="col-md-6 coluna" data-content="Coluna"></div>
@@ -35,6 +37,7 @@
 			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="col-md-4 coluna" data-content="Coluna"></div>
 				<div class="col-md-4 coluna" data-content="Coluna"></div>
@@ -51,6 +54,7 @@
 			<div class="row previa" data-content="Bloco">
 				<div class="col-md-12">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="col-md-3 coluna" data-content="Coluna"></div>
 				<div class="col-md-3 coluna" data-content="Coluna"></div>
@@ -68,6 +72,7 @@
 			<div class="componente-texto" data-content="Texto">
 				<div class="col-md-12">
 					<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
 				<div class="poc-texto">
@@ -85,9 +90,10 @@
 			<div class="componente-miniaturas" data-content="Miniaturas">
 				<div class="col-md-12">
 					<a data-prop="miniaturas" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-miniaturas"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
-				<div class="group-thumbnails">
+				<div class="group-thumbnails row">
 					<div class="col-md-3">
 						<a href="#" class="thumbnail poc-miniaturas">
 							<img src="img/logolinked.png" alt="miniatura de exemplo" />
@@ -124,6 +130,7 @@
 			<div class="componente-formulario" data-content="Formulário">
 				<div class="col-md-12">
 					<a data-prop="formulario" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-formulario"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
 				<form class="form-horizontal" role="form">
@@ -166,9 +173,10 @@
 			<div class="componente-redes-sociais" data-content="Redes Sociais - Miniaturas">
 				<div class="col-md-12">
 					<a data-prop="redes-sociais" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
-				<div class="group-thumbnails text-center">
+				<div class="group-thumbnails text-center row">
 					
 					<a href="#" data-social="facebook" data-social="facebook">
 						<img src="img/social/pacote_1/56/facebook.png" alt="miniatura de exemplo" />
@@ -195,6 +203,7 @@
 			<div class="componente-painel-estatico" data-content="Painel - Estático">
 				<div class="col-md-12">
 					<a data-prop="painel-estatico" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel-estatico"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="row"></div>
 				<div class="panel panel-default">
@@ -217,6 +226,7 @@
 			<div class="componente-mapa-google" data-content="Mapa - Google">
 				<div class="col-md-12">
 					<a data-prop="mapa-google" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-google"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
 				<div id="poc-mapa-google" data-mapa-id=""></div>
@@ -232,6 +242,7 @@
 			<div class="componente-video" data-content="Vídeo">
 				<div class="col-md-12">
 					<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-video"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 
 				<iframe width="480" height="360" src="//www.youtube.com/embed/Th4DkA-AJT0" frameborder="0" allowfullscreen></iframe>
@@ -248,6 +259,7 @@
 			<div class="componente-categoria-blog" data-content="Categoria de Blog">
 				<div class="col-md-12">
 					<a data-prop="categoria-blog" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-categoria-blog"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
 				<div class="col-md-12">
 					<ul class="media-list">
@@ -343,72 +355,84 @@
 			<div class="componente-slideshow" data-content="Slideshow">
 				<div class="col-md-12">
 					<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
 				</div>
+				
+				<div id="poc-carousel-example" class="carousel slide" data-ride="carousel" data-id="">
+      				
+      				<!-- Indicators -->
+      				<ol class="carousel-indicators">
+      					<li data-target="#poc-carousel-example" data-slide-to="0" class="active"></li>
+      					<li data-target="#poc-carousel-example" data-slide-to="1"></li>
+      					<li data-target="#poc-carousel-example" data-slide-to="2"></li>
+  					</ol>
 
-				<div class="sl-slider-wrapper poc-slideshow">
-
-					<div class="sl-slider">
-
-						<div class="sl-slide bg-1" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
-							<div class="sl-slide-inner">
-								<h2>Título 1</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+  					<div class="carousel-inner">
+  						<div class="item active">
+  							<img src="img/slideshow/imagem1.jpg" alt="primeiro slide">
+  							
+							<div class="carousel-caption">
+								<h1>Título 1</h1>
+								<div class="content">
+									<p>Exemplo de conteúdo com um pouco mais de texto</p>
+								</div>
 							</div>
-						</div>
+  							
+  						</div>
 
-						<div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
-							<div class="sl-slide-inner">
-								<h2>Título 2</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+  						<div class="item">
+  							<img src="img/slideshow/imagem2.jpg" alt="segundo slide">
+							<div class="carousel-caption">
+								<h1>Título 2</h1>
+								<div class="content">
+									<p>Exemplo de conteúdo com um pouco mais de texto</p>
+								</div>
 							</div>
-						</div>
+  						</div>
 
-						<div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
-							<div class="sl-slide-inner">
-								<h2>Título 3</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
+  						<div class="item">
+  							<img src="img/slideshow/imagem3.jpg" alt="terceiro slide">
+							<div class="carousel-caption">
+								<h1>Título 3</h1>
+								<div class="content">
+									<p>Exemplo de conteúdo com um pouco mais de texto</p>
+								</div>
 							</div>
-						</div>
+  						</div>
+  					</div>
+  					<a class="left carousel-control" href="#poc-carousel-example" data-slide="prev">
+  						<span class="glyphicon glyphicon-chevron-left"></span>
+  					</a>
+  					<a class="right carousel-control" href="#poc-carousel-example" data-slide="next">
+  						<span class="glyphicon glyphicon-chevron-right"></span>
+  					</a>
+  				</div>
 
-						<div class="sl-slide bg-4" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
-							<div class="sl-slide-inner">
-								<h2>Título 4</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-							</div>
-						</div>
-
-						<div class="sl-slide bg-5" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
-							<div class="sl-slide-inner">
-								<h2>Título 5</h2>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-							</div>
-						</div>
-					</div><!-- /sl-slider -->
-
-					<nav id="nav-arrows" class="nav-arrows">
-						<span class="nav-arrow-prev">Anterior</span>
-						<span class="nav-arrow-next">Próximo</span>
-					</nav>
-
-					<nav id="nav-dots" class="nav-dots">
-						<span class="nav-dot-current"></span>
-						<span></span>
-						<span></span>
-						<span></span>
-						<span></span>
-					</nav>
-
-				</div><!-- /slider-wrapper -->
+  				<div id="poc-accordion-example" style="display:none">
+  					<ul id="poc-accordion" class="poc-accordion">
+  						<li>
+  							<img src="img/slideshow/imagem1.jpg" alt="slideshow">
+  							<div>
+  								<strong>Titulo 1</strong>
+  								<p>Exemplo de conteúdo com um pouco mais de texto</p>
+  							</div>
+  						</li>
+  						<li>
+  							<img src="img/slideshow/imagem2.jpg" alt="slideshow">
+  							<div>
+  								<strong>Titulo 2</strong>
+  								<p>Exemplo de conteúdo com um pouco mais de texto</p>
+  							</div>
+  						</li>
+  						<li>
+  							<img src="img/slideshow/imagem3.jpg" alt="slideshow">
+  							<div>
+  								<strong>Titulo 3</strong>
+  								<p>Exemplo de conteúdo com um pouco mais de texto</p>
+  							</div>
+  						</li>
+  					</ul>
+  				</div>
 			</div>
 		]]>
 		</html>
@@ -421,14 +445,66 @@
 			<div class="componente-galeria-imagens" data-content="Galeria de Imagens">
 				<div class="col-md-12">
 					<a data-prop="galeria-imagens" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagens"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+				</div>
+				
+				<div class="row"></div>
+
+				<div class="poc-galeria-imagens-expandido">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><h1 class="panel-title">Galeria de Exemplo</h1></div>
+						<div class="panel-body">
+							<div class="row">
+								<a class="col-md-3 col-sm-4 col-xs-6" href="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" data-toggle="lightbox" data-gallery="galeria-exemplo-expandido">
+									<img class="img-responsive" src="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" />
+								</a>
+						        <a class="col-md-3 col-sm-4 col-xs-6" data-toggle="lightbox" data-gallery="galeria-exemplo-expandido" href="http://www.virginia.org/uploadedImages/virginiaorg/Images/OrgImages/H/HamptonConventionVisitorBureau/Grandview_Nature_Preserve.jpg?width=300&height=200&scale=upscalecanvas">
+						        	<img class="img-responsive" src="http://www.virginia.org/uploadedImages/virginiaorg/Images/OrgImages/H/HamptonConventionVisitorBureau/Grandview_Nature_Preserve.jpg?width=300&height=200&scale=upscalecanvas" />
+						        </a>
+						        <a class="col-md-3 col-sm-4 col-xs-6" data-toggle="lightbox" data-gallery="galeria-exemplo-expandido" href="http://blog.arborday.org/wp-content/uploads/2013/02/NEC1-300x200.jpg">
+						        	<img class="img-responsive" src="http://blog.arborday.org/wp-content/uploads/2013/02/NEC1-300x200.jpg" />
+						    	</a>
+						       
+						        <a class="col-md-3 col-sm-4 col-xs-6" data-toggle="lightbox" data-gallery="galeria-exemplo-expandido" href="http://th03.deviantart.net/fs70/200H/f/2010/256/0/9/painting_of_nature_by_dhikagraph-d2ynalq.jpg">
+						        	<img class="img-responsive" src="http://th03.deviantart.net/fs70/200H/f/2010/256/0/9/painting_of_nature_by_dhikagraph-d2ynalq.jpg" />
+						        </a>
+							</div>
+						</div>
+					</div>
 				</div>
 
-				<div class="poc-galeria-imagens blueimp-gallery-controls" data-fullScreen="true" data-useBootstrapModal="false">
+				<div class="poc-galeria-imagens-reduzido row" style="display:none">
+					<div class="col-xs-12 col-sm-6 col-md-3 item-reduzido">
+			            <div class="panel panel-default">
+			                <div class="panel-body">
+			                    <a href="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" class="zoom" data-toggle="lightbox" data-gallery="galeria-exemplo-reduzido">
+			                        <img src="http://2.bp.blogspot.com/-H6MAoWN-UIE/TuRwLbHRSWI/AAAAAAAABBk/89iiEulVsyg/s400/Free%2BNature%2BPhoto.jpg" alt="Nature Portfolio" />
+			                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+			                    </a>
 
+			                    <a href="http://www.virginia.org/uploadedImages/virginiaorg/Images/OrgImages/H/HamptonConventionVisitorBureau/Grandview_Nature_Preserve.jpg?width=300&height=200&scale=upscalecanvas" class="zoom oculta" data-toggle="lightbox" data-gallery="galeria-exemplo-reduzido">
+			                        <img src="http://www.virginia.org/uploadedImages/virginiaorg/Images/OrgImages/H/HamptonConventionVisitorBureau/Grandview_Nature_Preserve.jpg?width=300&height=200&scale=upscalecanvas" alt="Nature Portfolio" />
+			                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+			                    </a>
+
+			                    <a href="http://blog.arborday.org/wp-content/uploads/2013/02/NEC1-300x200.jpg" class="zoom oculta" data-toggle="lightbox" data-gallery="galeria-exemplo-reduzido">
+			                        <img src="http://blog.arborday.org/wp-content/uploads/2013/02/NEC1-300x200.jpg" alt="Nature Portfolio" />
+			                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+			                    </a>
+
+			                    <a href="http://th03.deviantart.net/fs70/200H/f/2010/256/0/9/painting_of_nature_by_dhikagraph-d2ynalq.jpg" class="zoom oculta" data-toggle="lightbox" data-gallery="galeria-exemplo-reduzido">
+			                        <img src="http://th03.deviantart.net/fs70/200H/f/2010/256/0/9/painting_of_nature_by_dhikagraph-d2ynalq.jpg" alt="Nature Portfolio" />
+			                        <span class="overlay"><i class="glyphicon glyphicon-fullscreen"></i></span>
+			                    </a>
+			                </div>
+			                <div class="panel-footer">
+			                    <h4>Galeria de Exemplo</h4>
+			                </div>
+			            </div>
+			        </div>
 				</div>
 			</div>
 		]]>
 		</html>
 	</componente>
-
 </listaComponentes>

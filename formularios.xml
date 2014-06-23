@@ -45,6 +45,10 @@
 			    	<option value="20px">20px</option>
 			    </select>
 			  </div>
+
+			  <div class="form-group">
+			  	<button class="btn btn-default btn-close-form">Fechar</button>
+			  </div>
 			</form>
 		]]>
 		</html>
@@ -91,6 +95,10 @@
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
+
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -132,8 +140,9 @@
 						<option value="6">Galeria de Vídeos</option>
 					</select>
 				</div>
-
-				
+				<div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -213,7 +222,9 @@
 		            </select>
 		            <span class="help-block">Clique no item do menu 'Meus Dados' para visualizar a mudança.</span>
 		        </div>
-		        <span class="help-block"></span>
+		        <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -262,6 +273,9 @@
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -277,7 +291,9 @@
 				  	<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalEditarTexto"><span class="glyphicon glyphicon-pencil"></span> Editar Texto</button>
 				  	<span class="help-block">Clique no botão acima para alterar o texto do componente. Nesse tela que aparecer será possível formatar o texto da maneira que desejar.</span>
 			    </div>
-
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 
 			</form>
 		]]>
@@ -288,7 +304,7 @@
 		<nome>miniaturas</nome>
 		<html><![CDATA[
 			<!-- formulario com as propriedades das miniaturas -->
-			<form id="poc-form-propriedades-miniaturas" role="form">
+			<form id="poc-form-propriedades-miniaturas" role="form" enctype="multipart/form-data">
 				<div class="form-group">
 				  	<label for="poc-upload-miniaturas">Carregar Miniaturas</label>
 				  	<input type="file" id="poc-upload-miniaturas" size="5000" name="poc-upload-miniaturas" multiple>
@@ -309,7 +325,7 @@
 				    	<input type="text" name="poc-miniaturas-largura" id="poc-miniaturas-largura" value="4" class="form-control">
 		        		<div class="input-group-btn">
 			        		<button class="btn btn-primary miniaturas-largura-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
-			        		<button class="btn btn-primary miniaturas-largura-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        		<button class="btn btn-default miniaturas-largura-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
@@ -333,6 +349,9 @@
 			    </div>			    
 			    <div class="form-group">
 				  	<button class="btn btn-primary" type="button" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#modalAddItemFormulario">Construir Formulário</button>
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
 		   </form>
 		]]>
@@ -447,6 +466,9 @@
 				  		<option value="256">256x256</option>
 				  	</select>
 			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -501,6 +523,9 @@
 						<option value="panel panel-danger">Perigo</option>
 					</select>
 				</div>
+				<div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
 			</form>
 		]]>
 		</html>
@@ -522,7 +547,10 @@
 				  		</span>
 				    </div><!-- /input-group -->
 				    <span class="help-block">Caso necessite de um endereço completo, insira da seguinte maneira: "Rua/Av Número, Cidade". Exemplo: Av. 7 de Setembro 10, São João Del Rei</span>
-			    </div>			    
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>		    
 		   </form>
 		]]>
 		</html>
@@ -553,6 +581,9 @@
 			    		<option value="640 480">640x480</option>
 			    		<option value="960 720">960x720</option>
 			    	</select>
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
 		   </form>
 		]]>
@@ -600,6 +631,129 @@
 			    		<option value="pagination pagination-lg">Grande</option>
 			    		<option value="pagination pagination-sm">Pequeno</option>
 			    	</select>
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+		   </form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>slideshow</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-slideshow" role="form" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="poc-tipo-slideshow">Tipo</label>
+					<select id="poc-tipo-slideshow" name="poc-tipo-slideshow" class="form-control">
+						<option value="0">Show de Slides</option>
+						<option value="1">Sanfona</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="poc-upload-slideshow">Carregar Imagens</label>
+					<input type="file" id="poc-upload-slideshow" name="poc-upload-slideshow" multiple>
+				</div>
+				<div class="form-group">
+				  	<label for="poc-altura-slideshow">Altura</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-altura-slideshow" id="poc-altura-slideshow" value="500" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary poc-altura-slideshow-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary poc-altura-slideshow-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+			    <div class="form-group">
+			    	<label for="btn-alterar-titulos">Títulos e Subtítulos</label>
+			    	<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalTitulosSlideshow" id="btnTitulos">Alterar Tíulos e Subtítulos</button>
+			    </div>
+			    <div class="form-group grupo-slideshow">
+			    	<label for="poc-alinhamento-caption-slideshow">Alinhamento</label>
+			    	<select id="poc-posicao-caption-slideshow" name="poc-posicao-caption-slideshow" class="form-control">
+			    		<option value="left">Esquerdo</option>
+			    		<option value="center" selected>Centralizado</option>
+			    		<option value="right">Direito</option>
+			    		<option value="justify">Justificado</option>
+			    	</select>
+			    </div>
+
+			    <div class="form-group grupo-slideshow">
+				  	<label for="poc-left-slideshow">Posição - Esquerda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-left-slideshow" id="poc-left-slideshow" value="20" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary poc-left-slideshow-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary poc-left-slideshow-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group grupo-slideshow">
+				  	<label for="poc-right-slideshow">Posição - Direita</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-right-slideshow" id="poc-right-slideshow" value="20" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary poc-right-slideshow-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary poc-right-slideshow-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group grupo-slideshow">
+				  	<label for="poc-top-slideshow">Posição - Topo</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-top-slideshow" id="poc-top-slideshow" value="200" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary poc-top-slideshow-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary poc-top-slideshow-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+		   </form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>galeria-imagens</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades dos formularios -->
+			<form id="poc-form-propriedades-galeria-imagens" role="form">
+				<div class="form-group">
+			    	<label for="poc-tipo-galeria-imagens">Formato da Galeria</label>
+			    	<select id="poc-tipo-galeria-imagens" name="poc-tipo-galeria-imagens" class="form-control">
+			    		<option value="0">Expandido</option>
+			    		<option value="1">Reduzido</option>
+			    	</select>
+			    	<span class="help-block">No formato reduzido, apenas a capa da galeria irá aparecer. Já no formato expandido, todas as imagens da
+			    		galeria serão exibidas</span>
+			    </div>
+
+
+			    <div class="form-group">
+			    	<label for="table-galerias">Galerias Cadastradas</label>
+			    	<table class="table table-bordered" id="table-galerias">
+			    		<thead>
+			    			<tr>
+			    				<th>Galeria</th>
+			    				<th>Excluir</th>
+			    			</tr>
+			    		</thead>
+			    		<tbody>
+			    		</tbody>
+			    	</table>
+
+			    	<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalCriarGaleria" id="btnAddGaleria">Criar Galeria</button>
+
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
 		   </form>
 		]]>

@@ -16,92 +16,96 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/summernote.css">
 
+	<link rel="stylesheet" type="text/css" href="css/ekko-lightbox.min.css">
+	<link rel="stylesheet" type="text/css" href="css/image-picker.css">
+
 	<link rel="stylesheet" type="text/css" href="css/poc.css">
 
 
 </head>
 <body class="conteudo-total">
 	<!-- área para os componentes -->
-	<div class="col-md-3">
-		<div class="panel-group" id="accordion">
-			<!-- Acorddion sobre as paginas -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapsePaginas">Itens do Menu</a>
-					</h4>
-				</div>
-				<div id="collapsePaginas" class="panel-collapse collapse in">
-					<div class="panel-body">
-						
-						<ul class="list-unstyled" id="lista-paginas"></ul>	
-						
-						<button class="btn btn-primary" id="btn-add-page" data-toggle="modal" data-target="#add-page">
-						  <span class="glyphicon glyphicon-plus"></span> Nova Página
-						</button>
+	<div class="col-md-3 panel-content">
+		<div class=" panel-itens">
+			<div class="panel-group" id="accordion">
+				<!-- Acorddion sobre as paginas -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapsePaginas">Itens do Menu</a>
+						</h4>
+					</div>
+					<div id="collapsePaginas" class="panel-collapse collapse in">
+						<div class="panel-body">
+							
+							<ul class="list-unstyled" id="lista-paginas"></ul>	
+							
+							<button class="btn btn-primary" id="btn-add-page" data-toggle="modal" data-target="#add-page">
+							  <span class="glyphicon glyphicon-plus"></span> Nova Página
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Acorddion sobre os containeres -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseColunas">Blocos</a>
-					</h4>
-				</div>
-				<div id="collapseColunas" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul class="list-unstyled" id="lista_colunas">
-							<li class="componente-arrastavel bloco 1coluna">1 Coluna <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 2colunas">2 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 3colunas">3 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel bloco 4colunas">4 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
-						</ul>
+				<!-- Acorddion sobre os containeres -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseColunas">Blocos</a>
+						</h4>
+					</div>
+					<div id="collapseColunas" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="list-unstyled" id="lista_colunas">
+								<li class="componente-arrastavel bloco 1coluna">1 Coluna <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel bloco 2colunas">2 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel bloco 3colunas">3 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel bloco 4colunas">4 Colunas <span class="pull-right glyphicon glyphicon-move"></span></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Componentes Conteúdo Estático -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes - Conteúdo Estático</a>
-					</h4>
-				</div>
-				<div id="collapseEstaticos" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul class="list-unstyled">
-							<li class="componente-arrastavel texto">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel miniaturas">Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel formulario">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel redes-sociais">Redes Sociais - Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel painel-estatico">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel mapa-google">Mapa - Localização <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel video">Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
-						</ul>
+				<!-- Componentes Conteúdo Estático -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseEstaticos">Componentes - Conteúdo Estático</a>
+						</h4>
+					</div>
+					<div id="collapseEstaticos" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="list-unstyled">
+								<li class="componente-arrastavel texto">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel miniaturas">Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel formulario">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel redes-sociais">Redes Sociais - Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel painel-estatico">Painel <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel mapa-google">Mapa - Localização <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel video">Vídeo <span class="pull-right glyphicon glyphicon-move"></span></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Componentes Conteúdo Estático -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseDinamicos">Componentes - Conteúdo Dinâmico</a>
-					</h4>
-				</div>
-				<div id="collapseDinamicos" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul class="list-unstyled">
-							<li class="componente-arrastavel categoria-blog">Categoria de Blog <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel slideshow">Slideshow <span class="pull-right glyphicon glyphicon-move"></span></li>
-							<li class="componente-arrastavel galeria-imagens">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
-						</ul>
+				<!-- Componentes Conteúdo Estático -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseDinamicos">Componentes - Conteúdo Dinâmico</a>
+						</h4>
+					</div>
+					<div id="collapseDinamicos" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="list-unstyled">
+								<li class="componente-arrastavel categoria-blog">Categoria de Blog <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel slideshow">Slideshow/Accordion <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel galeria-imagens">Galeria de Imagens <span class="pull-right glyphicon glyphicon-move"></span></li>
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
-
+			</div>			
 		</div>
 	</div>
 
@@ -109,7 +113,6 @@
 	
 	</div>
 	<div id="content-modal"></div>
-
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jqueryui.min.js"></script>
@@ -117,10 +120,16 @@
 	<script type="text/javascript" src="js/jquery.sidr.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
-	<script type="text/javascript" src="js/jquery.slitslider.js"></script>
 	<script type="text/javascript" src="js/summernote.min.js"></script>
 	<script type="text/javascript" src="js/summernote-pt-BR.js"></script>
 	<script type="text/javascript" src="js/summernote-pt-BR.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="js/jquery.zaccordion.min.js"></script>
+	<script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.file-input.js"></script>
+	<script type="text/javascript" src="js/image-picker.min.js"></script>
+	<script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
 	<script type="text/javascript" src="js/poc.js"></script>
 </body>
 </html>

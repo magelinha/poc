@@ -69,7 +69,7 @@ Vinicius:
 
 ********************************************************* Componentes detectados em projetos da Linked *******************************************
 IX Premio Fejemg
-	Slideshow (Accordeon)
+	Slideshow (Accordion)
 	Thumbnails com escala em cinza (muito usado)
 	Thumbnails comuns
 	Mapa do Site
