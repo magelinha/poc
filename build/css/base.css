@@ -1,249 +1,55 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro|Droid+Sans|Lato|PT+Sans|Ubuntu|Droid+Serif|Open+Sans|Roboto|Oswald|Open+Sans+Condensed:300|Roboto+Condensed|Montserrat);
+#poc-page {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box;
+	font-family:Glyphicons Halflings;
+	font-size:14px;
+}
+ 
+#poc-header { 
+ 	background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; 
+ 	min-height:200px; 
+ 	border:none; 
+ 	border-radius:0px; 
+ }
+ 
+#poc-content { 	background: rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box; 
+ 	min-height:600px; 
+ 	border:none; 
+ 	border-radius:0px; 
+ }
 
-html, body {
-	height: 100%;
-	margin: 0px;
-	padding: 0px;
+ #poc-menu {
+ 	background: #f8f8f8px;
+ 	color:#777777;
+ 	border:1px solid #e7e7e7;
+ 	border-radius:4px;
+ }
+
+ #poc-footer { 
+ 	background: #fff; 
+ 	min-height:200px; 
+ 	border:none; 
+ 	border-radius:0px; 
+ }
+#poc-page, #poc-header, #poc-content, .poc-content, #poc-footer {
+    -webkit-background-size : 'cover';
+    -moz-background-size : 'cover';
+    -o-background-size : 'cover';
+    background-size : 'cover'
 }
 
-.panel-content {
-	position: absolute;
-	left: 0;
-}
+.dropdown-submenu { 
+	position: relative; 
+} 
 
-.panel-itens{
-	position: fixed;
-	top: 74px;	
-	width: 22%;
-}
-
-.remover-componente, .mover.componente {
-	margin: 10px;
-}
-
-#poc-item-usuario, #poc-item-sair{ line-height: 63px; margin: 0px 15px 0px 15px}
-
-.link-propriedades {margin: 10px 0px 10px 0px}
-
-.poc-componente-fixo:before, .poc-componente:before, .poc-content:before {
-	content: attr(data-content);
-	border:1px solid #dddddd;
-	color: #9da0a4;
-	left: -1px;
-	padding: 3px 7px;
-	position: absolute;
-	top: -1px;
-}
-
-.conteudo-gerado {
-	min-height: 100%;
-	border: 1px dotted;
-	padding: 33px 10px 10px 10px !important;
-	left: 24%;
-	margin-top: 74px !important;
-}
-
-.poc-content {
-	min-height: 500px;
-}
-
-.poc-content, .poc-componente-fixo, .poc-componente{
-	position: relative;
-	padding: 33px 14px 0;
-	margin: 15px 0;
-}
-
-.poc-content, .previa, .poc-componente {
-	border: 1px solid;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding-bottom: 25px;
-	padding-top: 40px;
-}
-
-.previa {
-	min-height: 200px;
-  margin-top: 45px;
-}
-
-.coluna, .componente-miniaturas {
-	float: left;
-}
-
-.previa .coluna {
-	min-height: 200px;
-	border: 1px dotted;
-
-}
-
-.btn-propriedades {
-	margin-left: 0px;
-	margin-right: 0px;
-}
-header, footer {
-	min-height: 200px;
-}
-
-.componente-arrastavel { cursor: move}
-
-#poc-content{
-	min-height: 600px;	
-}
-
-#poc-content, #poc-header, #poc-footer, .poc-menu{
-	border: 1px solid;
-}
-
-.img-features {
-	width: 100%;
-	height: 100%;
-}
-
-.carousel {
-  height: 500px;
-  margin-bottom: 60px;
-  margin-top: 10px;
-}
-
-
-/* Since positioning the image, we need to help out the caption */
-
-
-#poc-features .carousel-caption {
-  z-index: 10;
-  top:37%;
-}
-
-
-/* Declare heights because of positioning of img element */
-
-#poc-features  .carousel .item {
-  height: 500px;
-  background-color: #777;
-}
-
-
-
-#poc-features  > .carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 500px;
-}
-
-
-.sidr form {
-	padding: 11px;
-}
-
-/* estilo voltado para as texturas */
-
-.label-textura {
-	margin-bottom: 0px !important;
-}
-
-.lista-texturas {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.lista-texturas:after {
-  content: "";
-  clear: both;
-}
-
-.item-textura {
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  float: left;
-  height: 70px;
-  position: relative;
-  width: 120px;
-}
-
-.item-textura label {
-  background: #fff no-repeat center center;
-  bottom: 1px;
-  cursor: pointer;
-  display: block;
-  font-size: 0;
-  left: 1px;
-  position: absolute;
-  right: 1px;
-  text-indent: 100%;
-  top: 1px;
-  white-space: nowrap;
-}
-
-.item-textura {
-  margin-right: 10px;
-  margin-bottom: 10px;
-
-}
-
-.textura-1 label {background-image: url(../img/texturas/textura01.png)}
-.textura-2 label {background-image: url(../img/texturas/textura02.png)}
-.textura-3 label {background-image: url(../img/texturas/textura03.png)}
-.textura-4 label {background-image: url(../img/texturas/textura04.png)}
-.textura-5 label {background-image: url(../img/texturas/textura05.png)}
-.textura-6 label {background-image: url(../img/texturas/textura06.png)}
-.textura-7 label {background-image: url(../img/texturas/textura07.png)}
-.textura-8 label {background-image: url(../img/texturas/textura08.png)}
-.textura-9 label {background-image: url(../img/texturas/textura09.png)}
-.textura-10 label {background-image: url(../img/texturas/textura10.png)}
-.textura-11 label {background-image: url(../img/texturas/textura11.png)}
-.textura-12 label {background-image: url(../img/texturas/textura12.png)}
-.textura-13 label {background-image: url(../img/texturas/textura13.png)}
-.textura-14 label {background-image: url(../img/texturas/textura14.png)}
-.textura-15 label {background-image: url(../img/texturas/textura15.png)}
-.textura-16 label {background-image: url(../img/texturas/textura16.png)}
-.textura-17 label {background-image: url(../img/texturas/textura17.png)}
-.textura-18 label {background-image: url(../img/texturas/textura18.png)}
-.textura-19 label {background-image: url(../img/texturas/textura19.png)}
-
-.lista-texturas input:focus + label {
-  outline: 2px dotted #21b4d0;
-}
-
-.lista-texturas input:checked + label {
-  outline: 4px solid #21b4d0;
-}
-
-.lista-texturas input:checked + label:after {
-  background: url(../img/checked.png);
-  bottom: 0px;
-  content: "";
-  display: inline-block;
-  height: 20px;
-  position: absolute;
-  right: 0px;
-  width: 20px;
-}
-
-@-moz-document url-prefix() {
-  .payment-methods input:checked + label:after {
-    bottom: 0;
-    right: 0;
-    background-color: #21b4d0;
-  }
-}
-
-/* Estilo para o menu */
-.dropdown-submenu {
-    position: relative;
-}
-
-.dropdown-submenu>.dropdown-menu {
-    top: 0;
-    left: 100%;
-    margin-top: -6px;
-    margin-left: -1px;
-    -webkit-border-radius: 0 6px 6px 6px;
-    -moz-border-radius: 0 6px 6px;
-    border-radius: 0 6px 6px 6px;
-}
+.dropdown-submenu>.dropdown-menu { 
+    top: 0; 
+    left: 100%; 
+    margin-top: -6px; 
+    margin-left: -1px; 
+    -webkit-border-radius: 0 6px 6px 6px; 
+    -moz-border-radius: 0 6px 6px; 
+    border-radius: 0 6px 6px 6px; 
+} 
 
 .dropdown-submenu:hover>.dropdown-menu {
     display: block;
@@ -295,46 +101,6 @@ header, footer {
 }
 
 .poc-navbar-search {float: left}
-#content-formularios { display: none}
-
-.link-propriedades {
-	-webkit-user-drag: none;
-}
-
-#lista-paginas li.bg-info { background-color: #D9EDF7}
-#lista-paginas li.bg-primary { background-color: #428BCA}
-#lista-paginas li.bg-primary a {color: #fff}
-
-#lista-paginas li a{
-	color: #000;
-	font-weight: bold;
-	font-size: 15px;
-	text-decoration: none;
-}
-
-#lista-paginas li a:hover {
-	cursor: default;
-}
-
-#lista-paginas li {
-	height: 40px;
-	line-height: 40px;
-	padding: 0 10px 0 10px;
-}
-
-.btn-opcoes-paginas {
-	margin-right: 5px;
-}
-
-
-#modalEditarTexto .modal-dialog {
-	width: 861px;
-}
-
-#modalEditarTexto .modal-dialog .modal-content .modal-body {
-	height: 300px;
-}
-
 
 .poc-single-miniatura {
 	box-shadow: none;
@@ -358,38 +124,13 @@ img.item-gray:hover {
 }
 
 
-.poc-build-form{
-	padding: 16px 16px 16px 16px;
-	min-height: 500px;
-	width: 60%;
-}
-
 form.form-inline .form-group {
 	margin-right: 10px;
 }
 
-#poc-form-add-item-formulario .form-group {
-	min-height: 70px; 
-}
-
-#modalAddItemFormulario #lista-input {
-	list-style-type: none;
-	width: 40%;
-}
-
-#modalAddItemFormulario #lista-input li {
-	margin: 10px 0 10px 0;
-
-}
-
-
 .componente-redes-sociais .group-thumbnails a, .componente-redes-sociais .group-thumbnails a:hover {
 	text-decoration: none;
 	margin-right: 10px;
-}
-
-#poc-form-propriedades-redes-sociais .group-redes-sociais .input-group {
-	margin-bottom: 10px;
 }
 
 #poc-mapa-google {
@@ -551,22 +292,4 @@ form.form-inline .form-group {
 .poc-galeria-imagens-reduzido .panel .panel-footer div { width: 15px; display: inline; font: 300 normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #34495e; text-align: center; background-color: transparent !important; border: none !important; }	
 
 .poc-galeria-imagens-reduzido .modal-title { font: 400 normal 1.625em "Roboto",Arial,Verdana,sans-serif; }
-.poc-galeria-imagens-reduzido .modal-footer { font: 400 normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
-
-.oculta {display: none !important}
-
-#poc-form-propriedades-galeria-imagens table a {color: #fff}
-#poc-form-propriedades-galeria-imagens table tr {text-align: center}
-
-div#poc-menu.navbar-fixed-top {
-  top: 54px;
-}
-
-.poc-pagina-centralizada, .poc-header-centralizado, .poc-content-centralizado, .poc-footer-centralizado {
-  min-height: 100%;
-}
-
-.poc-placeholder { outline: 1px dashed #ddd;visibility: visible !important; border-radius: 4px; min-height: 300px;}
-
-.container{ width: 970px !important}
-span.glyphicon {font-family: 'Glyphicons Halflings' !important}
+.poc-galeria-imagens-reduzido .modal-footer { font: 400 normal 1.125em "Roboto",Arial,Verdana,sans-serif; }

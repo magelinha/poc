@@ -3,10 +3,12 @@
 	<componente>
 		<nome>1coluna</nome>
 		<html><![CDATA[
-			<div class="row previa" data-content="Bloco">
-				<div class="col-md-12">
+			<div class="row previa poc-componente" data-content="Bloco">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+
 				</div>
 				<div class="col-md-12 coluna" data-content="Coluna"></div>
 			</div>
@@ -18,10 +20,11 @@
 	<componente>
 		<nome>2colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-content="Bloco">
-				<div class="col-md-12">
+			<div class="row previa poc-componente" data-content="Bloco">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				<div class="col-md-6 coluna" data-content="Coluna"></div>
 				<div class="col-md-6 coluna" data-content="Coluna"></div>
@@ -34,10 +37,11 @@
 	<componente>
 		<nome>3colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-content="Bloco">
-				<div class="col-md-12">
+			<div class="row previa poc-componente" data-content="Bloco">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				<div class="col-md-4 coluna" data-content="Coluna"></div>
 				<div class="col-md-4 coluna" data-content="Coluna"></div>
@@ -51,10 +55,11 @@
 	<componente>
 		<nome>4colunas</nome>
 		<html><![CDATA[
-			<div class="row previa" data-content="Bloco">
-				<div class="col-md-12">
+			<div class="row previa poc-componente" data-content="Bloco">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="bloco" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-bloco"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				<div class="col-md-3 coluna" data-content="Coluna"></div>
 				<div class="col-md-3 coluna" data-content="Coluna"></div>
@@ -65,14 +70,94 @@
 		</html>
 	</componente>
 
+
+	<!-- Título -->
+	<componente>
+		<nome>titulo</nome>
+		<html><![CDATA[
+			<div class="componente-titulo poc-componente" data-content="Título">
+				<div class="col-md-12 grupo-btn-propriedades">
+					<a data-prop="titulo" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-titulo"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+				</div>
+
+				<div class="page-header poc-titulo">
+					<h1>Título de Exemplo</h1>
+				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<componente>
+		<nome>imagem</nome>
+		<html><![CDATA[
+			<div class="componente-imagem poc-componente" data-content="Imagem">
+				<div class="col-md-12 grupo-btn-propriedades">
+					<a data-prop="imagem" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-imagem"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+				</div>
+
+				<img src="img/logolinked.png" alt="imagem de exemplo" class="img-responsive" />
+				
+				
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<componente>
+		<nome>tabela</nome>
+		<html><![CDATA[
+			<div class="componente-tabela poc-componente" data-content="Tabela">
+				<div class="col-md-12 grupo-btn-propriedades">
+					<a data-prop="tabela" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-tabela"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+				</div>
+
+				<table class="table table-bordered table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>Título 1</th>
+							<th>Título 2</th>
+							<th>Título 3</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Conteúdo 1</td>
+							<td>Conteúdo 2</td>
+							<td>Conteúdo 3</td>
+						</tr>
+						<tr>
+							<td>Conteúdo 1</td>
+							<td>Conteúdo 2</td>
+							<td>Conteúdo 3</td>
+						</tr>
+						<tr>
+							<td>Conteúdo 1</td>
+							<td>Conteúdo 2</td>
+							<td>Conteúdo 3</td>
+						</tr>
+					</tbody>
+				</table>
+			</div><!-- end componente-tabela -->
+		]]>
+		</html>
+	</componente>
+
 	<!-- Texto -->
 	<componente>
 		<nome>texto</nome>
 		<html><![CDATA[
-			<div class="componente-texto" data-content="Texto">
-				<div class="col-md-12">
+			<div class="componente-texto poc-componente" data-content="Texto">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="texto" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-texto"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<div class="poc-texto">
@@ -87,10 +172,11 @@
 	<componente>
 		<nome>miniaturas</nome>
 		<html><![CDATA[
-			<div class="componente-miniaturas" data-content="Miniaturas">
-				<div class="col-md-12">
+			<div class="componente-miniaturas poc-componente " data-content="Miniaturas">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="miniaturas" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-miniaturas"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<div class="group-thumbnails row">
@@ -127,10 +213,11 @@
 	<componente>
 		<nome>formulario</nome>
 		<html><![CDATA[
-			<div class="componente-formulario" data-content="Formulário">
-				<div class="col-md-12">
+			<div class="componente-formulario poc-componente" data-content="Formulário">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="formulario" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-formulario"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<form class="form-horizontal" role="form">
@@ -170,10 +257,11 @@
 	<componente>
 		<nome>redes-sociais</nome>
 		<html><![CDATA[
-			<div class="componente-redes-sociais" data-content="Redes Sociais - Miniaturas">
-				<div class="col-md-12">
+			<div class="componente-redes-sociais poc-componente" data-content="Redes Sociais - Miniaturas">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="redes-sociais" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-redes-sociais"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<div class="group-thumbnails text-center row">
@@ -200,12 +288,13 @@
 	<componente>
 		<nome>painel-estatico</nome>
 		<html><![CDATA[
-			<div class="componente-painel-estatico" data-content="Painel - Estático">
-				<div class="col-md-12">
+			<div class="componente-painel-estatico poc-componente" data-content="Painel - Estático">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="painel-estatico" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-painel-estatico"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
-				<div class="row"></div>
+				<div class="row poc-linha"></div>
 				<div class="panel panel-default">
 					<div class="panel-heading"><h3>Título</h3></div>
 					<div class="panel-body">
@@ -223,10 +312,11 @@
 	<componente>
 		<nome>mapa-google</nome>
 		<html><![CDATA[
-			<div class="componente-mapa-google" data-content="Mapa - Google">
-				<div class="col-md-12">
+			<div class="componente-mapa-google poc-componente" data-content="Mapa - Google">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="mapa-google" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-mapa-google"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<div id="poc-mapa-google" data-mapa-id=""></div>
@@ -239,10 +329,11 @@
 	<componente>
 		<nome>video</nome>
 		<html><![CDATA[
-			<div class="componente-video" data-content="Vídeo">
-				<div class="col-md-12">
+			<div class="componente-video poc-componente" data-content="Vídeo">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="video" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-video"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 
 				<iframe width="480" height="360" src="//www.youtube.com/embed/Th4DkA-AJT0" frameborder="0" allowfullscreen></iframe>
@@ -256,10 +347,11 @@
 	<componente>
 		<nome>categoria-blog</nome>
 		<html><![CDATA[
-			<div class="componente-categoria-blog" data-content="Categoria de Blog">
-				<div class="col-md-12">
+			<div class="componente-categoria-blog poc-componente" data-content="Categoria de Blog">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="categoria-blog" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-categoria-blog"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				<div class="col-md-12">
 					<ul class="media-list">
@@ -352,10 +444,11 @@
 	<componente>
 		<nome>slideshow</nome>
 		<html><![CDATA[
-			<div class="componente-slideshow" data-content="Slideshow">
-				<div class="col-md-12">
+			<div class="componente-slideshow poc-componente" data-content="Slideshow">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="slideshow" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-slideshow"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				
 				<div id="poc-carousel-example" class="carousel slide" data-ride="carousel" data-id="">
@@ -442,13 +535,14 @@
 	<componente>
 		<nome>galeria-imagens</nome>
 		<html><![CDATA[
-			<div class="componente-galeria-imagens" data-content="Galeria de Imagens">
-				<div class="col-md-12">
+			<div class="componente-galeria-imagens poc-componente" data-content="Galeria de Imagens">
+				<div class="col-md-12 grupo-btn-propriedades">
 					<a data-prop="galeria-imagens" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-galeria-imagens"><span class="glyphicon glyphicon-cog"></span></a>
 					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
 				</div>
 				
-				<div class="row"></div>
+				<div class="row poc-linha"></div>
 
 				<div class="poc-galeria-imagens-expandido">
 					<div class="panel panel-primary">
@@ -503,6 +597,38 @@
 			            </div>
 			        </div>
 				</div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<componente>
+		<nome>api-facebook</nome>
+		<html><![CDATA[
+			<div class="componente-api-facebook poc-componente" data-content="API - Facebook">
+				<div class="col-md-12 grupo-btn-propriedades">
+					<a data-prop="api-facebook" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-api-facebook"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+				</div>
+
+				<div class="fb-like" data-href="https://www.facebook.com/LinkedEJ?fref=ts" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+			</div>
+		]]>
+		</html>
+	</componente>
+
+	<componente>
+		<nome>api-twitter</nome>
+		<html><![CDATA[
+			<div class="componente-api-twitter poc-componente" data-content="API-Twitter">
+				<div class="col-md-12 grupo-btn-propriedades">
+					<a data-prop="api-twitter" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-api-twitter"><span class="glyphicon glyphicon-cog"></span></a>
+					<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>
+					<a href="#" class="btn btn-warning btn-xs mover-componente"><span class="glyphicon glyphicon-move"></span></a>
+				</div>
+
+				<a class="twitter-timeline"  href="https://twitter.com/magelinha_"  data-widget-id="483587004572004356">Tweets de @magelinha_</a>
 			</div>
 		]]>
 		</html>

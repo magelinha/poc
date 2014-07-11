@@ -52,16 +52,52 @@ var fonts = [
 	{nome: 'Open Sans Condensed',	familia: "'Open Sans Condensed', sans-serif"},
 	{nome: 'Roboto Condensed',		familia: "'Roboto Condensed', sans-serif"},
 	{nome: 'Montserrat',			familia: "'Montserrat', sans-serif"},
-	{nome: 'Glyphicons Halflings',	familia: "'Glyphicons Halflings', sans-serif"},
+	{nome: 'Arial',					familia: "'Arial', sans-serif"},
 	{nome: 'Tahoma',				familia: "'Tahoma', sans-serif"},
 	{nome: 'Verdana',				familia: "'Verdana', sans-serif"}
+];
+
+var larguraColunas = [
+	[
+		'6-6',
+		'10-2',
+		'2-10',
+		'8-4',
+		'4-8',
+		'3-9',
+		'9-3'
+	],
+
+	[
+		'4-4-4',
+		'8-2-2',
+		'2-8-2',
+		'2-2-8',
+		'2-5-5',
+		'5-2-5',
+		'5-5-2'
+	],
+
+	[
+		'3-3-3-3',
+		'6-2-2-2',
+		'2-6-2-2',
+		'2-2-6-2',
+		'2-2-2-6',
+		'4-4-2-2',
+		'4-2-4-2',
+		'4-2-2-4',
+		'2-4-4-2',
+		'2-4-2-4',
+		'2-2-4-4'
+	]
 ];
 
 /** FIM VARIAVEIS GLOBAIS **/
 
 /** CARREGAMENTOS OS XMLS **/
 
-/** adiciona o eventos de arrastar à todos os compenentes **/ 
+/** adiciona o eventos de arrastar à todos os componentes **/ 
 function getComponent(nome){
 	for(i=0; i<componentes_basicos.length; i++){
 		if(componentes_basicos[i].nome === nome) return componentes_basicos[i].html;
@@ -225,6 +261,46 @@ function readXml(){
 
 /** CONFIGURAÇÕES INICIAIS DA FERRAMENTA DE PROTOTIPAÇÃO **/
 
+//upload de imagens
+$(document).on('click', '.poc-btn-confirmar-upload', function(e){
+	e.preventDefault();
+	var botao = $(this);
+	var campoFile = botao.parents('.form-group').find('input[type="file"]'); //pega o botão que contem os arquivos;
+	var selectImagens = botao.parents('.modal-body').find('#poc-lista-imagens-biblioteca'); //select com a lista de imagens
+	var imagensSelecionadas = campoFile[0].files;
+	console.log(imagensSelecionadas);
+
+	//verifica se tem algum arquivo selecionado
+	if(campoFile.val() == ''){
+		alert('Nenhuma imagem selecionada');
+		return false;
+	}
+
+	var valor = new FormData();
+	$.each(imagensSelecionadas, function(chave, item){
+		valor.append(chave, item);
+	});
+	
+	$.ajax({
+		url: 'upload.php',
+		type: 'POST',
+		dataType: 'JSON',
+		data: valor,
+		processData: false,
+		contentType: false,
+		cache: false,
+
+		success: function(data){
+
+			if(data.success){
+				preencherSelectBiblioteca(selectImagens);
+			}else{
+				alert('ERRO: ' + data.mensagem);
+			}
+		}
+	});
+});
+
 //remove a função de arrastar dos links de propriedades
 $(document).on('dragstart', function(e){
 	if(e.target.tagName.toLowerCase() === "a") return false;
@@ -235,40 +311,120 @@ $(document).on('dragstart', function(e){
 function addDraggableToComponents(){
 	$(".componente-arrastavel").each(function(index, value){
 		var data = componentes_basicos[index].html;
-
-		index < 4 ? classe = "#poc-header,#poc-content, #poc-footer, .poc-content" : classe = ".coluna";
-		
-		if($(data).find('iframe').length > 0) data = '<img src="http://img.youtube.com/vi/g8PLcfyjaZw/0.jpg" alt="Linked EJ">';
-		$(this).draggable({
-			revert:function(receive){
-				if(receive === false){
-					alert('Os compoenentes estáticos e dinâmicos só podem ser arrastados para blocos.');
-					return true;
+		var iframe = '';
+		if(index < 4){
+			$(this).draggable({
+				revert: 'invalid',
+				cursor: "move",
+				iframeFix: true,
+				connectToSortable: "#poc-header,#poc-content,#poc-footer,.poc-content, .poc-header-centralizado, .poc-content-centralizado, .poc-footer-centralizado",
+				cursorAt: {left: 40, top: 25},
+				helper: function(event){
+					return $(data).css('width', '800px').css('min-height', '300px');
 				}
 
-				return false;
-			},
-			cursor: "move",
-			iframeFix: true,
-			connectToSortable: classe,
-			cursorAt: {left: 40, top: 25},
-			helper: function(event){
-				return $(data).css('width', '800px').css('min-height', '300px');
-			}
+			}).disableSelection();
+		}else{
+			if($(data).find('iframe').length > 0) iframe = '<img src="http://img.youtube.com/vi/g8PLcfyjaZw/0.jpg" alt="Linked EJ">';
+			$(this).draggable({
+				revert: function(receive){
+					if(receive === false){
+						alert('Os componentes estáticos, dinâmicos e API das Redes Sociais só podem ser arrastados para blocos.');
+						return true;
+					}
 
-		}).disableSelection();
+					return false;
+				},
+				cursor: "move",
+				iframeFix: true,
+				connectToSortable: '.coluna',
+				cursorAt: {left: 40, top: 25},
+				helper: function(event){
+					if(iframe.length > 0) return $(iframe).css('width', '800px').css('min-height', '300px');
+					return $(data).css('width', '800px').css('min-height', '300px');
+				}
+			}).disableSelection();
+		}
 	});
+	
 }
 
-function addSortableToComponents(classe){
-	$(classe).sortable({
-		revert: true, 
-		helper: "clone",
-		cancel: ".link-propriedades, .link-propriedades span, .remover-componente, .remover-componente span",
-		items: ":not(.link-propriedades, .link-propriedades span)",
+function addSortableToComponents(){
+	//indica que os itens em poc-page podem ser ordenados, mas unico item arrastavel é #poc-menu. (ok)
+	$('#poc-page').sortable({
+		revert: true,
+		helper: 'clone',
+		handle: '.mover-componente',
+		connectWith: '.coluna',
+		cursorAt: {top: 3, left:3},
+		placeholder: 'poc-placeholder',
+		
+		start: function(event, ui){
+			ui.item.toggleClass('poc-placeholder');
+		},
+
+		stop: function(event,ui){
+			ui.item.toggleClass('poc-placeholder');
+			salvarAlteracoesSite();
+		}
+	});
+
+	//os itens dentro de uma coluna podem ser ordenados, mas so podem ser enviados para a mesma coluna ou outra coluna
+	$('.coluna').sortable({
+		revert: true,
+		helper: 'clone',
+		handle: '.mover-componente',
+		connectWith: '.coluna, #poc-page',
+		items: '.previa, .poc-componente, #poc-menu',
+		cursorAt: {top: 3, left:3},
+		placeholder: 'poc-placeholder',
 
 		start: function(e, ui){
+			ui.item.toggleClass('poc-placeholder');	
+			var item = ui.item[0].classList;
+
+			for(var i=0; i<item.length; i++) {
+				if(item[i] === 'link-propriedades') return;
+			}
+
+			//pega o nome da penultima classe do objeto
+			var nome = item[item.length-3];
 			
+			elementoAtual = getComponent(nome);
+			//if(!elementoAtual) elementoAtual = ui.helper[0].outerHTML.toString();
+
+		},
+
+		stop: function(event, ui){
+			ui.item.toggleClass('poc-placeholder');
+			if(elementoAtual.length > 0){
+				ui.item.replaceWith(elementoAtual).removeAttr('style');
+			
+				//addDraggableToComponents();
+				addSortableToComponents(); //informa quais elementos podem receber outros elementos
+				addSidrToComponents(); //adciona os formularios de propriedades	
+				criarMapa();
+
+				FB.XFBML.parse();
+				twttr.widgets.load();
+			}
+			
+			salvarAlteracoesSite();
+
+		}
+	});
+
+
+	//
+	$('#poc-header, #poc-content, .poc-content, #poc-footer, .poc-header-centralizado, .poc-content-centralizado, .poc-footer-centralizado').sortable({
+		revert: true,
+		helper: 'clone',
+		handle: '.mover-componente',
+		items: '.previa',
+		placeholder: 'poc-placeholder',
+
+		start: function(e, ui){
+			ui.item.toggleClass('poc-placeholder');
 
 			var item = ui.item[0].classList;
 
@@ -277,26 +433,29 @@ function addSortableToComponents(classe){
 			}
 
 			//pega o nome da penultima classe do objeto
-			var nome = item[item.length-2];
+			var nome = item[item.length-3];
 			
 			elementoAtual = getComponent(nome);
-
-			if(!elementoAtual) elementoAtual = ui.helper[0].outerHTML.toString();
+			//if(!elementoAtual) elementoAtual = ui.helper[0].outerHTML.toString();
 
 		},
 
 		stop: function(event, ui){
-			ui.item.replaceWith(elementoAtual).removeAttr('style');
+			ui.item.toggleClass('poc-placeholder');
+			if(elementoAtual.length > 0){
+				ui.item.replaceWith(elementoAtual).removeAttr('style');
 			
-			addDraggableToComponents();
-			addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer, .poc-content"); //informa quais elementos podem receber outros elementos
-			addSidrToComponents(); //adciona os formularios de propriedades
-			criarMapa();
+				//addDraggableToComponents();
+				addSortableToComponents(); //informa quais elementos podem receber outros elementos
+				addSidrToComponents(); //adciona os formularios de propriedades	
+				criarMapa();
+			}
+			
 			salvarAlteracoesSite();
-
 		}
 
-	}).disableSelection();
+	});
+
 }
 
 function removeStyle(el){	
@@ -324,7 +483,7 @@ function addColorPicker(){
 	});
 
 	$("#menu-background-color").minicolors({
-		defaultValue: $(".poc-navbar").css('background-color'),
+		defaultValue: '#f8f8f8',
 		position: 'bottom right',
 		change: function(hex, opacity){
 			$('.poc-navbar').css('background', hex);
@@ -335,7 +494,7 @@ function addColorPicker(){
 	});
 
 	$("#menu-font-color").minicolors({
-		defaultValue: $(".poc-navbar").css('color'),
+		defaultValue: '#777',
 		position: 'bottom right',
 		change: function(hex, opacity){
 			$('.poc-navbar a').css('color', hex);
@@ -350,6 +509,26 @@ function addColorPicker(){
 		position: 'bottom right',
 		change: function(hex, opacity){
 			objetoAtual.find('h4').css('color', hex);
+		},
+
+		theme: 'bootstrap'
+	});
+
+	$('#poc-form-propriedades-titulo #poc-titulo-cor').minicolors({
+		defaultValue: '#000',
+		position: 'bottom right',
+		change: function(hex, opacity){
+			objetoAtual.find('.poc-titulo').css('color', hex);
+		},
+
+		theme: 'bootstrap'
+	});
+
+	$('#poc-header-border-color, #poc-conteudo-border-color, #poc-rodape-border-color').minicolors({
+		defaultValue: '#000000',
+		position: 'bottom right',
+		change: function(hex, opacity){
+			$('#poc-form-propriedades-header #poc-cabecalho-border-style').change();
 		},
 
 		theme: 'bootstrap'
@@ -375,17 +554,22 @@ function addSidrToComponents(){
 		
 		var prop = $(el).data('prop');
 
-		if($("#sidr-propriedade-" + prop).length == 0){
+		//if($("#sidr-propriedade-" + prop).length == 0){
 			$(el).sidr({
 				name: "sidr-propriedade" + "-" + prop,
 				side: 'right',
 				source: function(name){
+					//caso o formulário já exista, não faz 'nada'
+					var form = $('#sidr-propriedade-'+prop);
+					if(form.html().trim() != '') return //form.html();
+
+					//pega o formulário do xml
 					return "<h1>Propriedades</h1>" + getFormulario(prop);
 				},
-				renaming: false,
+				renaming: true
 
 			});		
-		}
+		//}
 	});
 
 	addColorPicker();
@@ -396,26 +580,48 @@ function addSidrToComponents(){
 
 function addBotaoPropriedade(content, id){
 	//#prop-'+id+'
-	html = '<div class="row btn-propriedades"><a id="prop-'+id+'" data-prop="'+id+'" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
-	'<span class="glyphicon glyphicon-cog"></span></a></div>';
 
-	$(content).prepend(html);
+	var html = '<a id="prop-'+id+'" data-prop="'+id+'" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-'+id+'">' +
+					'<span class="glyphicon glyphicon-cog"></span>'+
+				'</a>';
+	var botoes = $('<div />').addClass('col-md-12 grupo-btn-propriedades').append(html);
+	var linha = '<div class="row poc-linha"></div>';
+	$(content).prepend(linha).prepend(botoes);
+
+}
+
+
+function addBotaoPropriedadeSection(){
+	html = '<a id="prop-onepage" data-prop="onepage" href="#" class="btn btn-primary btn-xs link-propriedades link-propriedades-onepage">' +
+				'<span class="glyphicon glyphicon-cog"></span>'+
+			'</a>'+
+			'<a href="#" class="btn btn-danger btn-xs remover-componente"><span class="glyphicon glyphicon-remove"></span></a>';
+	var botoes = $('<div />').addClass('col-md-12 grupo-btn-propriedades').append(html);
+
+	return botoes;
 
 }
 
 //sempre que clicar em um botão 
 $(document).on('click', '.link-propriedades', function(el){
 	$(this).toggleClass('btn-primary btn-success');
+	if(typeof(botaoAtual) !== 'undefined' && botaoAtual.attr('class').toString() !== $(this).attr('class'))
+		botaoAtual.removeClass().addClass('btn btn-primary btn-xs');
+
 	el.preventDefault(); //como são todos links, tira o efeito de ir pra outra página
-	objetoAtual = $(this).parent().parent(); //o objeto atual vai ser o pai do link clicado
+
+	if($(this).hasClass('link-propriedades-menu')) objetoAtual = $('#poc-menu'); //se conter a classe link-propriedades-menu, então o objeto atual é o menu
+	else {
+		objetoAtual = $(this).parent().parent(); //o objeto atual vai ser o pai do link clicado
+		if($(this).hasClass('link-propriedades-bloco')) onOpenBloco(); //se for o botão de propriedade do bloco, então preenche o select
+	}
+	
 	botaoAtual = $(this);
 
 	objetoAtual.find('.poc-texto').each(function(){
 		$('#poc-form-propriedades-texto #propriedade-texto').val($(this).text().trim());
 		summernote = $(this).html();
 	});
-
-
 });
 
 $(document).on('click', '.clear-input', function(){
@@ -470,107 +676,38 @@ function addBoxTexturas(){
 	}
 }
 
-$(document).on('change', '#background-image', function(e){
-	var arquivo = e.target.files; 
-	var url = 'upload.php?arquivo';
-
-	objetoAtual.css('background-image', 'none'); //remove a imagem atual
-
-	var valor = new FormData();
-	$.each(arquivo, function(chave, item){
-		valor.append(chave, item);
-	});
-
-	valor.append("nome", objetoAtual.attr('id'));
-	
-	
-	$.ajax({
-		url: url,
-		type: 'POST',
-		dataType: 'JSON',
-		data: valor,
-		processData: false,
-		contentType: false,
-		cache: false,
-
-		success: function(data){
-
-			if(data.success){
-				var repeticao = $("#repeticao").val();
-				objetoAtual.css('background', $("#background-color").val()); //remove a imagem atual
-				var aux = 'url('+ data.imagem + ') no-repeat center center fixed';
-				if(repeticao == 'no-repeat'){
-					var opcoes = {
-						'background' : 'url('+ data.imagem +'?'+ Math.random() + ') no-repeat center center fixed',
-						'-webkit-background-size' : 'cover',
-						'-moz-background-size' : 'cover',
-						'-o-background-size' : 'cover',
-						'background-size' : 'cover'
-					}
-					//background full size
-					objetoAtual.css(opcoes);
-
-					opcoes.background = aux; //remove a versão da imagem
-					background.valor = opcoes;
-
-				}else {
-					objetoAtual.css('background', 'url('+ data.imagem +'?'+ Math.random() + ') ' + $("#repeticao").val());
-					background.valor = 'background', 'url('+ data.imagem + ') ' + $("#repeticao").val();
-				}
-
-
-				
-			}else{
-				alert('ERRO: ' + data.mensagem);
-			}
-		}
-	});
-});
-
 $(document).on('change', "#repeticao", function(){
-	$.ajax({
-		url: 'img/background-image/',
-		cache: false,
-		success: function(data){
-			var contem = objetoAtual.attr('id').split("-")[1];
-			
-			var arquivo="";
-			$(data).find("a:contains("+contem+")").each(function(indice, valor){
-				arquivo = 'img/background-image/' + $.trim(this.innerHTML);
-			});
+	var repeticao = $("#repeticao").val();
+	var url = $('#modalFundoSite #poc-imagem-selecionar').val();
 
-			if(arquivo.length > 0){
-				var repeticao = $("#repeticao").val();
-				if(repeticao == 'no-repeat'){
-					//background full size
-					objetoAtual.css({
-						'background' : 'url('+ arquivo +') no-repeat center center fixed',
-						'-webkit-background-size' : 'cover',
-						'-moz-background-size' : 'cover',
-						'-o-background-size' : 'cover',
-						'background-size' : 'cover'
-					});	
-				}else {
-					objetoAtual.css('background', 'url('+ arquivo +') ' + repeticao);
-				}
-			}else {
-				alert("Selecione uma imagem!");
-			}
-		}
+	//se não tiver selecionado alguma imagem, dá o alerta e não faz nada
+	if(url.trim() == '') {
+		alert('Seleciona uma imagem!');
+		return false;
+	}
 
-	})
+	if(repeticao == 'no-repeat'){
+		//background full size
+		objetoAtual.css({
+			'background' : 'url('+ url +') no-repeat center center fixed',
+			'-webkit-background-size' : 'cover',
+			'-moz-background-size' : 'cover',
+			'-o-background-size' : 'cover',
+			'background-size' : 'cover'
+		});	
+	}else {
+		objetoAtual.css('background', 'url('+ url +') ' + repeticao);
+	}
 });
 
 
 $(document).on("hide.bs.modal", "#modalFundoSite", function(){
-	var local = objetoAtual[0].id.split("-")[1];
-	var backgroundObject = '#' + local + '-background';
+	var local = objetoAtual[0].id.split("-")[1]; //verifica se o objetoAtual é a página, menu, cabeçalho ou rodapé
+	if(local == 'page') local = 'pagina';
 	
-	if(background.valor instanceof Object ){
-		$(backgroundObject).val(background.valor.background);
-	}else{
-		$(backgroundObject).val(background.valor);
-	}
+	
+	$('#poc-form-propriedades-'+local+' #'+local+'-background').val('Personalizado');
+	
 });
 
 function configurarModalFundoSite(){
@@ -612,6 +749,11 @@ $(document).on('change', '#tipo_fundo', function(){
 /** FIM JS PARA PROPRIEDADE PLANO DE FUNDO **/
 
 /** PROPRIEDADES NO MODAL **/
+
+$(document).on('click', '.btn-open-fundo-site', function(e){
+	e.preventDefault();
+})
+
 $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	
 	template = $('input[name=layout]:checked', '#formLayout').val();
@@ -637,7 +779,7 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 		children: 		[],
 		pai: 			0,
 		url: 			"#", 
-		conteudo: 		$("#poc-content"),
+		conteudo: 		$('#poc-content').html(),
 	};
 
 	paginas.push(home);
@@ -652,12 +794,11 @@ $(document).on('hidden.bs.modal', '#selecionarLayout', function (e) {
 	
 	//depois que for escolhido o tipo de layout, insere as funcionalidades para os componentes
 	addDraggableToComponents();//capacidade de arrastar
-	addSortableToComponents(".coluna, #poc-header, #poc-content, #poc-footer"); //elementos que vão receber os conteúdos arrastaveis
+	addSortableToComponents(); //elementos que vão receber os conteúdos arrastaveis
 	startCarousel();
 
 	addBotaoPropriedade("#poc-page", "pagina");
 	addBotaoPropriedade("#poc-header", "cabecalho");
-	addBotaoPropriedade("#poc-menu", "menu");
 	addBotaoPropriedade("#poc-content", "conteudo");
 	addBotaoPropriedade("#poc-footer", "rodape");
 
@@ -762,6 +903,32 @@ function definirTooltip(selecionado, livre, onepage, administrativo){
 	return retorno;
 }
 
+
+
+//deve ser feito uma função para upload de imagem para a biblioteca
+
+//propriedade referente a escolha de uma imagem da biblioteca
+$(document).on('shown.bs.modal', '#modalSelecionarImagem', function(e){
+	var el = $('#modalSelecionarImagem #poc-lista-imagens-biblioteca');
+	preencherSelectBiblioteca(el);
+})
+
+$(document).on('click', '#modalSelecionarImagem #btn-selecionar-imagem', function(){
+	if(objetoAtual.hasClass('componente-imagem')){
+		//console.log('ta aqui');
+		//coloca a url da imagem no campo do formulario
+		var campo = $('#poc-form-propriedades-imagem #poc-imagem-selecionar');
+		campo.val($('#modalSelecionarImagem select').val());
+		campo.change();
+	}else {
+		var campo = $('#modalFundoSite #poc-imagem-selecionar');
+		campo.val($('#modalSelecionarImagem select').val());
+		objetoAtual.css('background', 'url('+campo.val()+')');
+	}
+})
+
+
+
 /** FIM PROPRIEDADES NO MODAL **/
 
 
@@ -846,31 +1013,129 @@ function addFontsToSelect(){
 }
 
 //funções que serão chamadas quando alguma coisa mudar nos formularios
-$(document).on('change', '#poc-form-propriedades-pagina', function(){
-	var dados = $("#poc-form-propriedades-pagina").serializeArray();
-	
-	var pagina = $("#poc-page");
+$(document).on('change', '#poc-form-propriedades-pagina #site-centralizado', function(){
+	var valor = parseInt($(this).val());
+	var pagina = $('#poc-page');
+
 	//se o valor de site centrazalido for "não", remove a div com class container
-	if(dados[0].value == 1){
+	if(valor == 1){
 		//insere o conteúdo numa div centralizada
 		var conteudo = pagina.html();
 		pagina.html('<div class="container poc-pagina-centralizada">' + conteudo + '</div>');
+		pagina.find('.grupo-btn-propriedades:first').prependTo('#poc-page');
+		addSidrToComponents();
+		botaoAtual = pagina.find('.link-propriedades-pagina');
+		objetoAtual = $('#poc-page');
+		$('#poc-form-propriedades-pagina #site-centralizado').val('1');
+		addDraggableToComponents();
+		addSortableToComponents();
 	}else{
 		//remove a div que centraliza o conteudo
 		if($('.poc-pagina-centralizada').length > 0){
 			var conteudo_centralizado = $('.poc-pagina-centralizada').html();
 			$('.poc-pagina-centralizada').remove();
-			pagina.html(conteudo_centralizado);
+			pagina.append(conteudo_centralizado);
 		}
 	}
+})
 
-	pagina.css('font-family', dados[1].value); //adiciona a fonte que está selecionada
-	pagina.css('font-size', dados[2].value);//tamanho da fonte
+$(document).on('click', '.btn-fundo-transparente', function(e){
+	e.preventDefault();
+
+	objetoAtual.css('background', 'transparent none');
+	$(this).parents('.form-group').find('input[type="text"]').val('Padrão');
+})
+
+$(document).on('change', '#poc-form-propriedades-pagina #fonte', function(){
+	$('#poc-page').css('font-family', $(this).val());
+})
+
+$(document).on('change', '#poc-form-propriedades-pagina #tamanho_fonte', function(){
+	$('#poc-page').css('font-size', $(this).val());
+})
+
+/** FIM PROPRIEDADES DA PÁGINA **/
+
+/**PROPRIEDADES DO BLOCO **/
+function onOpenBloco(){
+	var qtdColunas = objetoAtual.children('.coluna').length; //pega a quantidade de div com a a classe .coluna dentro do bloco
+
+	var select = $('#largura-colunas');
+	select.empty();
 	
+
+	if(qtdColunas == 1) {
+		select.append('<option value="12">12</option>');
+		return;
+	}
+
+	for(var i=0; i<larguraColunas[qtdColunas-2].length; i++){
+		select.append('<option value="'+larguraColunas[qtdColunas-2][i]+'">'+ larguraColunas[qtdColunas-2][i] + '</option>');
+	}
+}
+
+
+$(document).on('change', '#largura-colunas', function(e){
+	var valores = $(this).val().split('-'); //pega o largura de cada coluna do bloco
+	objetoAtual.children('.coluna').each(function(i,el){
+		var coluna = $(this);
+		coluna.removeClass().addClass('col-md-'+valores[i]+' coluna ui-sortable') //insere a classe col-md-largura.
+	});
+})
+
+
+/**FIM DAS PROPRIEDADES DO BLOCO **/
+
+/** PROPRIEDADES DO CABEÇALHO **/
+$(document).on('change', '#poc-form-propriedades-header #poc-header-centralizado', function(){
+	
+	var cabecalho = $('#poc-header');
+	var valor = parseInt($(this).val());
+
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var conteudo = cabecalho.html();
+		cabecalho.html('<div class="container poc-header-centralizado">' + conteudo + '</div>');
+		cabecalho.find('.grupo-btn-propriedades:first').prependTo('#poc-header');
+		cabecalho.find('.poc-linha:first').remove();
+		addSidrToComponents();
+		botaoAtual = cabecalho.find('.link-propriedades-cabecalho');
+		$('#poc-form-propriedades-header #poc-header-centralizado').val('1');
+		addDraggableToComponents();
+		addSortableToComponents();
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-header-centralizado').length > 0){
+			var conteudo_centralizado = $('.poc-header-centralizado').html();
+			$('.poc-header-centralizado').remove();
+			cabecalho.append(conteudo_centralizado);
+		}
+	}
 });
 
+$(document).on('change', '#poc-form-propriedades-header #poc-container-header', function(){
+	
+	var cabecalho = $('#poc-header');
+	var valor = parseInt($(this).val());
 
-//quando tiver alguma alteração no campo tamanho. Servirá para campos de qualquer propriedade
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var container = $('<div />').addClass('container poc-container-header');
+		container.append($('#poc-header').clone(true));
+		$('#poc-header').replaceWith(container);
+
+		
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-container-header').length > 0){
+			$('.poc-container-header').replaceWith($('#poc-header'));
+		}
+	}
+});
+
+//alteração no tamanho mínimo
 $(document).on('change paste keyup', '.tamanho-minimo', function(){
 	var valor = parseInt($(this).val());
 	
@@ -907,44 +1172,115 @@ $(document).on('click','.header-btn-down', function(){
 	header.change();
 })
 
-/** FIM PROPRIEDADES DA PÁGINA **/
 
-/** PROPRIEDADES DO CABEÇALHO **/
-$(document).on('change', '#poc-header-centralizado', function(){
-	var cabacalho = $('#poc-header');
-	var valor = parseInt($(this).val());
+//alteração na borda
+$(document).on('change', '#poc-form-propriedades-header #poc-cabecalho-border-style', function(){
+	var grupo = $('#poc-form-propriedades-header .group-border');
+	var valor = $(this).val();
+	var borderSize = $('#poc-form-propriedades-header #poc-header-border-size').val();
+	var borderRadius = $('#poc-form-propriedades-header #poc-header-border-radius').val();
+	var borderColor = $('#poc-form-propriedades-header #poc-header-border-color').val();
 
-
-	if(valor == 1){
-		//insere o conteúdo numa div centralizada
-		var conteudo = cabecalho.html();
-		cabecalho.html('<div class="container poc-header-centralizado">' + conteudo + '</div>');
+	if(valor == 'none'){
+		grupo.prop('disabled', true);
+		objetoAtual.css('border', valor);
 	}else{
-		//remove a div que centraliza o conteudo
-		if($('.poc-header-centralizado').length > 0){
-			var conteudo_centralizado = $('.poc-header-centralizado').html();
-			$('.poc-header-centralizado').remove();
-			cabecalho.html(conteudo_centralizado);
-		}
+		grupo.prop('disabled', false);
+		objetoAtual.css('border', borderSize + 'px ' + valor + ' ' + borderColor);
+		objetoAtual.css('border-radius', borderRadius+'px')
 	}
-});
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-header #poc-header-border-size', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 1 || valor > 15){
+		$(this).val('1');
+		$(this).change();
+	}else $('#poc-form-propriedades-header #poc-cabecalho-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-size-header-btn-up', function(){
+	var header = $("#poc-header-border-size");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 15) valor = 14;
+
+	header.val(valor+1);
+	header.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-size-header-btn-down', function(){
+	var header = $("#poc-header-border-size");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 1)) atual = 1;
+	else atual = atual-1;
+
+	header.val(atual);
+	header.change();
+})
+
+//border radius - cabeçalho
+$(document).on('change paste keyup', '#poc-form-propriedades-header #poc-header-border-radius', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 0 || valor > 25){
+		$(this).val('0');
+		$(this).change();
+	}else $('#poc-form-propriedades-header #poc-cabecalho-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-radius-header-btn-up', function(){
+	var header = $("#poc-header-border-radius");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 25) valor = 24;
+
+	header.val(valor+1);
+	header.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-radius-header-btn-down', function(){
+	var header = $("#poc-header-border-radius");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	header.val(atual);
+	header.change();
+})
 
 
-//carrega o estilo informado pelo usuário. Caso o estilo seja livre, limpa-se o header
-$(document).on('change', '#select-header-style', function(){
-	var item = $(this).val();
-	var cabecalho = $("#poc-header");
-	
-	//remove qualquer conteúdo já existente
-	cabecalho.find("div").each(function(){
-		$(this).remove();
-	});
-	
-	if(item != '0') $(getHeaderStyle(item)).appendTo(cabecalho);
-});
 /** FIM PROPRIEDADES DO CABEÇALHO **/
 
 /** PROPRIEDADE DO MENU **/
+
+$(document).on('change', '#poc-menu-fixo', function(){
+	console.log(objetoAtual);
+	var valor = $(this).val();
+	objetoAtual.removeClass('navbar-static-top navbar-fixed-top'); //remove as classes que deixam o menu no topo
+	switch(valor){
+		case '0':
+			objetoAtual.find('.mover-componente').prop('disabled', false); 
+			break;
+
+		case '1':
+			objetoAtual.find('.mover-componente').prop('disabled', true); 
+			objetoAtual.addClass('navbar-static-top');
+			break;
+		case '2':
+			objetoAtual.find('.mover-componente').prop('disabled', true); 
+			objetoAtual.addClass('navbar-fixed-top');
+			break;
+	}
+})
+
 $(document).on('change', '#poc-border-menu', function(){
 	var valor = parseInt($(this).val());
 	var menu = $('.poc-navbar');
@@ -1042,12 +1378,39 @@ $(document).on('change', '#poc-content-centralizado', function(){
 		//insere o conteúdo numa div centralizada
 		var aux = conteudo.html();
 		conteudo.html('<div class="container poc-content-centralizado">' + aux + '</div>');
+		conteudo.find('.grupo-btn-propriedades:first').prependTo('#poc-content');
+		addSidrToComponents();
+		botaoAtual = pagina.find('.link-propriedades-conteudo');
+		$(this).val('1');
+		addDraggableToComponents();
+		addSortableToComponents();
+
 	}else{
 		//remove a div que centraliza o conteudo
 		if($('.poc-content-centralizado').length > 0){
 			var conteudo_centralizado = $('.poc-content-centralizado').html();
 			$('.poc-content-centralizado').remove();
-			conteudo.html(conteudo_centralizado);
+			conteudo.append(conteudo_centralizado);
+		}
+	}
+});
+
+$(document).on('change', '#poc-form-propriedades-content #poc-container-content', function(){
+	
+	var valor = parseInt($(this).val());
+
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var container = $('<div />').addClass('container poc-container-content');
+		container.append($('#poc-content').clone(true));
+		$('#poc-content').replaceWith(container);
+
+		
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-container-content').length > 0){
+			$('.poc-container-content').replaceWith($('#poc-content'));
 		}
 	}
 });
@@ -1075,6 +1438,88 @@ $(document).on('click','.content-btn-down', function(){
 	conteudo.val(atual);
 	conteudo.change();
 })
+
+$(document).on('change', '#poc-form-propriedades-content #poc-conteudo-border-style', function(){
+	var grupo = $('#poc-form-propriedades-content .group-border');
+	var valor = $(this).val();
+	var borderSize = $('#poc-form-propriedades-content #poc-conteudo-border-size').val();
+	var borderRadius = $('#poc-form-propriedades-content #poc-conteudo-border-radius').val();
+	var borderColor = $('#poc-form-propriedades-content #poc-conteudo-border-color').val();
+
+	if(valor == 'none'){
+		grupo.prop('disabled', true);
+		objetoAtual.css('border', valor);
+	}else{
+		grupo.prop('disabled', false);
+		objetoAtual.css('border', borderSize + 'px ' + valor + ' ' + borderColor);
+		objetoAtual.css('border-radius', borderRadius+'px')
+	}
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-content #poc-conteudo-border-size', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 1 || valor > 15){
+		$(this).val('1');
+		$(this).change();
+	}else $('#poc-form-propriedades-content #poc-conteudo-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-size-conteudo-btn-up', function(){
+	var conteudo = $("#poc-conteudo-border-size");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 15) valor = 14;
+
+	conteudo.val(valor+1);
+	conteudo.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-size-conteudo-btn-down', function(){
+	var conteudo = $("#poc-conteudo-border-size");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 1)) atual = 1;
+	else atual = atual-1;
+
+	conteudo.val(atual);
+	conteudo.change();
+})
+
+//border radius - cabeçalho
+$(document).on('change paste keyup', '#poc-form-propriedades-content #poc-conteudo-border-radius', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 0 || valor > 25){
+		$(this).val('0');
+		$(this).change();
+	}else $('#poc-form-propriedades-content #poc-conteudo-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-radius-conteudo-btn-up', function(){
+	var conteudo = $("#poc-conteudo-border-radius");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 25) valor = 24;
+
+	conteudo.val(valor+1);
+	conteudo.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-radius-conteudo-btn-down', function(){
+	var conteudo = $("#poc-conteudo-border-radius");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	conteudo.val(atual);
+	conteudo.change();
+})
 /** FIM PROPRIEDADE DO CONTEÚDO **/
 
 /** PROPRIEDADES DO RODAPÉ **/
@@ -1087,6 +1532,13 @@ $(document).on('change', '#poc-footer-centralizado', function(){
 		//insere o conteúdo numa div centralizada
 		var conteudo = rodape.html();
 		rodape.html('<div class="container poc-footer-centralizado">' + conteudo + '</div>');
+
+		rodape.find('.grupo-btn-propriedades:first').prependTo('#poc-footer');
+		addSidrToComponents();
+		botaoAtual = pagina.find('.link-propriedades-pagina');
+		$(this).val('1');
+		addDraggableToComponents();
+		addSortableToComponents();
 	}else{
 		//remove a div que centraliza o conteudo
 		if($('.poc-footer-centralizado').length > 0){
@@ -1096,6 +1548,24 @@ $(document).on('change', '#poc-footer-centralizado', function(){
 		}
 	}
 })
+
+$(document).on('change', '#poc-form-propriedades-footer #poc-container-footer', function(){
+	var valor = parseInt($(this).val());
+
+	if(valor == 1){
+		//insere o conteúdo numa div centralizada
+		var container = $('<div />').addClass('container poc-container-footer');
+		container.append($('#poc-footer').clone(true));
+		$('#poc-footer').replaceWith(container);
+
+		
+	}else{
+		//remove a div que centraliza o conteudo
+		if($('.poc-container-footer').length > 0){
+			$('.poc-container-footer').replaceWith($('#poc-footer'));
+		}
+	}
+});
 
 //quando clicar no botão de aumentar, incrementa
 $(document).on('click','.footer-btn-up', function(){
@@ -1120,9 +1590,89 @@ $(document).on('click','.footer-btn-down', function(){
 	footer.change();
 })
 
+$(document).on('change', '#poc-form-propriedades-footer #poc-rodape-border-style', function(){
+	var grupo = $('#poc-form-propriedades-footer .group-border');
+	var valor = $(this).val();
+	var borderSize = $('#poc-form-propriedades-footer #poc-rodape-border-size').val();
+	var borderRadius = $('#poc-form-propriedades-footer #poc-rodape-border-radius').val();
+	var borderColor = $('#poc-form-propriedades-footer #poc-rodape-border-color').val();
+
+	if(valor == 'none'){
+		grupo.prop('disabled', true);
+		objetoAtual.css('border', valor);
+	}else{
+		grupo.prop('disabled', false);
+		objetoAtual.css('border', borderSize + 'px ' + valor + ' ' + borderColor);
+		objetoAtual.css('border-radius', borderRadius+'px')
+	}
+})
+
+$(document).on('change paste keyup', '#poc-form-propriedades-footer #poc-rodape-border-size', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 1 || valor > 15){
+		$(this).val('1');
+		$(this).change();
+	}else $('#poc-form-propriedades-footer #poc-rodape-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-size-rodape-btn-up', function(){
+	var rodape = $("#poc-rodape-border-size");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 15) valor = 14;
+
+	rodape.val(valor+1);
+	rodape.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-size-rodape-btn-down', function(){
+	var rodape = $("#poc-rodape-border-size");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 1)) atual = 1;
+	else atual = atual-1;
+
+	rodape.val(atual);
+	rodape.change();
+})
+
+//border radius - cabeçalho
+$(document).on('change paste keyup', '#poc-form-propriedades-footer #poc-rodape-border-radius', function(){
+	var valor = parseInt($(this).val());
+	
+	if(valor === NaN || valor < 0 || valor > 25){
+		$(this).val('0');
+		$(this).change();
+	}else $('#poc-form-propriedades-content #poc-rodape-border-style').change();
+})
+
+//quando clicar no botão de aumentar, incrementa
+$(document).on('click','.border-radius-rodape-btn-up', function(){
+	var rodape = $("#poc-rodape-border-radius");
+	var valor = parseInt(header.val());
+
+	if(valor === NaN || valor > 25) valor = 24;
+
+	rodape.val(valor+1);
+	rodape.change();
+})
+
+//quando clicar no botão de diminuir, decrementa
+$(document).on('click','.border-radius-rodape-btn-down', function(){
+	var rodape = $("#poc-rodape-border-radius");
+	var atual = parseInt(header.val());
+
+	if(atual === NaN || ((atual-1) < 0)) atual = 0;
+	else atual = atual-1;
+
+	rodape.val(atual);
+	rodape.change();
+})
+
 /** FIM PROPRIEDADES DO RODAPÉ **/
-
-
 
 /** ADICIONAR PÁGINA **/
 
@@ -1161,6 +1711,7 @@ function addPaiSelect(itens, nivel){
 
 	var lista = $('#pai');
 	for(var i=0; i<itens.length; i++){
+		if(!itens[i].isLink) continue;
 		//adiciona o nome da página na lista
 		lista.append("<option value='" + itens[i].id + "'>" + addTabulacao(nivel) + " " + itens[i].nome + "</option>");
 
@@ -1293,12 +1844,13 @@ function openPage(pagina, isOnePage){
 	paginaAtual = pagina;
 
 	$(".conteudo-gerado").attr('data-content', 'Página - ' + pagina.nome);
-	$("#poc-header").replaceWith(componentes_fixos.cabecalho);
-	$("#poc-menu").replaceWith(componentes_fixos.menuPrincipal);
-	$("#poc-menu-left").replaceWith(componentes_fixos.menuEsquerdo);
-	$("#poc-menu-right").replaceWith(componentes_fixos.menuDireito);
-	$("#poc-content").replaceWith(pagina.conteudo);
-	$("#poc-footer").replaceWith(componentes_fixos.rodape);	
+	//$("#poc-header").replaceWith(componentes_fixos.cabecalho);
+	//$("#poc-menu").replaceWith(componentes_fixos.menuPrincipal);
+	//$("#poc-menu-left").replaceWith(componentes_fixos.menuEsquerdo);
+	//$("#poc-menu-right").replaceWith(componentes_fixos.menuDireito);
+	$("#poc-content").html(pagina.conteudo);
+	//$("#poc-footer").replaceWith(componentes_fixos.rodape);
+	addSidrToComponents();
 }
 
 //adiciona as opções de posição de acordo com o pai selecionado.
@@ -1327,7 +1879,7 @@ $(document).on('change', '#pai', function(){
 
 $(document).on('change', '#tipo-item', function(){
 	var valor = parseInt($(this).val());
-
+	
 	if(valor == 0) {
 		$('#poc-form-add-page .form-group').show();
 		$('.grupo-link').hide();
@@ -1350,7 +1902,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 	var posicao = parseInt(dados[7].value);
 	var url = "#"; dados[2].value.length == 0 ? url = "#" : url = dados[2].value;
 
-	if(nome == '') alert('Dê um nome para o item!')
+	if(nome.trim().length == 0) alert('Dê um nome para o item!')
 	else {
 
 		if(dados[0].value == '0'){
@@ -1358,14 +1910,21 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 			var conteudo = "";
 			//se não for onePage limpa o conteúdo e insere o estilo desejado
 			if(!onePage){
+				//atualiza a pagina atual para criar um nova
+				paginaAtual.conteudo = $('#poc-content').html();
+				salvarAlteracoes(paginas, paginaAtual);
+				
+				//cria-se um novo conteúdo
 				conteudo = $('#poc-content');
 				conteudo.empty(); //esvazia o conteudo
 				addBotaoPropriedade("#poc-content", "conteudo"); //adiciona o botão de propriedade
 				conteudo.append(getPageStyle(dados[4].value));
 				url = "#";
 			}else {
+				salvarAlteracoesOnePage();
+				var linha = $('<div />').addClass('row poc-linha');
 				url = "#"+removerAcentosEspacos(nome);
-				conteudo = $('<section />').prop('id', removerAcentosEspacos(nome));
+				conteudo = $('<section />').prop('id', removerAcentosEspacos(nome)).append(addBotaoPropriedadeSection()).append(linha);
 			}
 			
 			if(dados[3].value == '1'){
@@ -1382,7 +1941,7 @@ $(document).on('click', '#btn-salvar-nova-pagina', function(){
 				children: 		[],
 				pai: 			pai,
 				url: 			url, 
-				conteudo: 		conteudo
+				conteudo: 		$('#poc-content').html()
 			};
 
 		}else{
@@ -1599,6 +2158,7 @@ function removerPagina(lista, pagina){
 }
 
 
+
 $(document).on('click', '.btn-editar-pagina', function(){
 	alterarPagina = true;
 	var id = parseInt($(this).parent().parent().data('id'));
@@ -1696,6 +2256,116 @@ $(document).on('click', '#btn-editar-texto-cancelar', function(){
 })
 
 /* fim das propriedades gerais  - texto */
+
+/* PROPRIEDADES DO TÍTULO */
+
+//altera o texto do título quando o usuário digitar ou colar algo no campo
+$(document).on('change paste keyup', '#poc-form-propriedades-titulo #poc-titulo-texto', function(){
+	var valor = $(this).val();
+	
+	objetoAtual.find('.poc-titulo').children().text(valor);
+})
+
+//insere a classe de alinhamento na div que circunda o titulo
+$(document).on('change', '#poc-form-propriedades-titulo #poc-titulo-alinhamento', function(){
+	var valor = $(this).val();
+
+	objetoAtual.find('.poc-titulo').removeClass('text-center text-left text-right').addClass(valor);
+})
+
+//pega o texto do titulo e insere em uma nova tag <hx>
+$(document).on('change', '#poc-form-propriedades-titulo #poc-titulo-tamanho', function(){
+	var valor = $(this).val();
+	var antigo = objetoAtual.find('.poc-titulo').children().text();
+	var novo = $('<'+ valor + '/>').text(antigo);
+
+	objetoAtual.find('.poc-titulo').html(novo);
+})
+
+/* FIM DAS PROPRIEDADES DO TÍTULO */
+
+/*PROPRIEDADES DA IMAGEM*/
+$(document).on('change', '#poc-form-propriedades-imagem #poc-imagem-selecionar', function(){
+	objetoAtual.find('img').attr('src', $(this).val());
+})
+
+$(document).on('change', '#poc-form-propriedades-imagem #poc-imagem-estilo', function(){
+	objetoAtual.find('img').removeClass('img-rounded img-circle img-thumbnail').addClass($(this).val());
+})
+/*FIM DAS PROPRIEDADES DA IMAGEM*/
+
+/*PROPRIEDADES DA TABELA*/
+
+function preencherTabela(){
+	var titulos = []
+	 $('#poc-form-propriedades-tabela #poc-tabela-titulos tbody tr').each(function(i,e){
+	 	var titulo = $(this).first('td').text();
+	 	titulos.push(titulo);
+	 });
+
+	var tabela = objetoAtual.find('table');
+
+	//remove todo o conteúdo da tabela
+	var corpoTabela = tabela.find('tbody');
+	corpoTabela.empty();
+
+	var cabecalhoTabela = tabela.find('thead');
+	cabecalhoTabela.empty();
+
+	//insere os títulos
+	var temp = $('<tr />');
+	for(var i=0; i<titulos.length; i++)temp.append('<th>'+titulos[i]+'</th>');
+	cabecalhoTabela.append(temp);
+
+	//insere o novo conteúdo com 3 linhas de exemplo
+	for(var i=0; i<3; i++){
+		var linha = $('<tr />');
+		for(var j=0; j<titulos.length; j++){
+			linha.append('<td>Conteúdo ' + (j+1) + '</td>');
+		}
+		corpoTabela.append(linha);
+	}
+}
+
+//adiciona um novo título à tabela
+$(document).on('click', '#poc-form-propriedades-tabela #btn-tabela-add-titulo', function(){
+	var tabela = $('#poc-form-propriedades-tabela #poc-tabela-titulos');
+	var valor = $('#poc-form-propriedades-tabela #poc-tabela-add-titulo');
+
+	if(valor.val().trim() == ''){
+		alert('Digite o título a ser inserido');
+		return false;
+	}
+
+
+	var html = '<tr>\
+					<td>'+valor.val()+'</td>\
+					<td class="text-center">\
+						<button class="btn btn-danger remover-titulo"><span class="glyphicon glyphicon-trash"></span></button>\
+					</td>\
+				</tr>'; 
+	tabela.find('tbody').append(html);
+	preencherTabela();
+	valor.val('');
+
+})
+
+//remover um título
+$(document).on('click', '#poc-form-propriedades-tabela .remover-titulo', function(e){
+	e.preventDefault();
+
+	var qtdLinhas = $(this).parents('tbody').find('tr').length;
+
+	if(qtdLinhas > 1){
+		$(this).parents('tr').remove();
+		preencherTabela();	
+	}
+	
+})
+
+/*FIM DAS PROPRIEDADES DA TABELA*/
+
+
 
 /* PROPRIEDADES DAS MINIATURAS */
 $(document).on('change', '#poc-form-propriedades-miniaturas #poc-upload-miniaturas', function(e){
@@ -3040,17 +3710,17 @@ function preencherSelectBiblioteca(el, selecionadas, capa){
 
 			el.html(html);
 
-			if(typeof selecionados !== "undefined" && typeof capa !== 'undefined'){
+			if(typeof(selecionados) !== "undefined" && typeof(capa) !== 'undefined'){
 				el.val(selecionados); //seleciona as fotos desejadas
 
 				//preenche o select e seleciona a capa
 				capa.empty();
 				for(var i=0; i<selecionados.length; i++)capa.append('<option data-img-src="'+selecionados[i]+'" value="'+selecionados[i]+'">');
 				capa.val(capa);
+				capa.imagepicker();
 			}
 
 			el.imagepicker();
-			capa.imagepicker();
 			$('input[type=file]').bootstrapFileInput();
 		}
 	});	
@@ -3311,7 +3981,7 @@ function abrirPaginasOnePage(){
 	}
 
 	addDraggableToComponents();//capacidade de arrastar
-	addSortableToComponents(".coluna, .poc-content"); //elementos que vão receber os conteúdos arrastaveis
+	addSortableToComponents(); //elementos que vão receber os conteúdos arrastaveis
 }
 
 /* FIM SITES ONE PAGE */
@@ -3337,13 +4007,13 @@ function trocarPagina(lista, pagina1, pagina2){
 }
 
 function salvarAlteracoesEstiloLivre(){
-	paginaAtual.conteudo.replaceWith($('#poc-content'));
+	paginaAtual.conteudo = $('#poc-content').html();
 	salvarAlteracoes(paginas, paginaAtual);
 }
 
 //salva as alterações que são feitas no #poc-content, para sites estilo livre, e .poc-content para sites One Page
 function salvarAlteracoesSite(){
-	if(onePage) salvarAlteracoesOnePage;
+	if(onePage) salvarAlteracoesOnePage();
 	else salvarAlteracoesEstiloLivre();
 }
 
@@ -3361,6 +4031,745 @@ $(document).on('click', '.remover-componente', function(e){
 $(document).on('click', '.btn-close-form', function(e){
 	e.preventDefault();
 	botaoAtual.click();
+})
+
+/*FUNCOES PARA EXPORTAR PARA O HTML */
+//converte os dados das páginas para um formato a ser enviado para o arquivo php
+function obterDadosPagina(lista){
+	var modelos = []; //lista com as paginas
+
+	for(i in lista){
+		var obj = new Object();
+		//se for um link, então não há a necessidade de criar arquivos
+		if(!lista[i].isLink){
+
+			var init = '<div id="poc-export-html"></div>';
+			var page = $(init);
+			
+			//html com o head
+			var cabecalhoDoc = 
+					//tag meta
+	'\t<meta charset="utf-8">\n \
+	<meta http-equiv="cache-control" content="no-cache">\n \
+	<meta http-equiv="expires" content="0">\n \
+	<meta http-equiv="pragma" content="no-cache">\n \
+	\n\
+	<title>' + lista[i].nome+'</title>\n \
+	\n \
+	\n \
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">\n \
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">\n\
+	<link rel="stylesheet" href="css/base.css">\n';
+			
+			page.append('<div id="poc-export-head">' + cabecalhoDoc + '</div>');
+
+			//pega tudo que ta no atual #poc-page e insere como body
+			page.append('<div id="poc-export-body">' + $('#poc-page').html() + '</div>');
+			
+			//troca o #poc-content pelo #poc-content da página
+			page.find('#poc-content').html(lista[i].conteudo);
+			
+			//aqui deve-se remover as bodas e os botões de propriedades
+			page.find('.poc-componente').removeClass('poc-componente');
+			page.removeClass('poc-componente-fixo');
+			page.find('.grupo-btn-propriedades, .poc-linha').remove();
+			page.find('*[class*="oculta"]').remove(); //tudo que estiver oculto é removido
+			page.find('*[class*="ui-sortable"]').removeClass('ui-sortable'); //tira a classe de arraste
+			page.find('*[class*="previa"]').removeClass('previa');
+
+			//verifica se o header e o footer estão vazio. Se sim, eles são removidos
+			if(page.find('#poc-header')[0].innerHTML.trim()=='') page.find('#poc-header').remove();
+			if(page.find('#poc-footer')[0].innerHTML.trim()=='') page.find('#poc-footer').remove();
+
+			//pega os js que serão adicionados no fim do body
+			var js = 
+	'\t<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>\n \
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>\n \
+	<script type="text/javascript" src="js/jquery.zaccordion.min.js"></script>\n \
+	<script type="text/javascript" src="js/ekko-lightbox.min.js"></script>\n \
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>\n';
+
+			page.find('#poc-export-body').append(js);
+
+			var htmlFinal = 
+
+'<!DOCTYPE html>\n\
+<html>\n\
+<head>\n\n'+page.find('#poc-export-head').html()+
+'\n\n</head>\n\n\
+<body>\n\n'+page.find('#poc-export-body').html()+
+'\n\n</body>\n\
+</html>';
+			var clean = $.htmlClean(htmlFinal, {
+				format:true, 
+				bodyOnly: false, 
+				formatIndent: 2,
+				allowedAttributes: [['id']],
+				allowedTags: [['script','meta', 'title', 'link']]
+			});
+
+			
+
+			//objeto que vai para o php
+			obj.isLink = false;
+			obj.html =htmlFinal; //conteúdo da página
+			obj.nome = removerAcentosEspacos(lista[i].nome);//nome do futuro arquivo
+
+			modelos.push(obj);
+		}else if(lista[i].children.length > 0){
+			obj.isLink = true;
+			obj.nome = removerAcentosEspacos(lista[i].nome);
+			obj.children = obterDadosPagina(lista[i].children);
+			modelos.push(obj);
+		}
+	}
+
+	return modelos;
+}
+
+//o que tem de dinâmico no css são as informações dos componentes fixos. Basicamente: Background e Border
+//o ideal seria usar um template engine, mas o tempo para desenvolvimento se tornou inviável
+function gerarCSS(){
+
+
+	var page = $('#poc-page'), header = $('#poc-header'), content = $('#poc-content'),
+		menu = $('#poc-menu'), footer = $('#footer');
+
+	var bgPage = page.css('background'), bgHeader = header.css('background'), bgContent = content.css('background'), 
+		bgMenu = menu.css('background'), bgFooter = footer.css('background')
+
+	if(typeof(bgPage) == 'undefined' || bgPage == '') bgPage = '#fff';
+	else if(bgPage.indexOf('url') > -1) bgPage.replace('biblioteca/', '');
+
+	if(typeof(bgHeader) == 'undefined' || bgHeader == '') bgHeader = '#fff';
+	else if(bgHeader.indexOf('url') > -1) bgHeader.replace('biblioteca/', '');
+
+	if(typeof(bgContent) == 'undefined' || bgContent == '') bgContent = '#fff';
+	else if(bgContent.indexOf('url') > -1) bgContent.replace('biblioteca/', '');
+	
+	if(typeof(bgFooter) == 'undefined' || bgFooter == '') bgFooter = '#fff';
+	else if(bgFooter.indexOf('url') > -1) bgFooter.replace('biblioteca/', '');
+
+	if(typeof(bgMenu) == 'undefined' || bgMenu == '') bgMenu = '#fff';
+
+	var propriedadesPagina = {
+		background: bgPage,
+		font_family: $('#poc-form-propriedades-pagina #fonte').val(),
+		font_size: $('#poc-form-propriedades-pagina #tamanho_fonte').val()
+	};
+
+	var bordaCabecalho;
+	$('#poc-form-propriedades-header #poc-cabecalho-border-style').val() == 'none' ? bordaCabecalho = 'none' : bordaCabecalho = 
+				$('#poc-form-propriedades-header #poc-header-border-size').val() + ' ' + $('#poc-form-propriedades-header #poc-cabecalho-border-style').val() +
+				' ' + $('#poc-form-propriedades-header #poc-header-border-color').val();
+
+	var propriedadesCabecalho = {
+		background: bgHeader,
+		min_height: $('#poc-form-propriedades-header #header-tamanho-minimo').val() + 'px',
+		border: bordaCabecalho,
+		border_radius: $('#poc-form-propriedades-header #poc-header-border-radius').val() + 'px'
+	};
+
+	var bordaConteudo;
+	$('#poc-form-propriedades-content #poc-conteudo-border-style').val() == 'none' ? bordaConteudo = 'none' : bordaConteudo = 
+				$('#poc-form-propriedades-content #poc-conteudo-border-size').val() + ' ' + $('#poc-form-propriedades-content #poc-conteudo-border-style').val() +
+				' ' + $('#poc-form-propriedades-content #poc-conteudo-border-color').val();
+
+	var propriedadesConteudo = {
+		background: bgContent,
+		min_height: $('#poc-form-propriedades-content #content-tamanho-minimo').val() + 'px',
+		border: bordaConteudo,
+		border_radius: $('#poc-form-propriedades-content #poc-conteudo-border-radius').val() + 'px'
+	};
+
+	var bordaRodape;
+	$('#poc-form-propriedades-footer #poc-rodape-border-style').val() == 'none' ? bordaRodape = 'none' : bordaRodape = 
+				$('#poc-form-propriedades-footer #poc-rodape-border-size').val() + ' ' + $('#poc-form-propriedades-footer #poc-rodape-border-style').val() +
+				' ' + $('#poc-form-propriedades-footer #poc-rodape-border-color').val();
+
+	var propriedadesRodape = {
+		background: bgFooter,
+		min_height: $('#poc-form-propriedades-header #header-tamanho-minimo').val() + 'px',
+		border: bordaRodape,
+		border_radius: $('#poc-form-propriedades-header #poc-header-border-radius').val() + 'px'
+	};
+
+	var bordaMenu;
+	$('#poc-form-propriedades-menu #poc-border-menu').val() == 1 ? bordaMenu = '1px solid #e7e7e7' : bordaMenu = 'none';
+
+	var propriedadesMenu = {
+		background: $('#poc-form-propriedades-menu #menu-background-color').val() + 'px',
+		font_color: $('#poc-form-propriedades-menu #menu-font-color').val(),
+		border: bordaMenu,
+		border_radius: $('#poc-form-propriedades-menu #poc-border-radius-menu').val() + 'px'
+	};
+
+	var cssComponentesFixos = 	
+				//body
+'#poc-page {\n\
+	background: ' 	+	propriedadesPagina.background 	+ ';\n\
+	font-family:' 	+	propriedadesPagina.font_family 	+ ';\n\
+	font-size:' 	+	propriedadesPagina.font_size 	+ ';\n\
+}\n \
+\
+\
+\n#poc-header { \n \
+	background: ' 	+ 	propriedadesCabecalho.background 	+ '; \n \
+	min-height:' 	+ 	propriedadesCabecalho.min_height 	+ '; \n \
+	border:' 		+ 	propriedadesCabecalho.border 		+ '; \n \
+	border-radius:'	+	propriedadesCabecalho.border_radius + '; \n \
+}\n \
+\
+\
+\n#poc-content { \
+	background: ' 	+ 	propriedadesConteudo.background 	+ '; \n \
+	min-height:' 	+ 	propriedadesConteudo.min_height 	+ '; \n \
+	border:' 		+ 	propriedadesConteudo.border 		+ '; \n \
+	border-radius:'	+	propriedadesConteudo.border_radius	+ '; \n \
+}\n\n \
+\
+\
+#poc-menu {\n \
+	background: ' 	+	propriedadesMenu.background 	+ ';\n \
+	color:' 		+	propriedadesMenu.font_color 	+ ';\n \
+	border:' 		+	propriedadesMenu.border 		+ ';\n \
+	border-radius:' +	propriedadesMenu.border_radius 	+ ';\n \
+}\n\n \
+\
+\
+#poc-footer { \n \
+	background: ' 	+ 	propriedadesRodape.background 		+ '; \n \
+	min-height:' 	+ 	propriedadesRodape.min_height 		+ '; \n \
+	border:' 		+ 	propriedadesRodape.border 			+ '; \n \
+	border-radius:'	+	propriedadesRodape.border_radius 	+ '; \n \
+}\n';
+
+	return cssComponentesFixos;
+
+}
+
+function criarArquivosHtmlEstiloLivre(){
+	var arquivos = obterDadosPagina(paginas);
+	var css = gerarCSS();
+
+	
+	$.ajax({
+		url: 'gerar_arquivos.php',
+		type: 'POST',
+		dataType: 'JSON', 
+		cache: false,
+		data: {css:css, arquivos:arquivos},
+
+		success: function(data){
+			alert(data);	
+		}		
+	})
+}
+
+function obterDadosPaginaOnePage(){
+	var obj = new Object();
+	//html com o head
+	var cabecalhoDoc = 
+			//tag meta
+			'\t<meta charset="utf-8">\n \
+			<meta http-equiv="cache-control" content="no-cache">\n \
+			<meta http-equiv="expires" content="0">\n \
+			<meta http-equiv="pragma" content="no-cache">\n \
+			\
+			<title>Título do site</title>\n \
+			\
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">\n \
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">\n \
+			<link rel="stylesheet" type="text/css" href="css/ekko-lightbox.min.css">\n \
+			<link rel="stylesheet" href="css/base.css">\n';
+				
+	var head = $('<head />').append(cabecalhoDoc);
+
+	//pega tudo que ta no atual #poc-page e insere como body
+	var content = $('<body />').append($('#poc-page').html());
+
+	//pega os js que serão adicionados no fim do body
+	var js = 
+				'\t<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>\n \
+				<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>\n \
+				<script type="text/javascript" src="js/jquery.zaccordion.min.js"></script>\n \
+				<script type="text/javascript" src="js/ekko-lightbox.min.js"></script>\n \
+				<script src="js/classie.js"></script>\n \
+    			<script src="js/cbpAnimatedHeader.js"></script>\n\n \
+    			<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>\n \
+    			<script type="text/javascript" src="js/base.js"></script>\n';
+
+	content.append(js); //insere o js no final do body
+
+	//cria a página e insere o head e content que repreentam o <head> e <body>
+	var page = $('<html />').append(head).append(content);
+
+
+	//aqui deve-se remover as bodas e os botões de propriedades
+	page.find('.poc-componente').removeClass('poc-componente');
+	page.removeClass('poc-componente-fixo');
+	page.find('.poc-componente-fixo').removeClass('poc-componente-fixo');
+	page.find('.grupo-btn-propriedades, .poc-linha').remove();
+	page.find("*[style*='display:none']").remove();
+
+	//objeto que vai para o php
+	obj.html = '<!DOCTYPE html>\n<html>\n' + page.html() + '\n\n</html>'; //conteúdo da página
+	//obj.html = $.htmlClean(obj.html, {format:true})
+
+	return obj;
+}
+
+function gerarCSSOnePage(){
+	var menu = $('#poc-menu');
+	var bgMenu = menu.css('background');
+	if(bg.length == 0) bg = '#fff'
+
+	var css = 
+		//menu
+		'#poc-menu {'+
+			'\nbackground: ' 	+	bgMenu + ';' + 
+			'\ncolor:' 		+	menu.css('color') + ';' + 
+		'}\n';
+
+	//css das sections
+	$('#poc-page').find('section').each(function(){
+		//css de cada section
+		var bg = $(this).css('background');
+		if(bg.length == 0) bg = '#fff'
+		css += '\n\n#' + $(this).prop('id') + '{\n'+
+					'background: ' + bg + ';' + 
+					'\ncolor: ' + $(this).css('color') + ';' + 
+				'}\n\n';
+
+	});
+
+	return css;
+}
+
+function criarArquivosHtmlOnePage(){
+	var pagina = obterDadosPaginaOnePage();
+	var css = gerarCSSOnePage();
+
+	
+	$.ajax({
+		url: 'gerar_arquivos_one_page.php',
+		type: 'POST',
+		dataType: 'JSON', 
+		cache: false,
+		data: {css:css, pagina:pagina},
+
+		success: function(data){
+			alert(data);	
+		}		
+	})
+}
+
+$(document).on('click', '#btn-exportar-html', function(e){
+	e.preventDefault();
+
+	if(onePage) criarArquivosHtmlOnePage();
+	else criarArquivosHtmlEstiloLivre();
+})
+/*FIM DAS FUNÇÕES PARA EXPORTAR PARA HTML */
+
+/*FUNCOES PARA EXPORTAR PARA O CRUX */
+function converterImagemCrux(componente){
+	var imagem = componente.find('img');
+	var classes = imagem.attr('class');
+	var url = imagem.attr('src');
+	return '<crux:image url="'+url+'" styleName="'+classes+'" onSelect="" id="poc-imagem"/>';
+}
+
+function converterTabelaCrux(componente){
+	var tabela = componente.find('table');
+	var classes = tabela.attr('class');
+
+	var retorno = '<crux:adaptativeGrid id="poc-tabela" styleName="'+classes+'">\n\
+						<crux:largeColumns>\n';
+	//pega os títulos das colunas e transforma em data column
+	var label1, key1;
+	tabela.find('thead td').each(function(i,e){
+		var label = $(this).text();
+		var key = removerAcentosEspacos(label);
+
+		if(i == 0){
+			label1 = label;
+			key1 = key;
+		}
+		retorno += '<crux:dataColumn key="'+key+'" label="'+label+'" />\n';
+	})
+
+
+	retorno += 
+			'</crux:largeColumns>\n\
+			<crux:smallColumns>\n\
+				<crux:dataColumn key="'+key1+'" label="'+label1+'"/>\n\
+			</crux:smallColumns>\n\
+		</crux:adaptativeGrid>';
+
+	return retorno;
+
+}
+
+
+
+function converterTextoCrux(componente){
+	
+	var retorno = 
+		'<gwt:HTMLPanel id="poc-texto">\n \
+			\t'+$(componente).html() + '\n \
+		</gwt:HTMLPanel>';
+
+	return retorno;
+}
+
+//troca todos as tags <img> para o tag image do crux. Também servirá para componentes em miniatura
+function converterMiniaturasCrux(componente){
+	var miniatura = $(componente).clone();
+
+	miniatura.find('img').each(function(i,e){
+		var imagem = $(this);
+		var src = imagem.attr('src'); //caminho da imagem
+		var id = 'miniatura-'+i; //id da miniatura
+		var style = imagem.attr('class'); //classe para verificar se o o item-gray aparecerá
+
+		imagem.replaceWith('<crux:image id="'+id+'" url="'+src+'" style="'+style+'" />');
+	})
+
+	return $('<div />').append(miniatura.clone()).html();
+}
+
+//função que trará mais trabalho. Cada item do formulário deve ser convertido para o modelo crux
+function converterFormularioCrux(componente){
+	var form = $(componente).find('form').clone();
+
+	form.find('input[type=text]').each(function(i,e){
+		var input = $(this);
+
+		var id = input.prop('id');
+		var style = input.attr('class');
+		input.replaceWith('<gwt:textBox id="'+id+'"styleName="'+style+'">');
+	})
+
+	form.find('input[type=password]').each(function(i,e){
+		var input = $(this);
+
+		var id = input.prop('id');
+		var style = input.attr('class');
+		input.replaceWith('<gwt:passwordTextBox id="'+id+'"styleName="'+style+'" />');
+	})
+
+	form.find('select').each(function(i,e){
+		var select = $(this);
+		var id = select.prop('id');
+		var style = select.attr('class');
+		listaSelect.push(objOption);
+		input.replaceWith('<gwt:listBox id="'+id+'" styleName="'+style+'" />');
+	});
+
+	form.find('textarea').each(function(i,e){
+		var textarea = $(this);
+		var id = textarea.prop('id');
+		var style = textarea.attr('class');
+
+		textarea.replaceWith('<crux:textArea id="'+id+'" styleName="'+style+'" />');
+	})
+
+	form.find('input[type=checkbox]').each(function(i,e){
+		var checkbox = $(this);
+
+		var id = checkbox.prop('id');
+		var valor = checkbox.val();
+		var name = checkbox.attr('name');
+
+		checkbox.replaceWith('<gwt:checkbox name="'+name+'" id="'+id+'" value="'+valor+'"/>');
+	})
+
+	form.find('input[type=radio]').each(function(i,e){
+		var radio = $(this);
+
+		var id = radio.prop('id');
+		var valor = radio.val();
+		var name = radio.attr('name');
+
+		radio.replaceWith('<gwt:radioButton name="'+name+'" id="'+id+'" value="'+valor+'"/>');
+	})
+
+	form.find('input[type=file]').each(function(i,e){
+		var file = $(this);
+		var id = file.prop('id');
+
+		file.replaceWith('<crux:fileUploader id="'+id+'" />');	
+	})
+
+	form.find('button').each(function(i,e){
+		var botao = $(this);
+
+		var texto = botao.text();
+		var id = botao.prop('id');
+		var style = botao.attr('class');
+
+		botao.replaceWith('<crux:button id="'+id+'" text="'+texto+'" styleName="'+style+'" onSelect=""');
+	});
+
+
+	var html = '<crux:formDisplay id="poc-form" styleName="'+form.attr('class')+'">\n'+
+					form.html() + '\n'+
+				'</crux:formDisplay>';
+	return html;
+}
+
+function converterPainelCrux(componente){
+	var painel = $(componente).clone();
+	var titulo = painel.find('.panel-heading');
+	titulo.html('<gwt:label id="poc-title-panel" text="'+titulo.text()+'"');
+
+	var texto = 
+			'<gwt:HTMLPanel id="poc-texto">\n'+
+				'\t' +painel.find('.poc-texto').html() + '\n';      
+			'</gwt:HTMLPanel>';
+
+	painel.find('.poc-texto').replaceWith(texto);
+
+	return $('<div />').append(painel.clone()).html();
+}
+
+
+
+function converterComponenteToCrux(classe, componente){
+	switch(classe){
+		case 'componente-titulo'			: return converterTextoCrux(componente);
+		case 'componente-texto'				: return converterTextoCrux(componente);
+		case 'componente-miniatura'			: return converterMiniaturasCrux(componente); 
+		case 'componente-formulario'		: return converterFormularioCrux(componente); 
+		case 'componente-redes-sociais'		: return converterMiniaturasCrux(componente); 
+		case 'componente-painel-estatico'	: return converterPainelCrux(componente); 
+		case 'componente-tabela'			: return converterTabelaCrux(componente);
+		default: return componente;
+	}
+}
+
+function gerarMenuView(){
+	var menu = $('#poc-menu').clone();
+
+	
+	menu.find('.grupo-btn-propriedades').remove(); //pega o grupo de botões de propriedades e os remove
+	//pega todos os links que não são dropdown-toogle
+	menu.find('.poc-nav-pages a[class!="dropdown-toggle"]').each(function(i,e){
+		var link = $(this);
+		var text = link.text();
+		var nome = removerAcentosEspacos(text);
+		link.replaceWith('<crux:anchor href="#" onSelect="menuController.'+nome+'">' + text + '</anchor>');
+	})
+
+	var menuHtml = $('<div />').append(menu.clone()).html();
+
+	var view = 
+		'<v:view \n\
+			xmlns="http://www.w3.org/1999/xhtml" \n\
+			xmlns:v="http://www.cruxframework.org/view" \n\
+			xmlns:core="http://www.cruxframework.org/crux" \n\
+			xmlns:crux="http://www.cruxframework.org/crux/widgets" \n\
+			xmlns:gwt="http://www.cruxframework.org/crux/gwt" \n\
+			xmlns:faces="http://www.cruxframework.org/crux/smart-faces" \n\
+			useController="menuController" \n\
+			onActivate="menuController.onActivate">\n' +
+				menuHtml + 
+		'</v:view>\n';
+
+	return view;
+}
+
+/* gera o conteúdo do documento index.crux.xml. A parte dinâmica fica com relação à ordem das camadas na tela. Essas camadas são inseridas de acordo
+	com a ordem em que elas aparecem NA TELA CORRENTE
+*/
+function gerarIndexCrux(){
+	var header = 
+				'\t<crux:simpleViewContainer id="headerView">\n \
+					<crux:view name="header" />\n \
+				</crux:simpleViewContainer>\n';
+
+	var content = 
+				'\t<crux:simpleViewContainer id="contentView">\n \
+					<crux:view name="content" />\n \
+				</crux:simpleViewContainer>\n';
+
+	var menu = 
+				'\t<crux:simpleViewContainer id="menuView">\n \
+					<crux:view name="menu" />\n \
+				</crux:simpleViewContainer>\n';
+
+	var footer = 
+				'\t<crux:simpleViewContainer id="footerView">\n \
+					<crux:view name="footer" />\n \
+				</crux:simpleViewContainer>\n';
+
+	
+	var index = 
+		'<!DOCTYPE html>\n \
+		<html\n \
+			xmlns="http://www.w3.org/1999/xhtml"\n \
+			xmlns:c="http://www.cruxframework.org/crux"\n \
+			xmlns:crux="http://www.cruxframework.org/crux/widgets"\n \
+			xmlns:faces="http://www.cruxframework.org/crux/smart-faces"\n \
+			xmlns:gwt="http://www.cruxframework.org/crux/gwt">\n \
+			\n\
+			<head<name /> \n\
+			<title>Nome do Projeto</title> \n\
+			\n\
+			<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700|Clicker+Script" rel="stylesheet" type="text/css" /> \n\
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> \n\
+			<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" /> \n\
+			\n\
+		</head>\n\
+			\n\
+		<body>\n\
+			<script type="text/javascript" src="../nomeprojeto/nomeprojeto.nocache.js"></script>\n \
+			\n\
+			<c:screen useView="**/views/*" \n\
+				smallViewport="user-scalable=no, width=320" \n\
+				largeViewport="user-scalable=no" \n\
+				useResource="seuProjetoResources" \n\
+				useController="rootController" \n\
+				onActivate="rootController.onActivate" \n\
+				height="100%"/>\n\n';
+
+	$('#poc-page').find('#poc-header, #poc-menu, #poc-content, #poc-footer').each(function(i,e){
+		switch($(this).prop('id')){
+			case 'poc-header': index += header; break;
+			case 'poc-menu': index += menu; break;
+			case 'poc-content': index += content; break;
+			case 'poc-footer': index += footer; break;
+		}
+	});
+
+	index += 
+					'\n\t<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>\n \
+					<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>\n \
+					<script type="text/javascript" src="js/jquery.zaccordion.min.js"></script>\n \
+					<script type="text/javascript" src="js/ekko-lightbox.min.js"></script>\n \
+				</body>\n \
+			</html>';
+
+	return index;
+}
+
+//Função capaz de gerar as view do projeto. Id será o nome da página
+function gerarView(elemento, camada, title){
+	
+	var view = 
+		'<v:view\n \
+			xmlns="http://www.w3.org/1999/xhtml"\n \
+			xmlns:v="http://www.cruxframework.org/view"\n \
+			xmlns:core="http://www.cruxframework.org/crux"\n \
+			xmlns:crux="http://www.cruxframework.org/crux/widgets"\n \
+			xmlns:gwt="http://www.cruxframework.org/crux/gwt"\n \
+			xmlns:faces="http://www.cruxframework.org/crux/smart-faces"\n \
+			useController="'+camada+'Controller"\n \
+			onActivate="'+camada+'Controller.onActivate"\n \
+			dataObject="'+camada+'"\n';
+
+		if(typeof(title) !== 'undefined') view += 'title="'+title+'"'; //caso seja um conteúdo, adiciona como título da página
+		view += '>\n\n';
+
+	var el = $(elemento).clone();
+		//procura pelos componentes nesse conteúdo 
+	$(el).find('.poc-componente').each(function(){
+		var temp = $(this);
+		var classe = temp.attr('class').split(' ')[0]; //pega a primeira classe do componente;
+
+		temp.replaceWith(converterComponenteToCrux(classe, temp)); //troca o elemento original pelo convertido em formato crux
+	})
+
+	console.log(el.html());
+	view += $('<div />').append(el.clone()).html();
+	view += '</v:view>';
+
+	return view;
+}
+
+function criarViewIniciais(){
+	var modelos = [];
+	//gerando o index.crux.xml
+	var obj = new Object();
+	obj.nome = 'index.crux.xml';
+	obj.html = gerarIndexCrux();
+	obj.isLink = false;
+	modelos.push(obj);
+
+	//gerando a view menu.view.xml
+	obj = new Object();
+	obj.nome = 'menu.view.xml';
+	obj.html = gerarMenuView();
+	obj.isLink = false;
+	modelos.push(obj);
+
+	//gerando a view header.view.xml
+	obj = new Object();
+	obj.nome = 'header.view.xml';
+	obj.html = gerarView($('#poc-header'), 'header');
+	obj.isLink = false;
+	modelos.push(obj);
+
+	//gerando a view footer.view.xml
+	obj = new Object();
+	obj.nome = 'footer.view.xml';
+	obj.html = gerarView($('#poc-footer'), 'footer');
+	obj.isLink = false;
+	modelos.push(obj);
+
+	return modelos;
+}
+
+//converte os dados das páginas para um formato a ser enviado para o arquivo php
+function obterDadosPaginaCrux(lista){
+	var modelos = []; //lista com as paginas. Cada página será uma view, mas apenas o seu #poc-content. Header, Footer e Menu são gerados separadamente
+	var obj; 
+	for(i in lista){
+		
+		//se for um link, então não há a necessidade de criar arquivos
+		if(!lista[i].isLink){
+			obj = new Object();
+			obj.isLink = false;
+			obj.nome = removerAcentosEspacos(lista[i].nome);
+			obj.html = gerarView($(lista[i].conteudo), obj.nome, lista[i].nome);
+			modelos.push(obj);
+		}else if(lista[i].children.length > 0){
+			obj.isLink = true;
+			obj.nome = removerAcentosEspacos(lista[i].nome);
+			obj.children = obterDadosPaginaCrux(lista[i].children);
+			modelos.push(obj);
+		}
+	}
+
+	return modelos;
+}
+
+function criarArquivosCrux(){
+	var paginas = criarViewIniciais();
+	paginas.join(obterDadosPaginaCrux(paginas));
+	
+	var css = gerarCSS();
+	
+	$.ajax({
+		url: 'gerar_arquivos_crux.php',
+		type: 'POST',
+		dataType: 'JSON', 
+		cache: false,
+		data: {css:css, arquivos:paginas},
+
+		success: function(data){
+			alert(data);	
+		}		
+	})
+}
+
+$(document).on('click', '#btn-exportar-crux', function(e){
+	e.preventDefault();
+
+	if(onePage) alert('O estilo Página Única não pode ser gerado para Crux no momento.');
+	else criarArquivosCrux()
+
 })
 
 $(document).ready(function(){

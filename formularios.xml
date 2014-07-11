@@ -15,9 +15,10 @@
 			  <div class="form-group">
 			    <label for="page-background">Plano de fundo</label>
 			    <div class="input-group input-group-sm">
-			    	<input type="text" name="page-background" id="page-background" value="Padrão" class="form-control" disabled>
+			    	<input type="text" name="page-background" id="pagina-background" value="Padrão" class="form-control" disabled>
 	        		<div class="input-group-btn">
-		        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite" id="btnFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+		        		<button class="btn-open-fundo-site btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite" id="btnFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+		        		<button class="btn-fundo-transparente btn btn-danger" type="button"><span class="glyphicon glyphicon-trash"></span></button>
 		        	</div>
 		        </div><!-- /input-group -->
 			  </div>
@@ -25,7 +26,8 @@
 			  <div class="form-group">
 			    <label for="fonte">Fonte</label>
 			    <select id="fonte" class="form-control" name="fonte">
-			    	<option value="Glyphicons Halflings" style="font-family:'Arial', sans-serif">Padrão (Arial)</option>
+			    	{nome: 'Glyphicons Halflings',	familia: "'Glyphicons Halflings', sans-serif"},
+			    	<option value="'Glyphicons Halflings', sans-serif" style="font-family:'Glyphicons Halflings', sans-serif">Padrão (Arial)</option>
 			    </select>
 			  </div>
 
@@ -64,26 +66,28 @@
 				    	<option value="0">Não</option>
 				    	<option value="1">Sim</option>
 				    </select>
+				    <span class="help-block">Nesse caso, os elementos internos ao Cabeçalho serão centralizados.</span>
 				</div>
+
+				<div class="form-group">
+				    <label for="poc-container-header">Conteúdo Centralizado</label>
+				    <select id="poc-container-header" class="form-control" name="poc-container-header">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				    <span class="help-block">Nesse caso, o Cabeçalho será centralizado com relação à página</span>
+				</div>
+
 
 				<div class="form-group">
 					<label for="hedader-background">Plano de fundo</label>
 				    <div class="input-group input-group-sm">
 				    	<input type="text" name="header-background" id="header-background" value="Padrão" class="form-control" disabled>
 		        		<div class="input-group-btn">
-			        		<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+			        		<button class="btn-open-fundo-site btn btn-primary" type="button" data-toggle="modal" data-target="#modalFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
-
-			    <div class="form-group">
-				  	<label for="header-style">Estilo</label>
-				  	<select class="form-control" id="select-header-style" name="select-header-style">
-				  		<option value="0">Estilo Livre</div>
-				  		<option value="poc-header-style-1">Estilo 1</div>
-				  		<option value="poc-header-style-2">Estilo 2</div>
-				  	</select>
-			  	</div>
 
 			  	<div class="form-group">
 				  	<label for="header-tamanho-minimo">Tamanho Mínimo</label>
@@ -95,6 +99,49 @@
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
+
+			    <div class="form-group">
+				  	<label for="poc-cabecalho-border-style">Estilo da Borda</label>
+				  	<select class="form-control" id="poc-cabecalho-border-style" name="poc-cabecalho-border-style">
+				  		<option value="none">Sem Borda</div>
+				  		<option value="solid">Solid</div>
+				  		<option value="dotted">Dotted</div>
+				  		<option value="dashed">Dashed</div>
+				  		<option value="double">Double</div>
+				  		<option value="groove">Groove</div>
+				  		<option value="ridge">Ridge</div>
+				  		<option value="inset">Inset</div>
+				  		<option value="outset">Outset</div>
+				  	</select>
+			  	</div>
+
+			  	<div class="form-group group-border">
+		    		<label for="poc-header-border-color">Cor da Borda</label>
+		            <input type="text" id="poc-header-border-color" class="form-control" name="poc-header-border-color">
+	            </div>
+
+			  	<div class="form-group group-border" disabled>
+				  	<label for="poc-header-border-size">Largura da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-header-border-size" id="poc-header-border-size" value="1" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-size-header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-size-header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group group-border" disabled>
+				  	<label for="poc-header-border-radius">Arredondamento da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-header-border-radius" id="poc-header-border-radius" value="0" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-radius-header-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-radius-header-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
 
 			    <div class="form-group">
 			    	<button class="btn btn-default btn-close-form">Fechar</button>
@@ -115,12 +162,32 @@
 				    	<option value="0">Não</option>
 				    	<option value="1">Sim</option>
 				    </select>
+				    <span class="help-block">Nesse caso, os elementos internos ao Conteúdo serão centralizados.</span>
+				</div>
+
+				<div class="form-group">
+				    <label for="poc-container-content">Conteúdo Centralizado</label>
+				    <select id="poc-container-content" class="form-control" name="poc-container-content">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				    <span class="help-block">Nesse caso, o Conteúdo será centralizado com relação à página</span>
+				</div>
+
+				<div class="form-group">
+					<label for="content-background">Plano de fundo</label>
+					<div class="input-group input-group-sm">
+						<input type="text" name="content-background" id="content-background" value="Padrão" class="form-control" disabled>
+						<div class="input-group-btn">
+							<button class="btn-open-fundo-site btn btn-primary" data-toggle="modal" data-target="#modalFundoSite" id="btnFundoSite"><span class="glyphicon glyphicon-picture"></span></button>
+						</div>
+					</div><!-- /input-group -->
 				</div>
 				
 				<div class="form-group">
 					<label for="header-tamanho-minimo">Tamanho Mínimo</label>
 					<div class="input-group input-group-sm">
-						<input type="text" name="tamanho-minimo" id="content-tamanho-minimo" value="600" class="form-control tamanho-minimo">
+						<input type="text" name="content-tamanho-minimo" id="content-tamanho-minimo" value="600" class="form-control tamanho-minimo">
 						<div class="input-group-btn">
 							<button class="btn btn-primary content-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
 							<button class="btn btn-primary content-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
@@ -129,17 +196,47 @@
 				</div>
 
 				<div class="form-group">
-					<label for="style-content">Tamanho Mínimo</label>
-					<select class="form-control" name="style-content" id="style-content">
-						<option value="0">Estilo Livre</option>
-						<option value="1">Texto Livre</option>
-						<option value="2">Formulário de Contato</option>
-						<option value="3">Formulário de Login</option>
-						<option value="4">Categoria de Blog</option>
-						<option value="5">Galeria de Imagens</option>
-						<option value="6">Galeria de Vídeos</option>
-					</select>
-				</div>
+				  	<label for="poc-conteudo-border-style">Estilo da Borda</label>
+				  	<select class="form-control" id="poc-conteudo-border-style" name="poc-conteudo-border-style">
+				  		<option value="none">Sem Borda</div>
+				  		<option value="solid">Solid</div>
+				  		<option value="dotted">Dotted</div>
+				  		<option value="dashed">Dashed</div>
+				  		<option value="double">Double</div>
+				  		<option value="groove">Groove</div>
+				  		<option value="ridge">Ridge</div>
+				  		<option value="inset">Inset</div>
+				  		<option value="outset">Outset</div>
+				  	</select>
+			  	</div>
+
+			  	<div class="form-group group-border" disabled>
+		    		<label for="poc-conteudo-border-color">Cor da Borda</label>
+		            <input type="text" id="poc-conteudo-border-color" class="form-control" name="poc-conteudo-border-color">
+	            </div>
+
+			  	<div class="form-group group-border" disabled>
+				  	<label for="poc-conteudo-border-size">Largura da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-conteudo-border-size" id="poc-conteudo-border-size" value="1" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-size-conteudo-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-size-conteudo-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group group-border" disabled>
+				  	<label for="poc-conteudo-border-radius">Arredondamento da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-conteudo-border-radius" id="poc-conteudo-border-radius" value="0" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-radius-conteudo-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-radius-conteudo-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
 				<div class="form-group">
 			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
@@ -154,16 +251,15 @@
 			<form id="poc-form-propriedades-menu" role="form">
 				<div class="form-group">
 					<label for="poc-menu-fixo">
-						Menu Fixo no Topo
+						Posição do Menu
 					</label>
 					<select id="poc-menu-fixo" name="poc-menu-fixo" class="form-control">
-		            	<option value="0">Não</option>
-		            	<option value="1">Sim</option>
+		            	<option value="0">Personalizado</option>
+		            	<option value="2">Fixo no Topo</option>
 		            </select>
 		            <span class="help-block">
-		            	<p>Marcando essa opção como 'Sim', o menu ficará fixo no topo da página. Entretanto está alteração não poderá ser vista na ferramenta de prototipação</p>
-
-		            	<p><a href='#'>Exemplo</a></p>
+		            	<p>A opção 'Personalizado' permite arrastar o menu para uma posição desejada.</p>
+		            	<p>A opção 'Fixo no Topo' faz com que o menu fique sempre no topo da página, inclusive ao descer a barra de rolagem.</p>
 		            </span>
 		        </div>
 
@@ -241,6 +337,16 @@
 				    	<option value="0">Não</option>
 				    	<option value="1">Sim</option>
 				    </select>
+				    <span class="help-block">Nesse caso, os elementos internos ao Rodapé serão centralizados.</span>
+				</div>
+
+				<div class="form-group">
+				    <label for="poc-footer-header">Conteúdo Centralizado</label>
+				    <select id="poc-footer-header" class="form-control" name="poc-footer-header">
+				    	<option value="0">Não</option>
+				    	<option value="1">Sim</option>
+				    </select>
+				    <span class="help-block">Nesse caso, o Rodapé será centralizado com relação à página</span>
 				</div>
 
 				<div class="form-group">
@@ -273,7 +379,182 @@
 			        	</div>
 			        </div><!-- /input-group -->
 			    </div>
+
 			    <div class="form-group">
+				  	<label for="poc-rodape-border-style">Estilo da Borda</label>
+				  	<select class="form-control" id="poc-rodape-border-style" name="poc-rodape-border-style">
+				  		<option value="none">Sem Borda</div>
+				  		<option value="solid">Solid</div>
+				  		<option value="dotted">Dotted</div>
+				  		<option value="dashed">Dashed</div>
+				  		<option value="double">Double</div>
+				  		<option value="groove">Groove</div>
+				  		<option value="ridge">Ridge</div>
+				  		<option value="inset">Inset</div>
+				  		<option value="outset">Outset</div>
+				  	</select>
+			  	</div>
+
+			  	<div class="form-group group-border" disabled>
+		    		<label for="poc-rodape-border-color">Cor da Borda</label>
+		            <input type="text" id="poc-rodape-border-color" class="form-control" name="poc-rodape-border-color">
+	            </div>
+
+			  	<div class="form-group group-border" disabled>
+				  	<label for="poc-rodape-border-size">Largura da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-rodape-border-size" id="poc-rodape-border-size" value="1" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-size-rodape-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-size-rodape-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group group-border" disabled>
+				  	<label for="poc-rodape-border-radius">Arredondamento da Borda</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-rodape-border-radius" id="poc-rodape-border-radius" value="0" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary border-radius-rodape-btn-up" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+			        		<button class="btn btn-primary border-radius-rodape-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>bloco</nome>
+		<html><![CDATA[
+			<form id="poc-form-propriedades-bloco" role="form">
+				<div class="form-group">
+				  	<label for="largura-colunas">Largura</label>
+				  	<select id="largura-colunas" name="largura-colunas" class="form-control"></select>
+				  	<span class="help-block">A opção 'Padrão' faz a divisão simples: 12/quantidade de colunas.</span> 
+			    </div>
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>titulo</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do texto -->
+			<form id="poc-form-propriedades-titulo" role="form">
+				<div class="form-group">
+				  	<label for="poc-titulo-texto">Texto</label>
+				  	<input type="text" class="form-control" id="poc-titulo-texto" name="poc-titulo-texto" value="Texto de Exemplo">
+				</div>
+				<div class="form-group">
+				  	<label for="poc-titulo-alinhamento">Texto</label>
+				  	<select class="form-control" id="poc-titulo-alinhamento" name="poc-titulo-alinhamento">
+				  		<option value="text-left">Esquerdo</option>
+				  		<option value="text-center">Centralizado</option>
+				  		<option value="text-right">Direito</option>
+				  	</select>
+				</div>
+				<div class="form-group">
+				  	<label for="poc-titulo-tamanho">Tamanho</label>
+				  	<select class="form-control" id="poc-titulo-tamanho" name="poc-titulo-tamanho">
+				  		<option value="h1">6</option>
+				  		<option value="h2">5</option>
+				  		<option value="h3">4</option>
+				  		<option value="h4">3</option>
+				  		<option value="h5">2</option>
+				  		<option value="h6">1</option>
+				  	</select>
+				</div>
+				<div class="form-group">
+				  	<label for="poc-titulo-cor">Texto</label>
+				  	<input type="text" id="poc-titulo-cor" name="poc-titulo-cor" class="form-control" value="#000000">
+				</div>
+				
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+
+			</form>
+		]]>
+		</html>
+	</formulario>
+
+	<formulario>
+		<nome>imagem</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do texto -->
+			<form id="poc-form-propriedades-imagem" role="form">
+				<div class="form-group">
+				  	<label for="poc-imagem-selecionar">Texto</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-imagem-selecionar" id="poc-imagem-selecionar" class="form-control" disabled>
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary" data-toggle="modal" data-target="#modalSelecionarImagem" type="button"><span class="glyphicon glyphicon-picture"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+				</div>
+				<div class="form-group">
+				  	<label for="poc-imagem-estilo">Texto</label>
+				  	<select class="form-control" id="poc-imagem-estilo" name="poc-imagem-estilo">
+				  		<option value="">Normal</option>
+				  		<option value="img-rounded">Cantos Arredondados</option>
+				  		<option value="img-circle">Circular</option>
+				  		<option value="img-thumbnail">Com bordas</option>
+				  	</select>
+				  	<span class="help-block">Em caso de imagem com fundo transparente ou igual ao fundo do conteúdo em que foi depositado será difícil a visualização das mudanças ocorridas</span>
+				</div>
+
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
+			    </div>
+
+			</form>
+		]]>
+		</html>
+	</formulario>
+	<formulario>
+		<nome>tabela</nome>
+		<html><![CDATA[
+			<!-- formulario com as propriedades do texto -->
+			<form id="poc-form-propriedades-tabela" role="form">
+				<div class="form-group">
+				  	<label for="poc-tabela-add-titulo">Adicionar Título</label>
+				  	<div class="input-group input-group-sm">
+				    	<input type="text" name="poc-tabela-add-titulo" id="poc-tabela-add-titulo" class="form-control">
+		        		<div class="input-group-btn">
+			        		<button class="btn btn-primary" id="btn-tabela-add-titulo" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+			        	</div>
+			        </div><!-- /input-group -->
+				</div>
+				<div class="form-group">
+				  	<table class="table table-bordered table-condensed" id="poc-tabela-titulos">
+				  		<thead>
+				  			<tr>
+				  				<td>Título</td>
+				  				<td>Excluir</td>
+				  			</tr>
+				  		</thead>
+				  		<tbody></tbody>
+				  	</table>
+				  	<span class="help-block">
+				  		<p>Este componente foi feito para casos onde a tabela é preenchida dinamicamente. Caso necessite criar uma tabela estática faça os seguintes passos: </p>
+
+				  		<p>1 - Arraste um componente texto para a tela.</p>
+				  		<p>2 - Acesse as propriedades do componente e clique para alterar o texto.</p>
+				  		<p>3 - Crie e preencha a tabela da forma como desejar.</p>
+				  	</span>
+				</div>
+				<div class="form-group">
 			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
 			</form>
@@ -328,6 +609,10 @@
 			        		<button class="btn btn-default miniaturas-largura-btn-down" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
 			        	</div>
 			        </div><!-- /input-group -->
+			    </div>
+
+			    <div class="form-group">
+			    	<button class="btn btn-default btn-close-form">Fechar</button>
 			    </div>
 			</form>
 		]]>

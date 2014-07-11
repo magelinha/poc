@@ -7,7 +7,7 @@
 	<meta http-equiv='pragma' content='no-cache'>
 	<title>POC - Ferramenta de prototipação</title>
 
-	<link rel="stylesheet" type="text/css" href="css/jqueryui.min.css">
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.sidr.dark.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.minicolors.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -24,6 +24,39 @@
 
 </head>
 <body class="conteudo-total">
+	<!-- Api do facebook -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=215281915305342&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<!-- Api do twitter -->
+	<script>
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+	</script>
+
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><button class="btn btn-primary" id="btn-salvar-projeto">Salvar Projeto</button></li>
+					<li><button class="btn btn-info" id="btn-exportar-html">Exportar para HTML</button></li>
+					<li><button class="btn btn-info" id="btn-exportar-crux">Exportar para CRUX</button></li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right">
+					<li id="poc-item-usuario"><span>Bem vindo, Usuário</span></li>
+					<li id="poc-item-sair">Sair <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-off"></span></button></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>	
+	</div>
+      
+    
 	<!-- área para os componentes -->
 	<div class="col-md-3 panel-content">
 		<div class=" panel-itens">
@@ -76,6 +109,9 @@
 					<div id="collapseEstaticos" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul class="list-unstyled">
+								<li class="componente-arrastavel titulo">Título <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel imagem">Imagem <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel tabela">Tabela <span class="pull-right glyphicon glyphicon-move"></span></li>
 								<li class="componente-arrastavel texto">Texto <span class="pull-right glyphicon glyphicon-move"></span></li>
 								<li class="componente-arrastavel miniaturas">Miniaturas <span class="pull-right glyphicon glyphicon-move"></span></li>
 								<li class="componente-arrastavel formulario">Formulário <span class="pull-right glyphicon glyphicon-move"></span></li>
@@ -105,18 +141,37 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Componentes Conteúdo Estático -->
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseAPI">Componentes - API Redes Socias</a>
+						</h4>
+					</div>
+					<div id="collapseAPI" class="panel-collapse collapse">
+						<div class="panel-body">
+							<ul class="list-unstyled">
+								<li class="componente-arrastavel api-facebook">Facebook <span class="pull-right glyphicon glyphicon-move"></span></li>
+								<li class="componente-arrastavel api-twitter">Twitter <span class="pull-right glyphicon glyphicon-move"></span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
 			</div>			
 		</div>
 	</div>
 
-	<div class="col-md-9 conteudo-gerado conteudo-ordenado" data-content="Página" id="poc-page">
+	<div class="col-md-9 conteudo-gerado conteudo-ordenado poc-componente-fixo" data-content="Página" id="poc-page">
 	
 	</div>
 	<div id="content-modal"></div>
 	
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jqueryui.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
 	<script type="text/javascript" src="js/jquery.sidr.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/jquery.minicolors.min.js"></script>
@@ -128,6 +183,8 @@
 	<script type="text/javascript" src="js/ekko-lightbox.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.file-input.js"></script>
 	<script type="text/javascript" src="js/image-picker.min.js"></script>
+	<script type="text/javascript" src="js/jquery.htmlClean.js"></script>
+	<script type="text/javascript" src="js/jquery.htmlBeautifier.js"></script>
 	<script src="js/classie.js"></script>
     <script src="js/cbpAnimatedHeader.js"></script>
 	<script type="text/javascript" src="js/poc.js"></script>

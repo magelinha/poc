@@ -151,6 +151,7 @@
     		      <select class="form-control" name="pai" id="pai">
     		      	<option value="0">Nenhum</option>
     		      </select>
+              <span class="help-block">Será listado acima apenas itens cadastrados como 'Link', pois uma página não pode ser pai de outra, apenas um link.</span>
     		    </div>
     		  </div>
 
@@ -207,9 +208,13 @@
           </div>
 
           <div class="form-group background-image">
-            <label for="background-image" class="col-sm-2 control-label">Imagem</label>
-            <div class="col-sm-10">
-              <input type="file" id="background-image" size="5000" name="background-image">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="input-group input-group-sm">
+              <input type="text" name="poc-imagem-selecionar" id="poc-imagem-selecionar" class="form-control" disabled>
+                <div class="input-group-btn">
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#modalSelecionarImagem" type="button"><span class="glyphicon glyphicon-picture"></span></button>
+                </div>
+              </div><!-- /input-group -->
             </div>
           </div>
 
@@ -379,12 +384,12 @@
 
           <div class="form-group">
             <label for="poc-lista-imagens-biblioteca"> Selecione as imagens da galeria</label>
-            <select id="poc-lista-imagens-biblioteca" name="poc-lista-imagens-biblioteca" multiple="multiple" class="image-picker"></select>
+            <select id="poc-lista-imagens-biblioteca" name="poc-lista-imagens-biblioteca" accept="image/*" multiple="multiple" class="image-picker"></select>
           </div>
 
           <div class="form-group">
             <input type="file" name="poc-upload-image-library" id="poc-upload-image-library" title="Carregar mais Imagens" data-bfi-disabled>
-            <button class="btn btn-success">Confirmar upload</button>
+            <button class="btn btn-success poc-btn-confirmar-upload">Confirmar upload</button>
           </div>
 
           <div class="form-group">
@@ -396,6 +401,41 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-confirmar-add-galeria">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalSelecionarImagem" role="dialog" aria-labelledby="selecionarImagem" aria-hidden="true" data-keybord="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="selecionarImagem">Selecionar Imagem</h4>
+      </div>
+      <div class="modal-body">
+        <form id="poc-form-galeria" role="form">
+          
+          <div class="form-group">
+            <label for="poc-lista-imagens-biblioteca"> Selecione uma imagem da biblioteca</label>
+            <select id="poc-lista-imagens-biblioteca" name="poc-lista-imagens-biblioteca" class="image-picker"></select>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-6">
+              <input type="file" name="poc-upload-image-library" id="poc-upload-image-library" accept="image/*" multiple="multiple" title="Carregar mais Imagens" data-bfi-disabled>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-success poc-btn-confirmar-upload">Confirmar upload</button>  
+            </div>
+            
+          </div>
+
+        </form>
+      </div>  
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-selecionar-imagem">Confirmar</button>
       </div>
     </div>
   </div>
